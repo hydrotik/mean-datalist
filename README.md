@@ -33,15 +33,6 @@ $ mkdir custom && cd custom
 $ git clone https://github.com/hydrotik/mean-datalist.git datalist
 $ cd datalist
 $ npm install && bower install
-```
-
-**Then if using grunt:**
-```bash
-$ grunt
-```
-
-**or using gulp:**
-```bash
 $ gulp
 ```
 
