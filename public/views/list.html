@@ -1,0 +1,21 @@
+<section data-ng-controller="DataListController" data-ng-init="find()">
+  <ul class="datalist unstyled">
+    <li data-ng-repeat="item in datalist">
+      <span>{{item.created | date:'medium'}}</span> /
+      <span>{{item.user.name}}</span>
+      <h2>
+        <a data-ng-href="#!/datalist/{{item._id}}">{{item.title}}</a>
+        <span data-ng-if="hasAuthorization(item)">
+          <a class="btn" href="/#!/datalist/{{item._id}}/edit">
+            <i class="glyphicon glyphicon-edit"></i>
+          </a>
+          <a class="btn" data-ng-click="remove(item);">
+            <i class="glyphicon glyphicon-trash"></i>
+          </a>
+        </span>
+      </h2>
+      <div>{{item.content}}</div>
+    </li>
+  </ul>
+  <h1 data-ng-hide="!datalist || datalist.length">No datalist yet. <br> Why don't you <a href="/#!/datalist/create">Create One</a>?</h1>
+</section>

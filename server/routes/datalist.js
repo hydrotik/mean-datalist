@@ -1,27 +1,25 @@
 'use strict';
 
-/* jshint -W098 */
-// The Package is past automatically as first parameter
-module.exports = function(Datalist, app, auth, database) {
+var datalist = require('../controllers/datalist');
 
-  app.get('/datalist/example/anyone', function(req, res, next) {
-    res.send('Anyone can access this');
-  });
+// Article authorization helpers
+var hasAuthorization = function(req, res, next) {
+  if (!req.user.isAdmin && req.item.user.id !== req.user.id) {
+    return res.status(401).send('User is not authorized');
+  }
+  next();
+};
 
-  app.get('/datalist/example/auth', auth.requiresLogin, function(req, res, next) {
-    res.send('Only authenticated users can access this');
-  });
+module.exports = function(Articles, app, auth) {
 
-  app.get('/datalist/example/admin', auth.requiresAdmin, function(req, res, next) {
-    res.send('Only users with Admin role can access this');
-  });
+  app.route('/datalist')
+    .get(datalist.all)
+    .post(auth.requiresLogin, datalist.create);
+  app.route('/datalist/:itemid')
+    .get(auth.isMongoId, datalist.show)
+    .put(auth.isMongoId, auth.requiresLogin, hasAuthorization, datalist.update)
+    .delete(auth.isMongoId, auth.requiresLogin, hasAuthorization, datalist.destroy);
 
-  app.get('/datalist/example/render', function(req, res, next) {
-    Datalist.render('index', {
-      package: 'datalist'
-    }, function(err, html) {
-      //Rendering a view from the Package server/views
-      res.send(html);
-    });
-  });
+  // Finish with setting up the itemid param
+  app.param('itemid', datalist.item);
 };
