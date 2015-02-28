@@ -1,4 +1,4 @@
-# Datalist Manager for M.E.A.N Stack
+# Datalist Manager Package for M.E.A.N Stack
 
 **Prereqs**
 * Make sure mean-cli is installed
