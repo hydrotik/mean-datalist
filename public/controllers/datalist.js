@@ -8,6 +8,7 @@ angular.module('mean.datalist').controller('DataListController', ['$scope', '$st
       return $scope.global.isAdmin || item.user._id === $scope.global.user._id;
     };
 
+    $scope.something1 = 'Hello Dynamic Directive';
 
     $scope.fields = [
       {
