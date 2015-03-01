@@ -8,6 +8,22 @@ angular.module('mean.datalist').controller('DataListController', ['$scope', '$st
       return $scope.global.isAdmin || item.user._id === $scope.global.user._id;
     };
 
+
+    $scope.fields = [
+      {
+        id : 'something1',
+        label : 'Something 1'
+      },
+      {
+        id : 'something2',
+        label : 'Something 2'
+      },
+      {
+        id : 'something3',
+        label : 'Something 3'
+      }
+    ];
+
     $scope.create = function(isValid) {
       if (isValid) {
         var item = new DataList({
