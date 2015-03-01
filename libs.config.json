@@ -1,11 +1,20 @@
 {
   "core": {
     "css": [
+    	"../lib/ng-table/dist/ng-table.css",
+    	"../lib/bootstrap/dist/css/bootstrap.css",
+    	"../lib/bootstrap/dist/css/bootstrap-theme.css"
     ],
     "js": [
+    	"../lib/highland/dist/highland.js",
+    	"../lib/ng-table/dist/ng-table.js",
+    	"../lib/bootstrap/dist/js/bootstrap.js",
+    	"../lib/angular-bootstrap/ui-bootstrap.js",
+        "../lib/angular-bootstrap/ui-bootstrap-tpls.js"
     ],
     "ng": [
-        
+        "ngTable",
+        "ui.bootstrap"
     ]
   }
 }

@@ -3,7 +3,7 @@
     <div class="form-group" ng-class="{ 'has-error' : submitted && datalistForm.title.$invalid }">
       <label mean-token="'edit-title'" for="title" class="col-md-2 control-label">Title</label>
       <div class="col-md-10">
-        <input name="title" type="text" class="form-control" data-ng-model="datalist.title" id="title" placeholder="Title" required>
+        <input name="title" type="text" class="form-control" data-ng-model="item.title" id="title" placeholder="Title" required>
         <div ng-show="submitted && datalistForm.title.$invalid" class="help-block">
           <p ng-show="datalistForm.title.$error.required">Title is required</p>
         </div>
@@ -13,7 +13,7 @@
     <div class="form-group" ng-class="{ 'has-error' : submitted && datalistForm.content.$invalid }">
       <label mean-token="'edit-content'" for="content" class="col-md-2 control-label">Content</label>
       <div class="col-md-10">
-        <textarea name="content" data-ng-model="datalist.content" id="content" cols="30" rows="10" placeholder="Content" class="form-control" required></textarea>
+        <textarea name="content" data-ng-model="item.content" id="content" cols="30" rows="10" placeholder="Content" class="form-control" required></textarea>
         <div ng-show="submitted && datalistForm.content.$invalid" class="help-block">
           <p ng-show="datalistForm.content.$error.required">Content is required</p>
         </div>

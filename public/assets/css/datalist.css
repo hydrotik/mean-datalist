@@ -1,3 +1,11 @@
 .datalist-example h1 {
   background-color: purple
 }
+
+.ng-table {
+    border: 1px solid #000;
+}
+
+.ng-table .btn{
+	padding : 0 !important;
+}

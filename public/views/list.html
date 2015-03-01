@@ -1,4 +1,5 @@
 <section data-ng-controller="DataListController" data-ng-init="find()">
+  <!--
   <ul class="datalist unstyled">
     <li data-ng-repeat="item in datalist">
       <span>{{item.created | date:'medium'}}</span> /
@@ -17,5 +18,28 @@
       <div>{{item.content}}</div>
     </li>
   </ul>
+-->
+
+  <table ng-table class="table">
+    <tr ng-repeat="item in datalist">
+        <td data-title="'Date'">{{item.date}}</td>
+        <td data-title="'Name'">{{item.title}}</td>
+        <td data-title="'Created'">{{item.created | date:'medium'}}</td>
+        <td data-title="'Edit'" data-ng-if="hasAuthorization(item)">
+          <a class="btn" href="/#!/datalist/{{item._id}}/edit">
+            <i class="glyphicon glyphicon-edit"></i>
+          </a>
+        </td>
+        <td data-title="'Delete'" data-ng-if="hasAuthorization(item)">
+          <a class="btn" data-ng-click="remove(item);">
+            <i class="glyphicon glyphicon-trash"></i>
+          </a>
+        </td>
+    </tr>
+  </table>
+
+
+
+
   <h1 data-ng-hide="!datalist || datalist.length">No datalist yet. <br> Why don't you <a href="/#!/datalist/create">Create One</a>?</h1>
 </section>

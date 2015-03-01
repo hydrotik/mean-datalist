@@ -1,5 +1,11 @@
 {
   "name": "datalist",
   "version": "0.0.1",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "ng-table": "~0.5.4",
+    "highland": "~2.4.0",
+    "bootstrap": "~3.3.2",
+    "angular-bootstrap": "~0.12.1"
+  }
 }

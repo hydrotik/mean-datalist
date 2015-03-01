@@ -12,6 +12,7 @@ angular.module('mean.datalist').controller('DataListController', ['$scope', '$st
       if (isValid) {
         var item = new DataList({
           title: this.title,
+          date: this.date,
           content: this.content
         });
         item.$save(function(response) {
@@ -19,6 +20,7 @@ angular.module('mean.datalist').controller('DataListController', ['$scope', '$st
         });
 
         this.title = '';
+        this.date = '';
         this.content = '';
       } else {
         $scope.submitted = true;
