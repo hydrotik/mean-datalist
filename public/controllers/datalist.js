@@ -8,6 +8,11 @@ angular.module('mean.datalist').controller('DataListController', ['$scope', '$st
       return $scope.global.isAdmin || item.user._id === $scope.global.user._id;
     };
 
+    $scope.title = '';
+    $scope.date = '';
+    $scope.content = '';
+
+
     $scope.fields = [
       {
         id : 'title',
@@ -17,7 +22,7 @@ angular.module('mean.datalist').controller('DataListController', ['$scope', '$st
       {
         id : 'date',
         label : 'Date',
-        type : 'text'
+        type : 'date'
       },
       {
         id : 'content',
@@ -28,22 +33,22 @@ angular.module('mean.datalist').controller('DataListController', ['$scope', '$st
 
     $scope.create = function(isValid) {
       console.warn('$scope.create()');
-      console.log('title: ' + this.title);
-      console.log('date: ' + this.date);
-      console.log('content: ' + this.content);
+      console.log('title: ' + $scope.title);
+      console.log('date: ' + $scope.date);
+      console.log('content: ' + $scope.content);
       if (isValid) {
         var item = new DataList({
-          title: this.title,
-          date: this.date,
-          content: this.content
+          title: $scope.title,
+          date: $scope.date,
+          content: $scope.content
         });
         item.$save(function(response) {
           $location.path('datalist/' + response._id);
         });
 
-        this.title = '';
-        this.date = '';
-        this.content = '';
+        $scope.title = '';
+        $scope.date = '';
+        $scope.content = '';
       } else {
         $scope.submitted = true;
       }
@@ -95,5 +100,6 @@ angular.module('mean.datalist').controller('DataListController', ['$scope', '$st
         $scope.item = item;
       });
     };
+
   }
 ]);
