@@ -8,7 +8,7 @@ angular.module('mean.datalist').controller('DataListController', ['$scope', '$st
       return $scope.global.isAdmin || item.user._id === $scope.global.user._id;
     };
     
-    $scope.fields = DataListModel.getFields();
+    $scope.schema = DataListModel.getFields();
 
 
     DataListModel.clearFieldModels($scope);

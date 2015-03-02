@@ -21,10 +21,20 @@
 -->
 
   <table ng-table class="table">
+    <thead>
+    <tr>
+        <th ng-repeat="field in schema">{{field.label}}</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+
+<tbody>
+
     <tr ng-repeat="item in datalist">
-        <td data-title="'Date'">{{item.date}}</td>
-        <td data-title="'Name'">{{item.title}}</td>
-        <td data-title="'Created'">{{item.created | date:'medium'}}</td>
+
+        <td ng-repeat="field in $parent.schema">{{item[field.id]}}</td>
+
         <td data-title="'Edit'" data-ng-if="hasAuthorization(item)">
           <a class="btn" href="/#!/datalist/{{item._id}}/edit">
             <i class="glyphicon glyphicon-edit"></i>
@@ -36,6 +46,7 @@
           </a>
         </td>
     </tr>
+    </tbody>
   </table>
 
 
