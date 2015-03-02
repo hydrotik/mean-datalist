@@ -8,37 +8,47 @@ angular.module('mean.datalist').controller('DataListController', ['$scope', '$st
       return $scope.global.isAdmin || item.user._id === $scope.global.user._id;
     };
 
-    $scope.something1 = 'Hello Dynamic Directive';
+    $scope.title = '';
+    $scope.date = '';
+    $scope.content = '';
+
 
     $scope.fields = [
       {
-        id : 'something1',
-        label : 'Something 1'
+        id : 'title',
+        label : 'Title',
+        type : 'text'
       },
       {
-        id : 'something2',
-        label : 'Something 2'
+        id : 'date',
+        label : 'Date',
+        type : 'text'
       },
       {
-        id : 'something3',
-        label : 'Something 3'
+        id : 'content',
+        label : 'Content',
+        type : 'textarea'
       }
     ];
 
     $scope.create = function(isValid) {
+      console.warn('$scope.create()');
+      console.log('title: ' + $scope.title);
+      console.log('date: ' + $scope.date);
+      console.log('content: ' + $scope.content);
       if (isValid) {
         var item = new DataList({
-          title: this.title,
-          date: this.date,
-          content: this.content
+          title: $scope.title,
+          date: $scope.date,
+          content: $scope.content
         });
         item.$save(function(response) {
           $location.path('datalist/' + response._id);
         });
 
-        this.title = '';
-        this.date = '';
-        this.content = '';
+        $scope.title = '';
+        $scope.date = '';
+        $scope.content = '';
       } else {
         $scope.submitted = true;
       }
