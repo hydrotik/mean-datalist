@@ -31,7 +31,6 @@ angular.module('mean.datalist').controller('DataListController', ['$scope', '$st
       }
     };
 
-    
 
     $scope.remove = function(item) {
       if (item) {
