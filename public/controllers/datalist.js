@@ -13,11 +13,6 @@ angular.module('mean.datalist').controller('DataListController', ['$scope', '$st
       }
     };
 
-    $scope.title = '';
-    $scope.date = '';
-    $scope.content = '';
-
-
     $scope.fields = [
       {
         id : 'title',
@@ -26,12 +21,22 @@ angular.module('mean.datalist').controller('DataListController', ['$scope', '$st
       },
       {
         id : 'date',
-        label : 'Date',
+        label : 'Start Date',
+        type : 'date'
+      },
+      {
+        id : 'date2',
+        label : 'Launch Date',
         type : 'date'
       },
       {
         id : 'content',
         label : 'Content',
+        type : 'textarea'
+      },
+      {
+        id : 'content2',
+        label : 'Content Again',
         type : 'textarea'
       }
     ];

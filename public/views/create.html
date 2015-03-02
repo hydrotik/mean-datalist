@@ -1,54 +1,8 @@
 <section data-ng-controller="DataListController">
   <form name="datalistForm" class="form-horizontal col-md-6" role="form" data-ng-submit="create(datalistForm.$valid)" novalidate>
 
-<!--
 
-    <div class="form-group" ng-class="{ 'has-error' : submitted && datalistForm.title.$invalid }">
-      <label mean-token="'create-title'" class="col-md-3 control-label">Item Title</label>
-      <div class="col-md-9">
-        <input name="title" type="text" class="form-control" data-ng-model="title" id="title" placeholder="Title" required>
-        <div ng-show="submitted && datalistForm.title.$invalid" class="help-block">
-          <p ng-show="datalistForm.title.$error.required">Title is required</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group" ng-class="{ 'has-error' : submitted && datalistForm.date.$invalid }">
-      <label mean-token="'create-date'" class="col-md-3 control-label">Item Date</label>
-      <div class="col-md-9">
-        <input name="date" type="text" class="form-control" data-ng-model="date" id="date" placeholder="Date" required>
-        <div ng-show="submitted && datalistForm.date.$invalid" class="help-block">
-          <p ng-show="datalistForm.date.$error.required">Date is required</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group" ng-class="{ 'has-error' : submitted && datalistForm.content.$invalid }">
-      <label mean-token="'create-content'" for="content" class="col-md-3 control-label">Item Content</label>
-      <div class="col-md-9">
-        <textarea name="content" data-ng-model="content" id="content" cols="30" rows="10" placeholder="Content" class="form-control" required></textarea>
-        <div ng-show="submitted && datalistForm.content.$invalid" class="help-block">
-          <p ng-show="datalistForm.content.$error.required">Content is required</p>
-        </div>
-      </div>
-    </div>
-
--->
-    
-    <hr/>
-
-      <datalistfield ng-repeat="item in fields" ng-model="item"></datalistfield>
-
-
-    <hr/>
-
-
-
-
-
-
-
-
+    <datalistfield ng-repeat="item in fields" ng-model="item"></datalistfield>
 
 
     <div class="form-group">

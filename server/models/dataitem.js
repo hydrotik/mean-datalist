@@ -34,6 +34,9 @@ var DataItemSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User'
   }
+},
+{
+  strict: false
 });
 
 /**
