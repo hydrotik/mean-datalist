@@ -1,57 +1,22 @@
 'use strict';
 
-angular.module('mean.datalist').controller('DataListController', ['$scope', '$stateParams', '$location', 'Global', 'DataList',
-  function($scope, $stateParams, $location, Global, DataList) {
+angular.module('mean.datalist').controller('DataListController', ['$scope', '$stateParams', '$location', 'Global', 'DataList', 'DataListModel',
+  function($scope, $stateParams, $location, Global, DataList, DataListModel) {
     $scope.global = Global;
     $scope.hasAuthorization = function(item) {
       if (!item || !item.user) return false;
       return $scope.global.isAdmin || item.user._id === $scope.global.user._id;
     };
-    $scope.clearFieldModels = function(){
-      for (var i = 0; i < $scope.fields.length; i+=1) {
-        $scope[$scope.fields[i].id] = '';
-      }
-    };
-
-    $scope.fields = [
-      {
-        id : 'title',
-        label : 'Title',
-        type : 'text'
-      },
-      {
-        id : 'date',
-        label : 'Start Date',
-        type : 'date'
-      },
-      {
-        id : 'date2',
-        label : 'Launch Date',
-        type : 'date'
-      },
-      {
-        id : 'content',
-        label : 'Content',
-        type : 'textarea'
-      },
-      {
-        id : 'content2',
-        label : 'Content Again',
-        type : 'textarea'
-      }
-    ];
+    
+    $scope.fields = DataListModel.getFields();
 
 
-    $scope.clearFieldModels();
+    DataListModel.clearFieldModels($scope);
 
     $scope.create = function(isValid) {
       console.warn('$scope.create()');
-      var data = {};
-      for (var i = 0; i < $scope.fields.length; i+=1) {
-        console.log($scope.fields[i].id + ': ' + $scope[$scope.fields[i].id]);
-        data[$scope.fields[i].id] = $scope[$scope.fields[i].id];
-      }
-
+      
+      var data = DataListModel.getData($scope);
 
 
       if (isValid) {
@@ -60,7 +25,7 @@ angular.module('mean.datalist').controller('DataListController', ['$scope', '$st
           $location.path('datalist/' + response._id);
         });
 
-        $scope.clearFieldModels();
+        DataListModel.clearFieldModels($scope);
       } else {
         $scope.submitted = true;
       }

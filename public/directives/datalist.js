@@ -10,13 +10,10 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
 
         link: function(scope, element, attrs, $parse) {
 
-        	console.warn(scope.item.id + ': ' + scope.item.type);
-
         	scope.dateFormat = 'dd-MMMM-yyyy';
 
             scope.change = function() {
                 scope.$parent.$parent[scope.item.id] = $filter('date')(scope[scope.item.id], scope.dateFormat);
-                console.log(scope.$parent.$parent[scope.item.id]);
             };
 
             scope.today = function() {
@@ -60,29 +57,19 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
 
 					// TextArea Input field - type="textarea"
 
-					//'<p class="input-group" ng-if="item.type == \'date\'">' +
-		              //'<input ng-change="change()" type="text" class="form-control" datepicker-popup="{{$parent.format}}" data-ng-model="$parent[item.id]" is-open="opened" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />' +
-		              //'</p>' +
-
-		              '<input type="text" ' +
-		               'ng-if="item.type == \'date\'" ' +
-		               'ng-change="change()"' + 
-				       'datepicker-popup="{{dateFormat}}" ' +
-				       'ng-model="$parent[item.id]" ' +
-				       'is-open="opened" ' +
-				       'ng-click = "opened = true" ' +
-				       'max-date="maxDate" ' +
-				       'datepicker-options="dateOptions" ' +
-				       'date-disabled="disabled(date, mode)" ' +
-				       'ng-required="true" ' +
-				       'close-text="Close" ' +
-				       'class="form-control" />' +
-
-
-
-		            
-
-
+		            '<input type="text" ' +
+		            'ng-if="item.type == \'date\'" ' +
+		            'ng-change="change()"' + 
+				    'datepicker-popup="{{dateFormat}}" ' +
+				    'ng-model="$parent[item.id]" ' +
+				    'is-open="opened" ' +
+				    'ng-click = "opened = true" ' +
+				    'max-date="maxDate" ' +
+				    'datepicker-options="dateOptions" ' +
+				    'date-disabled="disabled(date, mode)" ' +
+				    'ng-required="true" ' +
+				    'close-text="Close" ' +
+				    'class="form-control" />' +
 
 				'</div>' +
 			'</div>' +
