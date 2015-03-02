@@ -7,6 +7,11 @@ angular.module('mean.datalist').controller('DataListController', ['$scope', '$st
       if (!item || !item.user) return false;
       return $scope.global.isAdmin || item.user._id === $scope.global.user._id;
     };
+    $scope.clearFieldModels = function(){
+      for (var i = 0; i < $scope.fields.length; i+=1) {
+        $scope[$scope.fields[i].id] = '';
+      }
+    };
 
     $scope.title = '';
     $scope.date = '';
@@ -31,28 +36,32 @@ angular.module('mean.datalist').controller('DataListController', ['$scope', '$st
       }
     ];
 
+
+    $scope.clearFieldModels();
+
     $scope.create = function(isValid) {
       console.warn('$scope.create()');
-      console.log('title: ' + $scope.title);
-      console.log('date: ' + $scope.date);
-      console.log('content: ' + $scope.content);
+      var data = {};
+      for (var i = 0; i < $scope.fields.length; i+=1) {
+        console.log($scope.fields[i].id + ': ' + $scope[$scope.fields[i].id]);
+        data[$scope.fields[i].id] = $scope[$scope.fields[i].id];
+      }
+
+
+
       if (isValid) {
-        var item = new DataList({
-          title: $scope.title,
-          date: $scope.date,
-          content: $scope.content
-        });
+        var item = new DataList(data);
         item.$save(function(response) {
           $location.path('datalist/' + response._id);
         });
 
-        $scope.title = '';
-        $scope.date = '';
-        $scope.content = '';
+        $scope.clearFieldModels();
       } else {
         $scope.submitted = true;
       }
     };
+
+    
 
     $scope.remove = function(item) {
       if (item) {
