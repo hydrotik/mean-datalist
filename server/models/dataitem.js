@@ -20,12 +20,22 @@ var DataItemSchema = new Schema({
     required: true,
     trim: true
   },
-  date: {
-    type: String,
+  startdate: {
+    type: Date,
+    required: true,
+    trim: true
+  },
+  launchdate: {
+    type: Date,
     required: true,
     trim: true
   },
   content: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  description: {
     type: String,
     required: true,
     trim: true
@@ -42,6 +52,7 @@ var DataItemSchema = new Schema({
 /**
  * Validations
  */
+ /*
 DataItemSchema.path('title').validate(function(title) {
   return !!title;
 }, 'Title cannot be blank');

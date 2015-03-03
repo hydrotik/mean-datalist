@@ -37,11 +37,13 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
 				console.log(scope[scope.item.id]);
           	}, 100);
         	
-			
-            scope.change = function() {
-                scope.$parent[scope.item.id] = scope[scope.item.id];
-            };
 			*/
+            scope.change = function() {
+                //scope.$parent.item[scope.item.id] = scope.item[scope.item.id];
+                //console.log(scope.$parent.item[scope.field.id]);
+                //console.log(scope.item[scope.field.id]);
+            };
+			
             
 
             if (scope.field.type === 'date'){
@@ -71,7 +73,7 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
 	                formatYear: 'yy',
 	                startingDay: 1
 	            };
-	            scope.today();
+	            //scope.today();
 	            scope.opened = false;  
 	        }
 	        
@@ -82,7 +84,7 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
 				'<div class="col-md-9">' +
 
 					// Standard Input field - type="text"
-					'<input ng-if="field.type == \'text\'" ng-model="item[field.id]" name="{{::field.id}}" type="text" class="form-control" id={{::field.id}}" placeholder="{{::field.label}}" required>' +
+					'<input ng-if="field.type == \'text\'" data-ng-model="item[field.id]" name="{{::field.id}}" type="text" class="form-control" id={{::field.id}}" placeholder="{{::field.label}}" required>' +
 					// TextArea Input field - type="textarea"
 					'<textarea ng-if="field.type == \'textarea\'" data-ng-model="item[field.id]" name="{{::field.id}}" id="{{::field.id}}" cols="30" rows="10" placeholder="{{::field.label}}" class="form-control" required></textarea>' +
 
@@ -90,8 +92,9 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
 
 		            '<input type="text" ' +
 		            'ng-if="field.type == \'date\'" ' +
+		            'ng-change="change()"' + 
 				    'datepicker-popup="{{::dateFormat}}" ' +
-				    'ng-model="item[field.id]" ' +
+				    'data-ng-model="item[field.id]" ' +
 				    'is-open="opened" ' +
 				    'ng-click = "opened = true" ' +
 				    'max-date="maxDate" ' +

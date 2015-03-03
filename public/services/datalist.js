@@ -25,12 +25,12 @@ angular.module('mean.datalist').factory('DataListModel', function() {
         type : 'text'
       },
       {
-        id : 'date',
+        id : 'startdate',
         label : 'Start Date',
         type : 'date'
       },
       {
-        id : 'date2',
+        id : 'launchdate',
         label : 'Launch Date',
         type : 'date'
       },
@@ -40,7 +40,7 @@ angular.module('mean.datalist').factory('DataListModel', function() {
         type : 'textarea'
       },
       {
-        id : 'content2',
+        id : 'description',
         label : 'Content Again',
         type : 'textarea'
       }
@@ -60,7 +60,6 @@ angular.module('mean.datalist').factory('DataListModel', function() {
       for (var i = 0; i < fields.length; i+=1) {
         scope[fields[i].id] = data[fields[i].id];
       }
-      scope.$apply();
     }
 
     function getData(scope){
