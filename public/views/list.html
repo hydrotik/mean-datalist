@@ -33,9 +33,9 @@
     </thead>
 
     <tbody>
-      <tr ng-repeat="item in datalist">
+      <tr ng-repeat="item in items">
 
-          <td ng-repeat="field in $parent.schema">{{item[field.id]}}</td>
+          <td ng-repeat="field in $parent.schema"><a href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a></td>
 
           <td data-ng-if="hasAuthorization(item)">
             <a class="btn" href="/#!/datalist/{{item._id}}/edit">
@@ -53,5 +53,5 @@
 
 
 
-  <h1 data-ng-hide="!datalist || datalist.length">No datalist yet. <br> Why don't you <a href="/#!/datalist/create">Create One</a>?</h1>
+  <h1 data-ng-hide="!items || items.length">No datalist yet. <br> Why don't you <a href="/#!/datalist/create">Create One</a>?</h1>
 </section>

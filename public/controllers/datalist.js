@@ -18,12 +18,20 @@ angular.module('mean.datalist').controller('DataListController', [
     $scope.schema = DataListModel.getFields();
 
 
-    DataListModel.clearFieldModels($scope);
+    $scope.item = {
+      _key : 'empty'
+    };
+
+    DataListModel.clearFieldModels($scope.item);
 
     $scope.create = function(isValid) {
       console.warn('$scope.create()');
+
+      console.warn($scope.item);
       
-      var data = DataListModel.getData($scope);
+      var data = DataListModel.getData($scope.item);
+
+      console.warn(data);
 
 
       if (isValid) {
@@ -32,7 +40,7 @@ angular.module('mean.datalist').controller('DataListController', [
           $location.path('datalist/' + response._id);
         });
 
-        DataListModel.clearFieldModels($scope);
+        DataListModel.clearFieldModels($scope.item);
       } else {
         $scope.submitted = true;
       }
@@ -42,9 +50,9 @@ angular.module('mean.datalist').controller('DataListController', [
     $scope.remove = function(item) {
       if (item) {
         item.$remove(function(response) {
-          for (var i in $scope.datalist) {
-            if ($scope.datalist[i] === item) {
-	      $scope.datalist.splice(i,1);
+          for (var i in $scope.items) {
+            if ($scope.items[i] === item) {
+	      $scope.items.splice(i,1);
             }
           }
           $location.path('datalist');
@@ -73,8 +81,8 @@ angular.module('mean.datalist').controller('DataListController', [
     };
 
     $scope.find = function() {
-      DataList.query(function(datalist) {
-        $scope.datalist = datalist;
+      DataList.query(function(items) {
+        $scope.items = items;
 
 
       });
@@ -85,42 +93,28 @@ angular.module('mean.datalist').controller('DataListController', [
         itemid: $stateParams.itemid
       }, function(item) {
 
+        $scope.item = item;
+
         //$scope.$apply(function () {
-            $scope.item = item;
+            //$scope.dataitem = dataitem;
 
             //DataListModel.setScope($scope, item);
 
 
             
         //});
+          //console.warn($scope.dataitem);
 
-
-          $timeout(function() {
-              for(var i = 0; i < $scope.schema.length; i+=1){
-                console.warn($scope.schema[i].id+': '+item[$scope.schema[i].id]);
-                $scope[$scope.schema[i].id] = item[$scope.schema[i].id];
-              }
-              $scope.$apply();
-          }, 3000);
-
+          /*
         
 
+            for(var i = 0; i < $scope.schema.length; i+=1){
+          $scope[$scope.schema[i].id] = item[$scope.schema[i].id];
+          console.warn($scope.schema[i].id + ': ' + $scope[$scope.schema[i].id]);
+        }
 
+        */
       });
     };
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
   }
 ]);

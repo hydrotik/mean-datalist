@@ -4,28 +4,55 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
     return {
         restrict: 'AE',
 
+        // require option with value ^myTabs. When a directive uses this option,
+        // $compile will throw an error unless the specified controller is found.
+        // The ^ prefix means that this directive searches for the controller on its
+        // parents (without the ^ prefix, the directive would look for the controller
+        // on just its own element)
+        //require: '^DataListController',
+
+        // The transclude option changes the way scopes are nested. It makes it so that
+        // the contents of a transcluded directive have whatever scope is outside the directive,
+        // rather than whatever scope is on the inside. In doing so, it gives the contents access
+        // to the outside scope.
+        transclude: true,
+
         scope: {
-            item: '=ngModel',
-            operation: '@fieldOp'
+        	operation : '@fieldOp',
+        	field : '=ngModel',
+        	item : '=dlModel'
         },
 
         link: function(scope, element, attrs, $parse) {
 
-        	scope.dateFormat = 'dd-MMMM-yyyy';
-
+        	console.warn('directive::');
         	console.log(scope.operation);
-
+        	console.log(scope.item);
+        	console.log(scope.field);
+        	
+        	
+        	/*
+        	$timeout(function() {
+        		scope[scope.item.id] = scope.$parent.$parent[scope.item.id];
+				console.log(scope[scope.item.id]);
+          	}, 100);
+        	
+			
             scope.change = function() {
-                scope.$parent.$parent[scope.item.id] = $filter('date')(scope[scope.item.id], scope.dateFormat);
+                scope.$parent[scope.item.id] = scope[scope.item.id];
             };
+			*/
+            
 
-            scope.today = function() {
-                scope[scope.item.id] = $filter('date')(new Date(), scope.dateFormat);
-                //scope[scope.item.id] = new Date();
-            };
+            if (scope.field.type === 'date'){
 
-            if (scope.item.type === 'date'){
-            	scope.today();
+            	scope.dateFormat = 'dd-MMMM-yyyy';
+            	
+
+            	scope.today = function() {
+	                //scope[scope.item.id] = $filter('date')(new Date(), scope.dateFormat);
+	                scope.item[scope.field.id] = new Date();
+	            };
 
 	            scope.open = function($event) {
 	                $event.preventDefault();
@@ -44,27 +71,27 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
 	                formatYear: 'yy',
 	                startingDay: 1
 	            };
-
+	            scope.today();
 	            scope.opened = false;  
 	        }
+	        
         },
 		
         template: '<div class="form-group">' +
-            '<label mean-token="{{operation}}-{{item.id}}" class="col-md-3 control-label">Item {{item.label}}</label>' +
+            '<label mean-token="{{::operation}}-{{::field.id}}" class="col-md-3 control-label">Item {{::field.label}}</label>' +
 				'<div class="col-md-9">' +
 
 					// Standard Input field - type="text"
-					'<input ng-change="change()" ng-if="item.type == \'text\'" data-ng-model="$parent[item.id]" name="{{item.id}}" type="text" class="form-control" id={{item.id}}" placeholder="{{item.label}}" required>' +
+					'<input ng-if="field.type == \'text\'" ng-model="item[field.id]" name="{{::field.id}}" type="text" class="form-control" id={{::field.id}}" placeholder="{{::field.label}}" required>' +
 					// TextArea Input field - type="textarea"
-					'<textarea ng-change="change()" ng-if="item.type == \'textarea\'" data-ng-model="$parent[item.id]" name="{{item.id}}" id="{{item.id}}" cols="30" rows="10" placeholder="{{item.label}}" class="form-control" required></textarea>' +
+					'<textarea ng-if="field.type == \'textarea\'" data-ng-model="item[field.id]" name="{{::field.id}}" id="{{::field.id}}" cols="30" rows="10" placeholder="{{::field.label}}" class="form-control" required></textarea>' +
 
 					// TextArea Input field - type="textarea"
 
 		            '<input type="text" ' +
-		            'ng-if="item.type == \'date\'" ' +
-		            'ng-change="change()"' + 
-				    'datepicker-popup="{{dateFormat}}" ' +
-				    'ng-model="$parent[item.id]" ' +
+		            'ng-if="field.type == \'date\'" ' +
+				    'datepicker-popup="{{::dateFormat}}" ' +
+				    'ng-model="item[field.id]" ' +
 				    'is-open="opened" ' +
 				    'ng-click = "opened = true" ' +
 				    'max-date="maxDate" ' +

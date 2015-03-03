@@ -2,7 +2,7 @@
   <form name="datalistForm" class="form-horizontal col-md-6" role="form" data-ng-submit="create(datalistForm.$valid)" novalidate>
 
 
-    <datalistfield ng-repeat="item in schema" ng-model="item" field-op="create"></datalistfield>
+    <datalistfield ng-repeat="field in schema" ng-model="field" dl-model="item" field-op="edit"></datalistfield>
 
 
     <div class="form-group">
