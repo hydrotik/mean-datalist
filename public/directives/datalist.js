@@ -9,7 +9,7 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
         // The ^ prefix means that this directive searches for the controller on its
         // parents (without the ^ prefix, the directive would look for the controller
         // on just its own element)
-        //require: '^DataListController',
+        // require: '^DataListController',
 
         // The transclude option changes the way scopes are nested. It makes it so that
         // the contents of a transcluded directive have whatever scope is outside the directive,
