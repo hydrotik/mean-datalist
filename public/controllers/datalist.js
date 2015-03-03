@@ -1,6 +1,12 @@
 'use strict';
 
-angular.module('mean.datalist').controller('DataListController', ['$scope', '$stateParams', '$location', 'Global', 'DataList', 'DataListModel',
+angular.module('mean.datalist').controller('DataListController', [
+    '$scope',
+    '$stateParams',
+    '$location',
+    'Global',
+    'DataList',
+    'DataListModel',
   function($scope, $stateParams, $location, Global, DataList, DataListModel) {
     $scope.global = Global;
     $scope.hasAuthorization = function(item) {
@@ -68,6 +74,8 @@ angular.module('mean.datalist').controller('DataListController', ['$scope', '$st
     $scope.find = function() {
       DataList.query(function(datalist) {
         $scope.datalist = datalist;
+
+
       });
     };
 
@@ -78,6 +86,19 @@ angular.module('mean.datalist').controller('DataListController', ['$scope', '$st
         $scope.item = item;
       });
     };
+
+
+
+
+
+
+
+
+
+    
+
+
+
 
   }
 ]);

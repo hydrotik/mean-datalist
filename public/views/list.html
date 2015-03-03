@@ -25,33 +25,31 @@
 
   <table ng-table class="table">
     <thead>
-    <tr>
-        <th ng-repeat="field in schema">{{field.label}}</th>
-        <th>Edit</th>
-        <th>Delete</th>
-    </tr>
+      <tr>
+          <th ng-repeat="field in schema">{{field.label}}</th>
+          <th>Edit</th>
+          <th>Delete</th>
+      </tr>
     </thead>
 
-<tbody>
+    <tbody>
+      <tr ng-repeat="item in datalist">
 
-    <tr ng-repeat="item in datalist">
+          <td ng-repeat="field in $parent.schema">{{item[field.id]}}</td>
 
-        <td ng-repeat="field in $parent.schema">{{item[field.id]}}</td>
-
-        <td data-title="'Edit'" data-ng-if="hasAuthorization(item)">
-          <a class="btn" href="/#!/datalist/{{item._id}}/edit">
-            <i class="glyphicon glyphicon-edit"></i>
-          </a>
-        </td>
-        <td data-title="'Delete'" data-ng-if="hasAuthorization(item)">
-          <a class="btn" data-ng-click="remove(item);">
-            <i class="glyphicon glyphicon-trash"></i>
-          </a>
-        </td>
-    </tr>
+          <td data-ng-if="hasAuthorization(item)">
+            <a class="btn" href="/#!/datalist/{{item._id}}/edit">
+              <i class="glyphicon glyphicon-edit"></i>
+            </a>
+          </td>
+          <td data-ng-if="hasAuthorization(item)">
+            <a class="btn" data-ng-click="remove(item);">
+              <i class="glyphicon glyphicon-trash"></i>
+            </a>
+          </td>
+      </tr>
     </tbody>
   </table>
-
 
 
 
