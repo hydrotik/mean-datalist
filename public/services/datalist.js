@@ -56,6 +56,13 @@ angular.module('mean.datalist').factory('DataListModel', function() {
       }
     }
 
+    function setScope(scope, data){
+      for (var i = 0; i < fields.length; i+=1) {
+        scope[fields[i].id] = data[fields[i].id];
+      }
+      scope.$apply();
+    }
+
     function getData(scope){
     	var data = {};
       for (var i = 0; i < fields.length; i+=1) {
@@ -121,6 +128,7 @@ angular.module('mean.datalist').factory('DataListModel', function() {
     return {
         getFields : getFields,
         clearFieldModels : clearFieldModels,
-        getData : getData
+        getData : getData,
+        setScope : setScope
     };
 });

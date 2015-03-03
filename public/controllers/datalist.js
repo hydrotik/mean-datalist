@@ -4,10 +4,11 @@ angular.module('mean.datalist').controller('DataListController', [
     '$scope',
     '$stateParams',
     '$location',
+    '$timeout',
     'Global',
     'DataList',
     'DataListModel',
-  function($scope, $stateParams, $location, Global, DataList, DataListModel) {
+  function($scope, $stateParams, $location, $timeout, Global, DataList, DataListModel) {
     $scope.global = Global;
     $scope.hasAuthorization = function(item) {
       if (!item || !item.user) return false;
@@ -83,7 +84,28 @@ angular.module('mean.datalist').controller('DataListController', [
       DataList.get({
         itemid: $stateParams.itemid
       }, function(item) {
-        $scope.item = item;
+
+        //$scope.$apply(function () {
+            $scope.item = item;
+
+            //DataListModel.setScope($scope, item);
+
+
+            
+        //});
+
+
+          $timeout(function() {
+              for(var i = 0; i < $scope.schema.length; i+=1){
+                console.warn($scope.schema[i].id+': '+item[$scope.schema[i].id]);
+                $scope[$scope.schema[i].id] = item[$scope.schema[i].id];
+              }
+              $scope.$apply();
+          }, 3000);
+
+        
+
+
       });
     };
 

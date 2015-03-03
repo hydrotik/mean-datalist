@@ -5,12 +5,15 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
         restrict: 'AE',
 
         scope: {
-            item: '=ngModel'
+            item: '=ngModel',
+            operation: '@fieldOp'
         },
 
         link: function(scope, element, attrs, $parse) {
 
         	scope.dateFormat = 'dd-MMMM-yyyy';
+
+        	console.log(scope.operation);
 
             scope.change = function() {
                 scope.$parent.$parent[scope.item.id] = $filter('date')(scope[scope.item.id], scope.dateFormat);
@@ -47,7 +50,7 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
         },
 		
         template: '<div class="form-group">' +
-            '<label mean-token="create-{{item.id}}" class="col-md-3 control-label">Item {{item.label}}</label>' +
+            '<label mean-token="{{operation}}-{{item.id}}" class="col-md-3 control-label">Item {{item.label}}</label>' +
 				'<div class="col-md-9">' +
 
 					// Standard Input field - type="text"
