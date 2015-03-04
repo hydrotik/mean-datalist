@@ -99,6 +99,16 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
 				    'close-text="Close" ' +
 				    'class="form-control" />' +
 
+
+
+				    '<input type="radio" ' +
+				    'ng-repeat="radio in field.children" ' + 
+				    'name="{{::field.id}}" ' +
+				    'id="{{::field.id}}" ' +
+				    'ng-if="field.type == \'radio\'" ' +
+				    'data-ng-model="item[field.id]" '+
+				    'value="{{radio.value}}" /> {{radio.label}}' +
+
 				'</div>' +
 			'</div>' +
         '</div>'

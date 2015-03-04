@@ -48,6 +48,21 @@ angular.module('mean.datalist').factory('DataListModel', function() {
         id : 'superhero',
         label : 'Superhero',
         type : 'text'
+      },
+      {
+        id : 'gender',
+        label : 'Gender',
+        type : 'radio',
+        children : [
+          {
+            label : 'Male',
+            value : 'male'
+          },
+          {
+            label : 'Female',
+            value : 'female'
+          }
+        ]
       }
     ];
 
