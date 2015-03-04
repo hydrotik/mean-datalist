@@ -35,7 +35,9 @@
     <tbody>
       <tr ng-repeat="item in items">
 
-          <td ng-repeat="field in $parent.schema"><a href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a></td>
+          <td ng-repeat="field in $parent.schema">
+            <a href="/#!/datalist/{{item._id}}">{{item[field.id] | date:'dd-MMMM-yyyy'}}</a>
+          </td>
 
           <td data-ng-if="hasAuthorization(item)">
             <a class="btn" href="/#!/datalist/{{item._id}}/edit">
