@@ -5,12 +5,8 @@
  */
 var mongoose = require('mongoose'),
   DataItem = mongoose.model('DataItem'),
-  _ = require('lodash'),
-  DataItemSchemaTree = DataItem.schema.tree;
+  _ = require('lodash');
 
-
-
-console.log(DataItemSchemaTree);
 /**
  * Find item by id
  */
@@ -27,7 +23,7 @@ exports.item = function(req, res, next, id) {
  * Create an item
  */
 exports.create = function(req, res) {
-  var item = new DataItem(req.body);
+  var item = new DataItem(req.body, false);
   item.user = req.user;
 
   item.save(function(err) {
@@ -41,13 +37,19 @@ exports.create = function(req, res) {
   });
 };
 
+
+
 /**
  * Update an item
  */
 exports.update = function(req, res) {
   var item = req.item;
-
+  // Doesn't really work when items are not in the schema!
   item = _.extend(item, req.body);
+  // Need this for schemaless keys not in the model
+  for (var key in req.body){
+    if(!DataItem.schema.tree.hasOwnProperty(key)) item.set(key, req.body[key]);
+  }
 
   item.save(function(err) {
     if (err) {
@@ -81,11 +83,13 @@ exports.destroy = function(req, res) {
  * Show an item
  */
 exports.show = function(req, res) {
+  /*
   var obj = {
     item : req.item,
     tree : DataItemSchemaTree
   };
-  res.json(obj);
+  */
+  res.json(req.item);
 };
 
 /**
@@ -98,12 +102,13 @@ exports.all = function(req, res) {
         error: 'Cannot list the items'
       });
     }
-    
+    /*
     var obj = {
       items : items,
       tree : DataItemSchemaTree
     };
-    res.json(obj);
+    */
+    res.json(items);
 
   });
 };

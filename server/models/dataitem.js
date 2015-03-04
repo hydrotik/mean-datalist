@@ -19,6 +19,8 @@ var DataItemSchema = new Schema({
     type: Date,
     default: Date.now
   },
+
+  /*
   
   title: {
     type: String,
@@ -60,14 +62,18 @@ var DataItemSchema = new Schema({
     fieldlabel : 'Description',
     fieldtype : 'textarea'
   },
-  superhere: {
+
+  superhero: {
     type: String,
     required: true,
     trim: true,
     fieldenabled : true,
-    fieldlabel : 'Super Hero',
+    fieldlabel : 'Superhero',
     fieldtype : 'text'
   },
+  
+  */
+  
   updated : [],
   
   user: {

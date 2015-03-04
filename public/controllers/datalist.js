@@ -15,7 +15,7 @@ angular.module('mean.datalist').controller('DataListController', [
       return $scope.global.isAdmin || item.user._id === $scope.global.user._id;
     };
     
-    
+    $scope.schema = DataListModel.getFields();
 
 
     $scope.item = {
@@ -25,14 +25,7 @@ angular.module('mean.datalist').controller('DataListController', [
     DataListModel.clearFieldModels($scope.item);
 
     $scope.create = function(isValid) {
-      console.warn('$scope.create()');
-
-      console.warn($scope.item);
-      
       var data = DataListModel.getData($scope.item);
-
-      console.warn(data);
-
 
       if (isValid) {
         var item = new DataList(data);
@@ -67,7 +60,6 @@ angular.module('mean.datalist').controller('DataListController', [
     $scope.update = function(isValid) {
       if (isValid) {
         var item = $scope.item;
-        console.log(item);
         if(!item.updated) {
           item.updated = [];
 	}
@@ -82,19 +74,16 @@ angular.module('mean.datalist').controller('DataListController', [
     };
 
     $scope.find = function() {
-      DataList.query(function(obj) {
-        $scope.schema = DataListModel.parseTree(obj.tree);
-        $scope.items = obj.items;
+      DataList.query(function(items) {
+        $scope.items = items;
       });
     };
 
     $scope.findOne = function() {
       DataList.get({
         itemid: $stateParams.itemid
-      }, function(obj) {
-        $scope.schema = DataListModel.parseTree(obj.tree);
-        $scope.item = obj.item;
-        console.log(obj);
+      }, function(item) {
+        $scope.item = item;
       });
     };
   }
