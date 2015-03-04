@@ -23,28 +23,52 @@ var DataItemSchema = new Schema({
   title: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
+    fieldenabled : true,
+    fieldlabel : 'Title',
+    fieldtype : 'text'
   },
   startdate: {
     type: Date,
     required: true,
-    trim: true
+    trim: true,
+    fieldenabled : true,
+    fieldlabel : 'Start Date',
+    fieldtype : 'date'
   },
   launchdate: {
     type: Date,
     required: true,
-    trim: true
+    trim: true,
+    fieldenabled : true,
+    fieldlabel : 'Launch Date',
+    fieldtype : 'date'
   },
   content: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
+    fieldenabled : true,
+    fieldlabel : 'Content',
+    fieldtype : 'textarea'
   },
   description: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
+    fieldenabled : true,
+    fieldlabel : 'Description',
+    fieldtype : 'textarea'
   },
+  superhere: {
+    type: String,
+    required: true,
+    trim: true,
+    fieldenabled : true,
+    fieldlabel : 'Super Hero',
+    fieldtype : 'text'
+  },
+  updated : [],
   
   user: {
     type: Schema.ObjectId,

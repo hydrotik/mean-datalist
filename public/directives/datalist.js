@@ -24,11 +24,6 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
         },
 
         link: function(scope, element, attrs, $parse) {
-
-        	console.warn('directive::');
-        	console.log(scope.operation);
-        	console.log(scope.item);
-        	console.log(scope.field);
         	
         	
         	/*

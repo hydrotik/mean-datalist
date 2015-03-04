@@ -15,7 +15,7 @@ angular.module('mean.datalist').controller('DataListController', [
       return $scope.global.isAdmin || item.user._id === $scope.global.user._id;
     };
     
-    $scope.schema = DataListModel.getFields();
+    
 
 
     $scope.item = {
@@ -67,6 +67,7 @@ angular.module('mean.datalist').controller('DataListController', [
     $scope.update = function(isValid) {
       if (isValid) {
         var item = $scope.item;
+        console.log(item);
         if(!item.updated) {
           item.updated = [];
 	}
@@ -81,39 +82,19 @@ angular.module('mean.datalist').controller('DataListController', [
     };
 
     $scope.find = function() {
-      DataList.query(function(items) {
-        $scope.items = items;
-
-
+      DataList.query(function(obj) {
+        $scope.schema = DataListModel.parseTree(obj.tree);
+        $scope.items = obj.items;
       });
     };
 
     $scope.findOne = function() {
       DataList.get({
         itemid: $stateParams.itemid
-      }, function(item) {
-
-        $scope.item = item;
-
-        //$scope.$apply(function () {
-            //$scope.dataitem = dataitem;
-
-            //DataListModel.setScope($scope, item);
-
-
-            
-        //});
-          //console.warn($scope.dataitem);
-
-          /*
-        
-
-            for(var i = 0; i < $scope.schema.length; i+=1){
-          $scope[$scope.schema[i].id] = item[$scope.schema[i].id];
-          console.warn($scope.schema[i].id + ': ' + $scope[$scope.schema[i].id]);
-        }
-
-        */
+      }, function(obj) {
+        $scope.schema = DataListModel.parseTree(obj.tree);
+        $scope.item = obj.item;
+        console.log(obj);
       });
     };
   }

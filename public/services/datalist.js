@@ -8,6 +8,10 @@ angular.module('mean.datalist').factory('DataList', ['$resource',
     }, {
       update: {
         method: 'PUT'
+      },
+      query:{
+        method : 'GET',
+        isArray: false
       }
     });
   }
@@ -18,42 +22,32 @@ angular.module('mean.datalist').factory('DataList', ['$resource',
 
 angular.module('mean.datalist').factory('DataListModel', function() {
 
-	var fields = [
-      {
-        id : 'title',
-        label : 'Title',
-        type : 'text'
-      },
-      {
-        id : 'startdate',
-        label : 'Start Date',
-        type : 'date'
-      },
-      {
-        id : 'launchdate',
-        label : 'Launch Date',
-        type : 'date'
-      },
-      {
-        id : 'content',
-        label : 'Content',
-        type : 'textarea'
-      },
-      {
-        id : 'description',
-        label : 'Content Again',
-        type : 'textarea'
-      }
-    ];
 
-    function getFields() {
-    	return fields;
-    }
+    var fields = [];
+
 
     function clearFieldModels(scope){
       for (var i = 0; i < fields.length; i+=1) {
         scope[fields[i].id] = '';
       }
+    }
+
+    function parseTree(tree){
+
+      fields = [];
+
+      for (var key in tree) {
+        if(tree[key].fieldenabled){
+          fields.push({
+            id : key,
+            label : tree[key].fieldlabel,
+            type : tree[key].fieldtype,
+            required : tree[key].required
+          });
+        }
+      }
+
+      return fields;
     }
 
     function setScope(scope, data){
@@ -125,7 +119,7 @@ angular.module('mean.datalist').factory('DataListModel', function() {
 	
     // expose a public API
     return {
-        getFields : getFields,
+        parseTree : parseTree,
         clearFieldModels : clearFieldModels,
         getData : getData,
         setScope : setScope

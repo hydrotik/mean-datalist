@@ -5,9 +5,12 @@
  */
 var mongoose = require('mongoose'),
   DataItem = mongoose.model('DataItem'),
-  _ = require('lodash');
+  _ = require('lodash'),
+  DataItemSchemaTree = DataItem.schema.tree;
 
 
+
+console.log(DataItemSchemaTree);
 /**
  * Find item by id
  */
@@ -78,7 +81,11 @@ exports.destroy = function(req, res) {
  * Show an item
  */
 exports.show = function(req, res) {
-  res.json(req.item);
+  var obj = {
+    item : req.item,
+    tree : DataItemSchemaTree
+  };
+  res.json(obj);
 };
 
 /**
@@ -91,7 +98,13 @@ exports.all = function(req, res) {
         error: 'Cannot list the items'
       });
     }
-    res.json(items);
+    
+    var obj = {
+      items : items,
+      tree : DataItemSchemaTree
+    };
+    res.json(obj);
 
   });
 };
+
