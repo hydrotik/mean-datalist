@@ -7,6 +7,10 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 
+// https://www.npmjs.com/package/angoose
+
+
+
 /**
  * DataItem Schema
  */
@@ -15,6 +19,7 @@ var DataItemSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  
   title: {
     type: String,
     required: true,
@@ -40,6 +45,7 @@ var DataItemSchema = new Schema({
     required: true,
     trim: true
   },
+  
   user: {
     type: Schema.ObjectId,
     ref: 'User'
