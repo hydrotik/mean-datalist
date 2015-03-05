@@ -23,7 +23,7 @@
 
 
 
-  <table ng-table class="table">
+  <table ng-table class="table" data-ng-hide="!items || items.length === 0">
     <thead>
       <tr>
           <th ng-repeat="field in schema">{{field.label}}</th>
@@ -36,7 +36,8 @@
       <tr ng-repeat="item in items">
 
           <td ng-repeat="field in $parent.schema">
-            <a href="/#!/datalist/{{item._id}}">{{item[field.id] | date:'dd-MMMM-yyyy'}}</a>
+            <a ng-if="isDate(item[field.id])" href="/#!/datalist/{{item._id}}">{{item[field.id] | date:'dd-MMMM-yyyy'}}</a>
+            <a ng-if="!isDate(item[field.id])" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>
           </td>
 
           <td data-ng-if="hasAuthorization(item)">

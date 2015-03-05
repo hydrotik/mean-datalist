@@ -31,9 +31,14 @@ angular.module('mean.datalist').controller('DataListController', [
               var item = new DataList(data);
               item.$save(function(response) {
                   $location.path('datalist/' + response._id);
+                  
               });
 
-              DataListModel.clearFieldModels($scope.item);
+              $timeout(function() {
+                    DataListModel.clearFieldModels($scope.item);
+                  }, 100);
+
+              
           } else {
               $scope.submitted = true;
           }
