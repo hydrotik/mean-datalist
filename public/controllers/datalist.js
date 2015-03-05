@@ -24,6 +24,13 @@ angular.module('mean.datalist').controller('DataListController', [
 
       DataListModel.clearFieldModels($scope.item);
 
+      $scope.isDate = function(date){
+        //TODO Clean this up!
+        if(!isNaN(parseFloat(date)) && isFinite(date)) return false;
+        var d = new Date(date);
+        return Object.prototype.toString.call(d) === '[object Date]' ? true : angular.isDate(d);
+      };
+
       $scope.create = function(isValid) {
           var data = DataListModel.getData($scope.item);
 
