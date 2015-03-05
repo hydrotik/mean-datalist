@@ -47,8 +47,8 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
             	
 
             	scope.today = function() {
-	                //scope[scope.item.id] = $filter('date')(new Date(), scope.dateFormat);
-	                scope.item[scope.field.id] = new Date();
+	                scope.item[scope.field.id] = $filter('date')(new Date(), scope.dateFormat);
+	                //scope.item[scope.field.id] = new Date();
 	            };
 
 	            scope.open = function($event) {
@@ -68,7 +68,7 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
 	                formatYear: 'yy',
 	                startingDay: 1
 	            };
-	            //scope.today();
+	            scope.today();
 	            scope.opened = false;  
 	        }
 	        
