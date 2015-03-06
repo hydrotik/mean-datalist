@@ -71,6 +71,7 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
 	            scope.today();
 	            scope.opened = false;  
 	        }
+
 	        
         },
 		
@@ -101,12 +102,23 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
 
 
 				    '<span ng-if="field.type == \'radio\'" ng-repeat="radio in field.children"> ' + 
-				    '<input type="radio" ' +
-				    'name="{{::field.id}}" ' +
-				    'id="{{::field.id}}" ' +
-				    'data-ng-model="item[field.id]" '+
-				    'value="{{radio.value}}" /> {{radio.label}}&nbsp;&nbsp;&nbsp;' +
+					    '<input type="radio" ' +
+					    'name="{{::field.id}}" ' +
+					    'id="{{::field.id}}" ' +
+					    'data-ng-model="item[field.id]" '+
+					    'value="{{radio.value}}" /> {{radio.label}}&nbsp;&nbsp;&nbsp;' +
 				    '</span> ' + 
+
+
+				    '<span ng-if="field.type == \'checkbox\'">' + 
+				    
+				    '<input type="checkbox" ' + 
+			       	'data-ng-model="item[field.id]" ' +
+			       	'ng-init="item[field.id]=field.selected" ' + 
+			       	'ng-checked="field.selected" ' +
+			       	'name="{{::field.id}}" ' +
+					'id="{{::field.id}}" /> {{field.options[item[field.id]]}}</span>' + 
+
 				'</div>' +
 			'</div>' +
         '</div>'

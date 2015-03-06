@@ -25,11 +25,6 @@ angular.module('mean.datalist').factory('DataListModel', function() {
         type : 'text'
       },
       {
-        id : 'startdate',
-        label : 'Start Date',
-        type : 'date'
-      },
-      {
         id : 'launchdate',
         label : 'Launch Date',
         type : 'date'
@@ -38,16 +33,6 @@ angular.module('mean.datalist').factory('DataListModel', function() {
         id : 'content',
         label : 'Content',
         type : 'textarea'
-      },
-      {
-        id : 'description',
-        label : 'Content Again',
-        type : 'textarea'
-      },
-      {
-        id : 'superhero',
-        label : 'Superhero',
-        type : 'text'
       },
       {
         id : 'gender',
@@ -63,6 +48,16 @@ angular.module('mean.datalist').factory('DataListModel', function() {
             value : 'female'
           }
         ]
+      },
+      {
+        id : 'subscribe',
+        label : 'Subscribe',
+        type : 'checkbox',
+        options : {
+            'true' : 'Yes',
+            'false' : 'No'
+        },
+        selected : true
       }
     ];
 
