@@ -13,6 +13,7 @@
   "dependencies": {},
   "license": "MIT",
   "devDependencies": {
+    "connect-multiparty": "^1.2.5",
     "forerunnerdb": "^1.3.4",
     "highland": "^2.4.0"
   }

@@ -1,5 +1,25 @@
 'use strict';
 
+
+angular.module('app', ['flow']).config(['flowFactoryProvider', function (flowFactoryProvider) {
+  flowFactoryProvider.defaults = {
+    target: '/upload',
+    permanentErrors: [404, 500, 501],
+    maxChunkRetries: 1,
+    chunkRetryInterval: 5000,
+    simultaneousUploads: 4,
+    singleFile: true,
+    testChunks : false
+  };
+  flowFactoryProvider.on('catchAll', function (event) {
+    console.log('catchAll', arguments);
+  });
+  // Can be used with different implementations of Flow.js
+  // flowFactoryProvider.factory = fustyFlowFactory;
+}]);
+
+
+
 angular.module('mean.datalist').controller('DataListController', [
     '$scope',
     '$stateParams',

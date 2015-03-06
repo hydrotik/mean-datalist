@@ -85,7 +85,6 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
 					'<textarea ng-if="field.type == \'textarea\'" data-ng-model="item[field.id]" name="{{::field.id}}" id="{{::field.id}}" cols="30" rows="10" placeholder="{{::field.label}}" class="form-control" required></textarea>' +
 
 					// TextArea Input field - type="textarea"
-
 		            '<input type="text" ' +
 		            'ng-if="field.type == \'date\'" ' +
 		            'ng-change="change()"' + 
@@ -100,7 +99,7 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
 				    'close-text="Close" ' +
 				    'class="form-control" />' +
 
-
+				    // Radio Button Group type="radio"
 				    '<span ng-if="field.type == \'radio\'" ng-repeat="radio in field.children"> ' + 
 					    '<input type="radio" ' +
 					    'name="{{::field.id}}" ' +
@@ -109,15 +108,35 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
 					    'value="{{radio.value}}" /> {{radio.label}}&nbsp;&nbsp;&nbsp;' +
 				    '</span> ' + 
 
-
+				    // Checkbox type="checkbox"
 				    '<span ng-if="field.type == \'checkbox\'">' + 
-				    
 				    '<input type="checkbox" ' + 
 			       	'data-ng-model="item[field.id]" ' +
 			       	'ng-init="item[field.id]=field.selected" ' + 
 			       	'ng-checked="field.selected" ' +
 			       	'name="{{::field.id}}" ' +
 					'id="{{::field.id}}" /> {{field.options[item[field.id]]}}</span>' + 
+
+					// Image Upload type="image"
+					
+					'<div flow-init="{target: \'http://127.0.0.1:3000/upload\'}" ' + 
+					'ng-if="field.type == \'image\'" ' +
+				    'flow-files-submitted="$flow.upload()" ' + 
+				    'flow-file-success="$file.msg = $message"> ' + 
+
+					  	'<input type="file" flow-btn/> ' + 
+					  		'Input OR Other element as upload button' + 
+					  	'<span class="btn" flow-btn>Upload File</span> ' + 
+
+					  	'<table> ' + 
+					    	'<tr ng-repeat="file in $flow.files"> ' + 
+					        	'<td>{{$index+1}}</td> ' + 
+					        	'<td>{{file.name}}</td> ' + 
+					        	'<td>{{file.msg}}</td> ' + 
+					    	'</tr> ' + 
+					  	'</table> ' + 
+					'</div>' + 
+					
 
 				'</div>' +
 			'</div>' +
