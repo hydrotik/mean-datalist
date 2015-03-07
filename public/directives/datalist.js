@@ -23,7 +23,7 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
         	item : '=dlModel'
         },
 
-        link: function(scope, element, attrs, $parse) {
+        link: function(scope, element, attrs, $parse, $flow) {
         	
         	
         	/*
@@ -118,11 +118,22 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
 					'id="{{::field.id}}" /> {{field.options[item[field.id]]}}</span>' + 
 
 					// Image Upload type="image"
+
+					// http://stackoverflow.com/questions/24968194/ng-flow-issuing-a-get-but-not-a-post
+					// http://stackoverflow.com/questions/23449065/reassemble-binary-after-flow-js-upload-on-node-express-server
+					// https://raw.githubusercontent.com/raam86/secret-octo-ly/master/hacked
+					// https://github.com/flowjs/flow.js/blob/master/samples/Node.js/app.js#L1
+
+					// https://github.com/flowjs/ng-flow/issues/62
 					
-					'<div flow-init="{target: \'http://127.0.0.1:3000/api/upload\'}" ' + 
-					'ng-if="field.type == \'image\'" ' +
-				    'flow-files-submitted="$flow.upload()" ' + 
-				    'flow-file-success="$file.msg = $message"> ' + 
+				    '<div flow-init="{target: \'/api/upload\', testChunks : false, permanentErrors: [415, 500, 501]}" flow-prevent-drop ' + 
+                     'flow-drag-enter="style={border: \'5px solid green\'}" ' + 
+                     'flow-drag-leave="style={}" ' + 
+                     'ng-style="style" ' + 
+
+                     'flow-files-submitted="$flow.upload()" ' + 
+                     'flow-file-success="$file.msg = $message" ' +
+                     'ng-if="field.type == \'image\'">' + 
 
 					  	'<input type="file" flow-btn/> ' + 
 					  		'Input OR Other element as upload button' + 

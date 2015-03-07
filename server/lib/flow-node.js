@@ -18,6 +18,7 @@ module.exports = flow = function(temporaryFolder) {
     } catch (e) {}
 
     function cleanIdentifier(identifier) {
+        //console.log('cleanIdentifier() : ' + identifier);
         return identifier.replace(/[^0-9A-Za-z_-]/g, '');
     }
 
@@ -30,9 +31,11 @@ module.exports = flow = function(temporaryFolder) {
 
     function validateRequest(chunkNumber, chunkSize, totalSize, identifier, filename, fileSize) {
         // Clean up the identifier
-        console.log(identifier);
+        //console.log(' ');
+        //console.log('b: ' + identifier);
         identifier = cleanIdentifier(identifier);
-        console.log(identifier);
+        //console.log('a: ' + identifier);
+        //console.log(' ');
 
         // Check if the request is sane
         if (chunkNumber == 0 || chunkSize == 0 || totalSize == 0 || identifier.length == 0 || filename.length == 0) {
@@ -70,7 +73,7 @@ module.exports = flow = function(temporaryFolder) {
     //'not_found', null, null, null
     $.get = function(req, callback) {
 
-        console.log(req.query);
+        //console.log(req.query);
 
 
         var chunkNumber = parseInt(req.query.flowChunkNumber);
@@ -113,12 +116,18 @@ module.exports = flow = function(temporaryFolder) {
     //'non_flow_request', null, null, null
     $.post = function(req, callback) {
 
+
+        console.log(req.body);
+
         var fields = req.body;
         var files = req.files;
 
         var chunkNumber = fields['flowChunkNumber'];
         var chunkSize = fields['flowChunkSize'];
         var totalSize = fields['flowTotalSize'];
+        console.log(' ');
+        console.log('fields["flowIdentifier"] : ' + fields['flowIdentifier']);
+        console.log(' ');
         var identifier = cleanIdentifier(fields['flowIdentifier']);
         var filename = fields['flowFilename'];
 

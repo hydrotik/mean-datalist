@@ -41,7 +41,7 @@ module.exports = function(Articles, app, auth) {
           console.log('POST', status, original_filename, identifier);
           res.send(200);
           if (status === 'done' && currentTestChunk > numberOfChunks) {
-              var stream = fs.createWriteStream('./packages/custom/datalist/public/c' + filename);
+              var stream = fs.createWriteStream('./public/upload/' + filename);
               //EDIT: I removed options {end: true} because it isn't needed
               //and added {onDone: flow.clean} to remove the chunks after writing
               //the file.
@@ -50,6 +50,8 @@ module.exports = function(Articles, app, auth) {
       });
 
   });
+
+
 
 // Handle cross-domain requests
 // NOTE: Uncomment this funciton to enable cross-domain request.
