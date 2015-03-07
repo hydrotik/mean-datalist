@@ -1,10 +1,10 @@
 'use strict';
 
 var datalist = require('../controllers/datalist');
-var flow = require('../lib/flow-node.js')('./packages/custom/datalist/public/tmp/');
+//var flow = require('../lib/flow-node.js')('./packages/custom/datalist/public/tmp/');
 //var multipart = require('connect-multiparty');
 //var multipartMiddleware = multipart();
-var fs = require('fs');
+//var fs = require('fs');
 //var multer  = require('multer');
 
 
@@ -35,7 +35,7 @@ module.exports = function(Articles, app, auth) {
 
 
 
-
+/*
   app.post('/api/upload', function(req, res){
     flow.post(req, function(status, filename, original_filename, identifier, currentTestChunk, numberOfChunks) {
           console.log('POST', status, original_filename, identifier);
@@ -50,7 +50,7 @@ module.exports = function(Articles, app, auth) {
       });
 
   });
-
+*/
 
 
 // Handle cross-domain requests
@@ -64,6 +64,8 @@ module.exports = function(Articles, app, auth) {
   });
 */
 
+
+/*
 // Handle status checks on chunks through Flow.js
 app.get('/api/upload', function(req, res){
   flow.get(req, function(status, filename, original_filename, identifier){
@@ -72,7 +74,7 @@ app.get('/api/upload', function(req, res){
     res.status(200).sendStatus((status === 'found' ? 200 : 404));
   });
 });
-
+*/
 
 
 

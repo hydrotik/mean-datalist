@@ -11,13 +11,13 @@
     	"../lib/bootstrap/dist/js/bootstrap.js",
     	"../lib/angular-bootstrap/ui-bootstrap.js",
         "../lib/angular-bootstrap/ui-bootstrap-tpls.js",
-        "../lib/flow.js/dist/flow.js",
-        "../lib/ng-flow/dist/ng-flow.js"
+        "../lib/ng-file-upload/angular-file-upload-shim.js",
+        "../lib/ng-file-upload/angular-file-upload.js"
     ],
     "ng": [
         "ngTable",
         "ui.bootstrap",
-        "flow"
+        "angularFileUpload"
     ]
   }
 }

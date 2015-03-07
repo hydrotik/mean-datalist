@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 angular.module('mean.datalist').controller('DataListController', [
     '$scope',
     '$stateParams',

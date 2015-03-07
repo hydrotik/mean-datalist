@@ -1,6 +1,31 @@
 'use strict';
 
-angular.module('mean.datalist').directive('datalistfield', function($compile, $filter, $timeout) {
+/*
+angular.module('mean.datalist').config(['flowFactoryProvider', function (flowFactoryProvider) {
+  flowFactoryProvider.defaults = {
+      target: 'http://127.0.0.1:3000/api/upload/',
+      maxChunkRetries: 1,
+      chunkRetryInterval: 5000,
+      simultaneousUploads: 1,
+      testChunks:false,
+      query: 'injectUploadID',
+      permanentErrors: [415, 500, 501]
+    };
+  flowFactoryProvider.on('catchAll', function (event) {
+    console.log('catchAll', arguments);
+  });
+  // Can be used with different implementations of Flow.js
+  // flowFactoryProvider.factory = fustyFlowFactory;
+}]);
+*/
+
+
+angular.module('mean.datalist').directive('datalistfield', [
+	'$compile',
+	'$filter',
+	'$timeout',
+
+	function($compile, $filter, $timeout) {
     return {
         restrict: 'AE',
 
@@ -23,8 +48,8 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
         	item : '=dlModel'
         },
 
-        link: function(scope, element, attrs, $parse, $flow) {
-        	
+        link: function(scope, element, attrs, $parse) {
+        	//console.warn($upload);
         	
         	/*
         	$timeout(function() {
@@ -33,12 +58,40 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
           	}, 100);
         	
 			*/
+			scope.files = [];
+
             scope.change = function() {
                 //scope.$parent.item[scope.item.id] = scope.item[scope.item.id];
                 //console.log(scope.$parent.item[scope.field.id]);
                 //console.log(scope.item[scope.field.id]);
             };
-			
+            /*
+            scope.$watch('files', function () {
+            	console.warn(scope.files);
+		    });
+				
+            
+		    scope.upload = function (files) {
+		        if (files && files.length) {
+		            for (var i = 0; i < files.length; i+=1) {
+		                var file = files[i];
+		                $upload.upload({
+		                    url: 'upload/url',
+		                    file: file
+		                }).progress(scope.uploadProgress).success(scope.uploadSuccess);
+		            }
+		        }
+		    };
+
+		    scope.uploadProgress = function (evt) {
+		    	var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+		       	console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+		    };
+
+		    scope.uploadSuccess = function (data, status, headers, config) {
+		    	console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+		    };
+			*/
             
 
             if (scope.field.type === 'date'){
@@ -123,10 +176,9 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
 					// http://stackoverflow.com/questions/23449065/reassemble-binary-after-flow-js-upload-on-node-express-server
 					// https://raw.githubusercontent.com/raam86/secret-octo-ly/master/hacked
 					// https://github.com/flowjs/flow.js/blob/master/samples/Node.js/app.js#L1
-
 					// https://github.com/flowjs/ng-flow/issues/62
-					
-				    '<div flow-init="{target: \'/api/upload\', testChunks : false, permanentErrors: [415, 500, 501]}" flow-prevent-drop ' + 
+					/*
+				    '<div flow-init="{}" flow-prevent-drop ' + 
                      'flow-drag-enter="style={border: \'5px solid green\'}" ' + 
                      'flow-drag-leave="style={}" ' + 
                      'ng-style="style" ' + 
@@ -147,10 +199,27 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
 					    	'</tr> ' + 
 					  	'</table> ' + 
 					'</div>' + 
-					
+					*/
 
+
+					'<input ' +
+					'class="btn btn-info" ' +
+					'type="file" ' +
+					'data-ng-model="item[field.id]" ' +
+					'ng-if="field.type == \'image\'" ' + 
+					'name="{{::field.id}}" ' +
+					'accept="image/*" />' +
+
+					/*
+					'<div class="button btn btn-info" ' +
+					'ng-if="field.type == \'image\'" ' + 
+					'ng-file-select ' +
+					'ng-file-change="upload($files)">' +
+					'Upload on file change' +
+					'</div>' +
+					*/
 				'</div>' +
 			'</div>' +
         '</div>'
     };
-});
+}]);

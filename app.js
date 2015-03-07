@@ -11,9 +11,6 @@ var libconfig = require('./libs.config');
 
 
 
-
-process.env.TMPDIR = './public/tmp';
-
 /*
  * All MEAN packages require registration
  * Dependency injection is used to define required modules
@@ -21,7 +18,7 @@ process.env.TMPDIR = './public/tmp';
 Datalist.register(function(app, auth, database) {
 
 
-  
+
 
   //We enable routing. By default the Package Object is passed to the routes
   Datalist.routes(app, auth, database);
