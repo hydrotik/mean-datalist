@@ -1,12 +1,14 @@
 'use strict';
 
 var datalist = require('../controllers/datalist');
-var flow = require('../lib/flow-node.js')('tmp');
-var multipart = require('connect-multiparty');
-var multipartMiddleware = multipart();
+var flow = require('../lib/flow-node.js')('./packages/custom/datalist/public/tmp/');
+//var multipart = require('connect-multiparty');
+//var multipartMiddleware = multipart();
+var fs = require('fs');
+//var multer  = require('multer');
 
 
-var ACCESS_CONTROLL_ALLOW_ORIGIN = true;
+//var ACCESS_CONTROLL_ALLOW_ORIGIN = true;
 
 // Article authorization helpers
 var hasAuthorization = function(req, res, next) {
@@ -29,43 +31,47 @@ module.exports = function(Articles, app, auth) {
   // Finish with setting up the itemid param
   app.param('itemid', datalist.item);
 
-  app.post('/upload', multipartMiddleware, function(req, res) {
-    flow.post(req, function(status, filename, original_filename, identifier) {
-      console.log('POST', status, original_filename, identifier);
-      if (ACCESS_CONTROLL_ALLOW_ORIGIN) {
-        res.header('Access-Control-Allow-Origin', '*');
-      }
-      res.status(status).send();
-    });
+// https://github.com/mick26/ng_Node-AdvancedFileUpload
+
+
+
+
+  app.post('/api/upload', function(req, res){
+    flow.post(req, function(status, filename, original_filename, identifier, currentTestChunk, numberOfChunks) {
+          console.log('POST', status, original_filename, identifier);
+          res.send(200);
+          if (status === 'done' && currentTestChunk > numberOfChunks) {
+              var stream = fs.createWriteStream('./packages/custom/datalist/public/c' + filename);
+              //EDIT: I removed options {end: true} because it isn't needed
+              //and added {onDone: flow.clean} to remove the chunks after writing
+              //the file.
+              flow.write(identifier, stream, { onDone: flow.clean });            
+          }            
+      });
+
   });
 
+// Handle cross-domain requests
+// NOTE: Uncomment this funciton to enable cross-domain request.
+/*
   app.options('/upload', function(req, res){
-    console.log('OPTIONS');
-    if (ACCESS_CONTROLL_ALLOW_ORIGIN) {
-      res.header('Access-Control-Allow-Origin', '*');
-    }
-    res.status(200).send();
+  console.log('OPTIONS');
+  res.send(true, {
+  'Access-Control-Allow-Origin': '*'
+  }, 200);
   });
+*/
 
-  // Handle status checks on chunks through Flow.js
-  app.get('/upload', function(req, res) {
-    flow.get(req, function(status, filename, original_filename, identifier) {
-      console.log('GET', status);
-      if (ACCESS_CONTROLL_ALLOW_ORIGIN) {
-        res.header('Access-Control-Allow-Origin', '*');
-      }
-
-      if (status === 'found') {
-        status = 200;
-      } else {
-        status = 404;
-      }
-
-      res.status(status).send();
-    });
+// Handle status checks on chunks through Flow.js
+app.get('/api/upload', function(req, res){
+  flow.get(req, function(status, filename, original_filename, identifier){
+    console.log('GET', status);
+    //res.send(200, (status === 'found' ? 200 : 404));
+    res.status(200).sendStatus((status === 'found' ? 200 : 404));
   });
+});
 
-  app.get('/download/:identifier', function(req, res) {
-    flow.write(req.params.identifier, res);
-  });
+
+
+
 };

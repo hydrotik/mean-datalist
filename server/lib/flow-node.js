@@ -30,7 +30,9 @@ module.exports = flow = function(temporaryFolder) {
 
     function validateRequest(chunkNumber, chunkSize, totalSize, identifier, filename, fileSize) {
         // Clean up the identifier
+        console.log(identifier);
         identifier = cleanIdentifier(identifier);
+        console.log(identifier);
 
         // Check if the request is sane
         if (chunkNumber == 0 || chunkSize == 0 || totalSize == 0 || identifier.length == 0 || filename.length == 0) {
@@ -71,9 +73,9 @@ module.exports = flow = function(temporaryFolder) {
         console.log(req.query);
 
 
-        var chunkNumber = req.query.flowChunkNumber;
-        var chunkSize = req.query.flowChunkSize;
-        var totalSize = req.query.flowTotalSize;
+        var chunkNumber = parseInt(req.query.flowChunkNumber);
+        var chunkSize = parseInt(req.query.flowChunkSize);
+        var totalSize = parseInt(req.query.flowTotalSize);
         var identifier = req.query.flowIdentifier;
         var filename = req.query.flowFilename;
 

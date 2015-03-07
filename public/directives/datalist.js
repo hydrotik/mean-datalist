@@ -119,7 +119,7 @@ angular.module('mean.datalist').directive('datalistfield', function($compile, $f
 
 					// Image Upload type="image"
 					
-					'<div flow-init="{target: \'http://127.0.0.1:3000/upload\'}" ' + 
+					'<div flow-init="{target: \'http://127.0.0.1:3000/api/upload\'}" ' + 
 					'ng-if="field.type == \'image\'" ' +
 				    'flow-files-submitted="$flow.upload()" ' + 
 				    'flow-file-success="$file.msg = $message"> ' + 

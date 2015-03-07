@@ -1,16 +1,14 @@
 'use strict';
 
 
-angular.module('app', ['flow']).config(['flowFactoryProvider', function (flowFactoryProvider) {
+angular.module('mean.datalist', ['flow']).config(['flowFactoryProvider', function (flowFactoryProvider) {
   flowFactoryProvider.defaults = {
-    target: '/upload',
-    permanentErrors: [404, 500, 501],
-    maxChunkRetries: 1,
-    chunkRetryInterval: 5000,
-    simultaneousUploads: 4,
-    singleFile: true,
-    testChunks : false
-  };
+      target: 'http://127.0.0.1:3000/api/upload/',
+      permanentErrors: [500, 501],
+      maxChunkRetries: 1,
+      chunkRetryInterval: 5000,
+      simultaneousUploads: 1
+    };
   flowFactoryProvider.on('catchAll', function (event) {
     console.log('catchAll', arguments);
   });
