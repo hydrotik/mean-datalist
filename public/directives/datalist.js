@@ -50,6 +50,19 @@ angular.module('mean.datalist').directive('datalistfield', [
 
         link: function(scope, element, attrs, $parse) {
         	//console.warn($upload);
+
+        	element.find('input[type="file"]').bind('change', function(changeEvent) {   
+        		console.log('image input!');                     
+                var reader = new FileReader();
+                reader.onload = function(loadEvent) {
+                    scope.$apply(function() {
+                        scope.item[scope.field.id] = loadEvent.target.result;                                
+                    });
+                };
+                if (typeof(changeEvent.target.files[0]) === 'object') {
+                    reader.readAsDataURL(changeEvent.target.files[0]);
+                }
+            });
         	
         	/*
         	$timeout(function() {
@@ -59,6 +72,10 @@ angular.module('mean.datalist').directive('datalistfield', [
         	
 			*/
 			scope.files = [];
+
+			scope.imageUpdate = function() {
+				console.log('imageUpdate() : ');
+			};
 
             scope.change = function() {
                 //scope.$parent.item[scope.item.id] = scope.item[scope.item.id];
@@ -208,6 +225,7 @@ angular.module('mean.datalist').directive('datalistfield', [
 					'data-ng-model="item[field.id]" ' +
 					'ng-if="field.type == \'image\'" ' + 
 					'name="{{::field.id}}" ' +
+					'onchange="angular.element(this).scope().imageUpdate()" ' +
 					'accept="image/*" />' +
 
 					/*

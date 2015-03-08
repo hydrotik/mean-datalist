@@ -9,6 +9,8 @@ var Datalist = new Module('datalist');
 
 var libconfig = require('./libs.config');
 
+var multipart = require('connect-multiparty');
+
 
 
 /*
@@ -17,7 +19,9 @@ var libconfig = require('./libs.config');
  */
 Datalist.register(function(app, auth, database) {
 
-
+  app.use(multipart({
+    uploadDir: './tmp'
+  }));
 
 
   //We enable routing. By default the Package Object is passed to the routes
