@@ -24,8 +24,8 @@ angular.module('mean.datalist').directive('datalistfield', [
 	'$compile',
 	'$filter',
 	'$timeout',
-
-	function($compile, $filter, $timeout) {
+	'$upload',
+	function($compile, $filter, $timeout,$upload) {
     return {
         restrict: 'AE',
 
@@ -50,20 +50,20 @@ angular.module('mean.datalist').directive('datalistfield', [
 
         link: function(scope, element, attrs, $parse) {
         	//console.warn($upload);
-
-        	element.find('input[type="file"]').bind('change', function(changeEvent) {   
-        		console.log('image input!');                     
-                var reader = new FileReader();
-                reader.onload = function(loadEvent) {
-                    scope.$apply(function() {
-                        scope.item[scope.field.id] = loadEvent.target.result;                                
-                    });
-                };
-                if (typeof(changeEvent.target.files[0]) === 'object') {
-                    reader.readAsDataURL(changeEvent.target.files[0]);
-                }
+        	/*
+        	element.find('input[type="file"]').bind('change', function (changeEvent) {
+        		if(scope.field.type === 'file'){
+	                var reader = new FileReader();
+	                console.log(changeEvent.target);
+	                reader.onload = function (loadEvent) {
+	                    scope.$apply(function () {
+	                        scope.fileread = loadEvent.target.result;
+	                    });
+	                };
+	                //reader.readAsDataURL(changeEvent.target.files[0]);
+	            }
             });
-        	
+*/
         	/*
         	$timeout(function() {
         		scope[scope.item.id] = scope.$parent.$parent[scope.item.id];
@@ -71,10 +71,35 @@ angular.module('mean.datalist').directive('datalistfield', [
           	}, 100);
         	
 			*/
-			scope.files = [];
 
 			scope.imageUpdate = function() {
-				console.log('imageUpdate() : ');
+				console.warn('imageUpdate() : ');
+				console.log(element.find('input[type="file"]')[0].files[0].name);
+				//var exp = $parse(attrs.dlModel);
+
+				//console.log(exp);
+				//console.log(element.files[0]);
+				// http://stackoverflow.com/questions/16631702/file-pick-with-angular-js
+				
+				scope.$apply(function(scope) {
+					/*
+			         var photofile = element.find('input[type="file"]')[0].files[0];
+
+			         scope.$parent.item[scope.item.id] = photofile.name;
+
+			         var reader = new FileReader();
+			         reader.onload = function(e) {
+			            //scope[scope.item.id] = e.target.result;
+			            
+			         };
+			         reader.readAsDataURL(photofile);
+*/
+			         $upload.upload({
+		                    url: '/api/upload',
+		                    file: element.find('input[type="file"]')[0].files[0]
+		                }).progress(scope.uploadProgress).success(scope.uploadSuccess);
+			     });
+
 			};
 
             scope.change = function() {
@@ -99,7 +124,7 @@ angular.module('mean.datalist').directive('datalistfield', [
 		            }
 		        }
 		    };
-
+			*/
 		    scope.uploadProgress = function (evt) {
 		    	var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
 		       	console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
@@ -108,7 +133,7 @@ angular.module('mean.datalist').directive('datalistfield', [
 		    scope.uploadSuccess = function (data, status, headers, config) {
 		    	console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
 		    };
-			*/
+			
             
 
             if (scope.field.type === 'date'){
@@ -220,11 +245,10 @@ angular.module('mean.datalist').directive('datalistfield', [
 
 
 					'<input ' +
-					'class="btn btn-info" ' +
 					'type="file" ' +
 					'data-ng-model="item[field.id]" ' +
 					'ng-if="field.type == \'image\'" ' + 
-					'name="{{::field.id}}" ' +
+					'name="fileupload" ' +
 					'onchange="angular.element(this).scope().imageUpdate()" ' +
 					'accept="image/*" />' +
 

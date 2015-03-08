@@ -1,10 +1,10 @@
 'use strict';
 
 var datalist = require('../controllers/datalist');
-//var flow = require('../lib/flow-node.js')('./packages/custom/datalist/public/tmp/');
-//var multipart = require('connect-multiparty');
-//var multipartMiddleware = multipart();
-//var fs = require('fs');
+//var flow = require('../lib/flow-node.js')('./tmp/');
+var multiparty = require('connect-multiparty'),
+multipartyMiddleware = multiparty();
+//fs = require('fs');
 //var multer  = require('multer');
 
 
@@ -34,14 +34,18 @@ module.exports = function(Articles, app, auth) {
 // https://github.com/mick26/ng_Node-AdvancedFileUpload
 
 
-
+app.post('/api/upload', multipartyMiddleware, function(req, res) {
+    var file = req.files.file;
+    console.log(file.name);
+    console.log(file.type);
+});
 /*
   app.post('/api/upload', function(req, res){
     flow.post(req, function(status, filename, original_filename, identifier, currentTestChunk, numberOfChunks) {
           console.log('POST', status, original_filename, identifier);
           res.send(200);
           if (status === 'done' && currentTestChunk > numberOfChunks) {
-              var stream = fs.createWriteStream('./public/upload/' + filename);
+              var stream = fs.createWriteStream('./packages/custom/datalist/public/upload/' + filename);
               //EDIT: I removed options {end: true} because it isn't needed
               //and added {onDone: flow.clean} to remove the chunks after writing
               //the file.
