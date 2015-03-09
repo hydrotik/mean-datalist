@@ -9,3 +9,8 @@
 .ng-table .btn{
 	padding : 0 !important;
 }
+
+.ace_editor {
+  height: 200px;
+  background-color: #454545;
+}

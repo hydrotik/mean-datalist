@@ -3,21 +3,30 @@
     "css": [
     	"../lib/ng-table/dist/ng-table.css",
     	"../lib/bootstrap/dist/css/bootstrap.css",
+        "../lib/highlightjs/styles/dark.css",
     	"../lib/bootstrap/dist/css/bootstrap-theme.css"
     ],
     "js": [
+        "../lib/ace-builds/src-min-noconflict/ace.js",
     	"../lib/highland/dist/highland.js",
+        "../lib/highlightjs/highlight.pack.js",
+        "../lib/angular-highlightjs/angular-highlightjs.js",
     	"../lib/ng-table/dist/ng-table.js",
     	"../lib/bootstrap/dist/js/bootstrap.js",
     	"../lib/angular-bootstrap/ui-bootstrap.js",
         "../lib/angular-bootstrap/ui-bootstrap-tpls.js",
         "../lib/ng-file-upload/angular-file-upload-shim.js",
-        "../lib/ng-file-upload/angular-file-upload.js"
+        "../lib/ng-file-upload/angular-file-upload.js",
+        "../lib/ace-builds/src-min-noconflict/ext-language_tools.js",
+        "../lib/ace-builds/src-min-noconflict/ext-beautify.js",
+        "../lib/ace-builds/src-min-noconflict/theme-twilight.js",
+        "../lib/angular-ui-ace/ui-ace.js"
     ],
     "ng": [
         "ngTable",
         "ui.bootstrap",
-        "angularFileUpload"
+        "angularFileUpload",
+        "ui.ace"
     ]
   }
 }

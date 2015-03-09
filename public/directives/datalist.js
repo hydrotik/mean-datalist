@@ -25,7 +25,8 @@ angular.module('mean.datalist').directive('datalistfield', [
 	'$filter',
 	'$timeout',
 	'$upload',
-	function($compile, $filter, $timeout,$upload) {
+	'DataListAceEditor',
+	function($compile, $filter, $timeout,$upload, DataListAceEditor) {
     return {
         restrict: 'AE',
 
@@ -170,6 +171,48 @@ angular.module('mean.datalist').directive('datalistfield', [
 	            scope.opened = false;  
 	        }
 
+
+
+
+	        if (scope.field.type === 'javascript'){
+		        scope.item[scope.field.id] = 'var foo = function(bar){\n\treturn bar;\n};';
+
+			    scope.aceJSLoaded = function(_editor) {
+			      DataListAceEditor.create(_editor, 'javascript', function(){
+			        scope.item[scope.field.id] = _editor.getValue();
+			      });
+			    };
+			}
+
+	        if (scope.field.type === 'json'){
+		        scope.item[scope.field.id] = '{\n\t"id":"idname",\n\t"type": "text",\n\t"required": false,\n\t"label": "Text:"\n}';
+
+			    scope.aceJSONLoaded = function(_editor) {
+			      DataListAceEditor.create(_editor, 'json', function(){
+			        scope.item[scope.field.id] = _editor.getValue();
+			      });
+			    };
+			}
+
+			if (scope.field.type === 'css'){
+		        scope.item[scope.field.id] = '.stylename {\r\tbackground-color : #CCCCCC;\r}';
+
+			    scope.aceCSSLoaded = function(_editor) {
+			      DataListAceEditor.create(_editor, 'css', function(){
+			        scope.item[scope.field.id] = _editor.getValue();
+			      });
+			    };
+			}
+
+			if (scope.field.type === 'html'){
+		        scope.item[scope.field.id] = '<div class="stylename">\n\t{{idname}}\n</div>';
+
+			    scope.aceHTMLLoaded = function(_editor) {
+			      DataListAceEditor.create(_editor, 'html', function(){
+			        scope.item[scope.field.id] = _editor.getValue();
+			      });
+			    };
+			}
 	        
         },
 		
@@ -216,37 +259,6 @@ angular.module('mean.datalist').directive('datalistfield', [
 					'id="{{::field.id}}" /> {{field.options[item[field.id]]}}</span>' + 
 
 					// Image Upload type="image"
-
-					// http://stackoverflow.com/questions/24968194/ng-flow-issuing-a-get-but-not-a-post
-					// http://stackoverflow.com/questions/23449065/reassemble-binary-after-flow-js-upload-on-node-express-server
-					// https://raw.githubusercontent.com/raam86/secret-octo-ly/master/hacked
-					// https://github.com/flowjs/flow.js/blob/master/samples/Node.js/app.js#L1
-					// https://github.com/flowjs/ng-flow/issues/62
-					/*
-				    '<div flow-init="{}" flow-prevent-drop ' + 
-                     'flow-drag-enter="style={border: \'5px solid green\'}" ' + 
-                     'flow-drag-leave="style={}" ' + 
-                     'ng-style="style" ' + 
-
-                     'flow-files-submitted="$flow.upload()" ' + 
-                     'flow-file-success="$file.msg = $message" ' +
-                     'ng-if="field.type == \'image\'">' + 
-
-					  	'<input type="file" flow-btn/> ' + 
-					  		'Input OR Other element as upload button' + 
-					  	'<span class="btn" flow-btn>Upload File</span> ' + 
-
-					  	'<table> ' + 
-					    	'<tr ng-repeat="file in $flow.files"> ' + 
-					        	'<td>{{$index+1}}</td> ' + 
-					        	'<td>{{file.name}}</td> ' + 
-					        	'<td>{{file.msg}}</td> ' + 
-					    	'</tr> ' + 
-					  	'</table> ' + 
-					'</div>' + 
-					*/
-
-
 					'<input ' +
 					'type="file" ' +
 					'data-ng-model="item[field.id]" ' +
@@ -255,14 +267,35 @@ angular.module('mean.datalist').directive('datalistfield', [
 					'onchange="angular.element(this).scope().imageUpdate()" ' +
 					'accept="image/*" />' +
 
-					/*
-					'<div class="button btn btn-info" ' +
-					'ng-if="field.type == \'image\'" ' + 
-					'ng-file-select ' +
-					'ng-file-change="upload($files)">' +
-					'Upload on file change' +
-					'</div>' +
-					*/
+
+					// Javascript type="javascript"
+					'<div ui-ace="{onLoad: aceJSLoaded}" ' +
+					'data-ng-model="item[field.id]" ' +
+					'ng-if="field.type == \'javascript\'">' +
+					'style="width: 100%;" ' + 
+					'id="editor-javascript"></div>' +
+
+					// JSON type="json"
+					'<div ui-ace="{onLoad: aceJSONLoaded}" ' +
+					'data-ng-model="item[field.id]" ' +
+					'ng-if="field.type == \'json\'">' +
+					'style="width: 100%;" ' + 
+					'id="editor-json"></div>' +
+
+					// JSON type="css"
+					'<div ui-ace="{onLoad: aceCSSLoaded}" ' +
+					'data-ng-model="item[field.id]" ' +
+					'ng-if="field.type == \'css\'">' +
+					'style="width: 100%;" ' + 
+					'id="editor-css"></div>' +
+
+					// JSON type="json"
+					'<div ui-ace="{onLoad: aceHTMLLoaded}" ' +
+					'data-ng-model="item[field.id]" ' +
+					'ng-if="field.type == \'html\'">' +
+					'style="width: 100%;" ' + 
+					'id="editor-html"></div>' +
+
 				'</div>' +
 			'</div>' +
         '</div>'

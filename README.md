@@ -7,8 +7,8 @@
 **Tools Used**
 * jquery
 * highlandjs
-* d3
-* Google Visualization
+* d3 and/or Google Visualization - Coming Soon
+* ACE Editor
 
 **In a terminal process:**
 ```bash
@@ -35,6 +35,93 @@ $ cd datalist
 $ npm install && bower install
 $ gulp
 ```
+
+**Dynamic Input Field API Information**
+This example demonstrates the ability to dynamically create form fields and push them into MongDB
+```javascript
+// Basic Text Input Field
+{
+  id: 'title',
+  label: 'Title',
+  type: 'text'
+},
+
+// Date Picker Input Field
+{
+  id: 'launchdate',
+  label: 'Launch Date',
+  type: 'date'
+},
+
+// Basic Textarea Input Field
+{
+  id: 'content',
+  label: 'Content',
+  type: 'textarea'
+},
+
+// Radio Group Input Field
+{
+  id: 'gender',
+  label: 'Gender',
+  type: 'radio',
+  children: [{
+    label: 'Male',
+    value: 'male'
+  }, {
+    label: 'Female',
+    value: 'female'
+  }]
+},
+
+// Checkbox Input Field
+{
+  id: 'subscribe',
+  label: 'Subscribe',
+  type: 'checkbox',
+  options: {
+    'true': 'Yes',
+    'false': 'No'
+  },
+  selected: true
+},
+
+// Image Upload Field
+{
+  id: 'picture',
+  label: 'Profile Image',
+  type: 'image'
+},
+
+// JSON Code Editor Input Field
+{
+  id: 'json',
+  label: 'JSON',
+  type: 'json'
+},
+
+// Javascript Code Editor Input Field
+{
+  id: 'js',
+  label: 'Javascript',
+  type: 'javascript'
+},
+
+// CSS Code Editor Input Field
+{
+  id: 'css',
+  label: 'CSS',
+  type: 'css'
+},
+
+// HTML Code Editor Input Field
+{
+  id: 'html',
+  label: 'HTML',
+  type: 'html'
+}
+```
+
 
 Below are instructions for setting up and managing MEAN.io
 
