@@ -118,7 +118,14 @@ exports.all = function(req, res) {
 
 exports.upload = function(req, res) {
   var file = req.files.file;
+  var objid = mongoose.Types.ObjectId();
   //console.log(file);
+  file.objid = objid;
+
+  // https://www.npmjs.com/package/fs-extra
+
+
+
   res.json(file);
 };
 
