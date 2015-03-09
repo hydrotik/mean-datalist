@@ -63,6 +63,11 @@ angular.module('mean.datalist').factory('DataListModel', function() {
         id : 'picture',
         label : 'Profile Image',
         type : 'image'
+      },
+      {
+        id : 'thumb',
+        label : 'Thumb Image',
+        type : 'image'
       }
     ];
 

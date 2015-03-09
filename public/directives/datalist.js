@@ -133,7 +133,7 @@ angular.module('mean.datalist').directive('datalistfield', [
 		    scope.uploadSuccess = function (data, status, headers, config) {
 		    	console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
 		    	console.warn(data);
-		    	scope.item[scope.field.id] = data.name;
+		    	scope.item[scope.field.id] = data.objid + data.extension;
 		    	console.warn(scope.item[scope.field.id]);
 		    };
 			

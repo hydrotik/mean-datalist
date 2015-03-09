@@ -5,7 +5,9 @@
  */
 var mongoose = require('mongoose'),
   DataItem = mongoose.model('DataItem'),
-  _ = require('lodash');
+  _ = require('lodash'),
+  fse = require('fs-extra'),
+  path = require('path');
 
 /**
  * Find item by id
@@ -119,13 +121,21 @@ exports.all = function(req, res) {
 exports.upload = function(req, res) {
   var file = req.files.file;
   var objid = mongoose.Types.ObjectId();
-  //console.log(file);
   file.objid = objid;
+  file.extension = path.extname(file.name);
 
+  //console.log(file);
   // https://www.npmjs.com/package/fs-extra
 
+  fse.copy('./' + file.path, './packages/custom/datalist/public/upload/' + objid + file.extension, function(err) {
+    if (err) return console.error(err);
+    fse.remove('./' + file.path, function(err) {
+      if (err) return console.error(err);
+      res.json(file);
+      console.log('success!');
+    });
+  });
 
-
-  res.json(file);
+  
 };
 
