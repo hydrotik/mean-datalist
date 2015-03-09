@@ -31,14 +31,17 @@ module.exports = function(Articles, app, auth) {
   // Finish with setting up the itemid param
   app.param('itemid', datalist.item);
 
-// https://github.com/mick26/ng_Node-AdvancedFileUpload
+  
 
 
-app.post('/api/upload', multipartyMiddleware, function(req, res) {
-    var file = req.files.file;
-    console.log(file.name);
-    console.log(file.type);
-});
+  app.post('/api/upload', auth.requiresLogin, multipartyMiddleware, datalist.upload);
+
+
+
+  // https://github.com/mick26/ng_Node-AdvancedFileUpload
+
+
+  
 /*
   app.post('/api/upload', function(req, res){
     flow.post(req, function(status, filename, original_filename, identifier, currentTestChunk, numberOfChunks) {

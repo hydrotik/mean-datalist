@@ -132,6 +132,9 @@ angular.module('mean.datalist').directive('datalistfield', [
 
 		    scope.uploadSuccess = function (data, status, headers, config) {
 		    	console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+		    	console.warn(data);
+		    	scope.item[scope.field.id] = data.name;
+		    	console.warn(scope.item[scope.field.id]);
 		    };
 			
             
@@ -248,7 +251,7 @@ angular.module('mean.datalist').directive('datalistfield', [
 					'type="file" ' +
 					'data-ng-model="item[field.id]" ' +
 					'ng-if="field.type == \'image\'" ' + 
-					'name="fileupload" ' +
+					'name="{{::field.id}}" ' +
 					'onchange="angular.element(this).scope().imageUpdate()" ' +
 					'accept="image/*" />' +
 

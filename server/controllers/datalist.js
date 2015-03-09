@@ -5,8 +5,7 @@
  */
 var mongoose = require('mongoose'),
   DataItem = mongoose.model('DataItem'),
-  _ = require('lodash'),
-  path = require('path');
+  _ = require('lodash');
 
 /**
  * Find item by id
@@ -24,21 +23,6 @@ exports.item = function(req, res, next, id) {
  * Create an item
  */
 exports.create = function(req, res) {
-  var data = _.pick(req.body, 'type'), 
-      uploadPath = path.normalize('./packages/custom/datalist/public/upload'),
-      files = req.files;
-      // file = req.files.file
-
-console.log(files);
-  console.log(data);
-  //console.log(file.name); //original name (ie: sunset.png)
-  //console.log(file.path); //tmp path (ie: /tmp/12345-xyaz.png)
-  console.log(uploadPath); //uploads directory: (ie: /home/user/data/uploads)
-
-
-
-
-
   var item = new DataItem(req.body, false);
   item.user = req.user;
 
@@ -128,5 +112,13 @@ exports.all = function(req, res) {
     res.json(items);
 
   });
+};
+
+
+
+exports.upload = function(req, res) {
+  var file = req.files.file;
+  //console.log(file);
+  res.json(file);
 };
 
