@@ -23,19 +23,25 @@ angular.module('mean.datalist').factory('DataListModel', function() {
         id : 'title',
         label : 'Title',
         type : 'text',
-        showinlist : true
+        showinlist : true,
+        listview : '<a href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>',
+        detailview : ''
       },
       {
         id : 'launchdate',
         label : 'Launch Date',
         type : 'date',
-        showinlist : true
+        showinlist : true,
+        listview : '<a href="/#!/datalist/{{item._id}}">{{item[field.id] | date:"dd-MMMM-yyyy"}}</a>',
+        detailview : ''
       },
       {
         id : 'content',
         label : 'Content',
         type : 'textarea',
-        showinlist : false
+        showinlist : false,
+        listview : '<a href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>',
+        detailview : ''
       },
       {
         id : 'gender',
@@ -51,7 +57,9 @@ angular.module('mean.datalist').factory('DataListModel', function() {
             value : 'female'
           }
         ],
-        showinlist : true
+        showinlist : true,
+        listview : '<a href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>',
+        detailview : ''
       },
       {
         id : 'subscribe',
@@ -62,43 +70,57 @@ angular.module('mean.datalist').factory('DataListModel', function() {
             'false' : 'No'
         },
         selected : true,
-        showinlist : true
+        showinlist : true,
+        listview : '<a href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>',
+        detailview : ''
       },
       {
         id : 'picture',
         label : 'Profile Image',
         type : 'image',
-        showinlist : false
+        showinlist : false,
+        listview : '<a href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>',
+        detailview : ''
       },
       {
         id : 'pdf',
         label : 'PDF File',
         type : 'pdf',
-        showinlist : false
+        showinlist : false,
+        listview : '<a href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>',
+        detailview : ''
       },
       {
         id : 'json',
         label : 'JSON',
         type : 'json',
-        showinlist : false
+        showinlist : false,
+        listview : '<a href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>',
+        detailview : ''
       },
       {
         id : 'js',
         label : 'Javascript',
         type : 'javascript',
-        showinlist : false
+        showinlist : false,
+        listview : '<a href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>',
+        detailview : ''
       },
       {
         id : 'css',
         label : 'CSS',
         type : 'css',
-        showinlist : false
+        showinlist : false,
+        listview : '<a href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>',
+        detailview : ''
       },
       {
         id : 'html',
         label : 'HTML',
         type : 'html',
-        showinlist : false
+        showinlist : false,
+        listview : '<a href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>',
+        detailview : ''
       },
       {
         id : 'nested',
@@ -112,7 +134,9 @@ angular.module('mean.datalist').factory('DataListModel', function() {
             label : 'Address 2'
           }
         ],
-        showinlist : true
+        showinlist : true,
+        listview : '<a href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>',
+        detailview : ''
       },
 
       // http://mrngoitall.net/blog/2013/10/02/adding-form-fields-dynamically-in-angularjs/
@@ -122,7 +146,9 @@ angular.module('mean.datalist').factory('DataListModel', function() {
         type : 'textlist',
         children : [
         ],
-        showinlist : true
+        showinlist : true,
+        listview : '<a href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>',
+        detailview : ''
       }
     ];
 
