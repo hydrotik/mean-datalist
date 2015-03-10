@@ -37,91 +37,92 @@ $ gulp
 ```
 
 **Dynamic Input Field API Information**
-This example demonstrates the ability to dynamically create form fields and push them into MongDB
+This example demonstrates the ability to dynamically create form fields and push them into MongDB. See additional parameters below.
 ```javascript
 // Basic Text Input Field
 {
-  id: 'title',
-  label: 'Title',
   type: 'text'
 },
 
 // Date Picker Input Field
 {
-  id: 'launchdate',
-  label: 'Launch Date',
   type: 'date'
 },
 
 // Basic Textarea Input Field
 {
-  id: 'content',
-  label: 'Content',
   type: 'textarea'
 },
 
 // Radio Group Input Field
 {
-  id: 'gender',
-  label: 'Gender',
-  type: 'radio',
+  type: 'radio'
+},
+
+// Checkbox Input Field
+{
+  type: 'checkbox'
+},
+
+// Image Upload Field
+{
+  type: 'image'
+},
+
+// JSON Code Editor Input Field
+{
+  type: 'json'
+},
+
+// Javascript Code Editor Input Field
+{
+  type: 'javascript'
+},
+
+// CSS Code Editor Input Field
+{
+  type: 'css'
+},
+
+// HTML Code Editor Input Field
+{
+  type: 'html'
+}
+```
+
+
+**Additional properties of a field:**
+```javascript
+{
+  // id/key for field
+  id: 'title',
+
+  // form field label
+  label: 'Title',
+
+  // type of field (see api above)
+  type: 'text',
+
+  // show in the list view table
+  showinlist : true,
+
+  // options for Radio Group:
   children: [{
     label: 'Male',
     value: 'male'
   }, {
     label: 'Female',
     value: 'female'
-  }]
-},
+  }],
 
-// Checkbox Input Field
-{
-  id: 'subscribe',
-  label: 'Subscribe',
-  type: 'checkbox',
+  // options for Checkbox:
   options: {
     'true': 'Yes',
     'false': 'No'
   },
-  selected: true
-},
-
-// Image Upload Field
-{
-  id: 'picture',
-  label: 'Profile Image',
-  type: 'image'
-},
-
-// JSON Code Editor Input Field
-{
-  id: 'json',
-  label: 'JSON',
-  type: 'json'
-},
-
-// Javascript Code Editor Input Field
-{
-  id: 'js',
-  label: 'Javascript',
-  type: 'javascript'
-},
-
-// CSS Code Editor Input Field
-{
-  id: 'css',
-  label: 'CSS',
-  type: 'css'
-},
-
-// HTML Code Editor Input Field
-{
-  id: 'html',
-  label: 'HTML',
-  type: 'html'
+  selected: true,
 }
 ```
-
 
 Below are instructions for setting up and managing MEAN.io
 

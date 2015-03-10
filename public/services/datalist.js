@@ -22,17 +22,20 @@ angular.module('mean.datalist').factory('DataListModel', function() {
       {
         id : 'title',
         label : 'Title',
-        type : 'text'
+        type : 'text',
+        showinlist : true
       },
       {
         id : 'launchdate',
         label : 'Launch Date',
-        type : 'date'
+        type : 'date',
+        showinlist : true
       },
       {
         id : 'content',
         label : 'Content',
-        type : 'textarea'
+        type : 'textarea',
+        showinlist : false
       },
       {
         id : 'gender',
@@ -47,7 +50,8 @@ angular.module('mean.datalist').factory('DataListModel', function() {
             label : 'Female',
             value : 'female'
           }
-        ]
+        ],
+        showinlist : true
       },
       {
         id : 'subscribe',
@@ -57,32 +61,38 @@ angular.module('mean.datalist').factory('DataListModel', function() {
             'true' : 'Yes',
             'false' : 'No'
         },
-        selected : true
+        selected : true,
+        showinlist : true
       },
       {
         id : 'picture',
         label : 'Profile Image',
-        type : 'image'
+        type : 'image',
+        showinlist : false
       },
       {
         id : 'json',
         label : 'JSON',
-        type : 'json'
+        type : 'json',
+        showinlist : false
       },
       {
         id : 'js',
         label : 'Javascript',
-        type : 'javascript'
+        type : 'javascript',
+        showinlist : false
       },
       {
         id : 'css',
         label : 'CSS',
-        type : 'css'
+        type : 'css',
+        showinlist : false
       },
       {
         id : 'html',
         label : 'HTML',
-        type : 'html'
+        type : 'html',
+        showinlist : false
       },
       {
         id : 'nested',
@@ -95,7 +105,8 @@ angular.module('mean.datalist').factory('DataListModel', function() {
           {
             label : 'Address 2'
           }
-        ]
+        ],
+        showinlist : true
       },
 
       // http://mrngoitall.net/blog/2013/10/02/adding-form-fields-dynamically-in-angularjs/
@@ -104,7 +115,8 @@ angular.module('mean.datalist').factory('DataListModel', function() {
         label : 'Links',
         type : 'textlist',
         children : [
-        ]
+        ],
+        showinlist : true
       }
     ];
 
