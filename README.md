@@ -69,6 +69,11 @@ This example demonstrates the ability to dynamically create form fields and push
   type: 'image'
 },
 
+// PDF Upload Field
+{
+  type: 'pdf'
+},
+
 // JSON Code Editor Input Field
 {
   type: 'json'

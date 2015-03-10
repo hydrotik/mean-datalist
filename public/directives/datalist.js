@@ -50,56 +50,18 @@ angular.module('mean.datalist').directive('datalistfield', [
         },
 
         link: function(scope, element, attrs, $parse) {
-        	//console.warn($upload);
-        	/*
-        	element.find('input[type="file"]').bind('change', function (changeEvent) {
-        		if(scope.field.type === 'file'){
-	                var reader = new FileReader();
-	                console.log(changeEvent.target);
-	                reader.onload = function (loadEvent) {
-	                    scope.$apply(function () {
-	                        scope.fileread = loadEvent.target.result;
-	                    });
-	                };
-	                //reader.readAsDataURL(changeEvent.target.files[0]);
-	            }
-            });
-*/
-        	/*
-        	$timeout(function() {
-        		scope[scope.item.id] = scope.$parent.$parent[scope.item.id];
-				console.log(scope[scope.item.id]);
-          	}, 100);
-        	
-			*/
+
 
 			scope.imageUpdate = function() {
 				console.warn('imageUpdate() : ');
 				console.log(element.find('input[type="file"]')[0].files[0].name);
-				//var exp = $parse(attrs.dlModel);
 
-				//console.log(exp);
-				//console.log(element.files[0]);
-				// http://stackoverflow.com/questions/16631702/file-pick-with-angular-js
-				
 				scope.$apply(function(scope) {
-					/*
-			         var photofile = element.find('input[type="file"]')[0].files[0];
-
-			         scope.$parent.item[scope.item.id] = photofile.name;
-
-			         var reader = new FileReader();
-			         reader.onload = function(e) {
-			            //scope[scope.item.id] = e.target.result;
-			            
-			         };
-			         reader.readAsDataURL(photofile);
-*/
-			         $upload.upload({
-		                    url: '/api/upload',
-		                    file: element.find('input[type="file"]')[0].files[0]
-		                }).progress(scope.uploadProgress).success(scope.uploadSuccess);
-			     });
+					$upload.upload({
+						url: '/api/upload',
+						file: element.find('input[type="file"]')[0].files[0]
+					}).progress(scope.uploadProgress).success(scope.uploadSuccess);
+				});
 
 			};
 
@@ -108,24 +70,7 @@ angular.module('mean.datalist').directive('datalistfield', [
                 //console.log(scope.$parent.item[scope.field.id]);
                 //console.log(scope.item[scope.field.id]);
             };
-            /*
-            scope.$watch('files', function () {
-            	console.warn(scope.files);
-		    });
-				
-            
-		    scope.upload = function (files) {
-		        if (files && files.length) {
-		            for (var i = 0; i < files.length; i+=1) {
-		                var file = files[i];
-		                $upload.upload({
-		                    url: 'upload/url',
-		                    file: file
-		                }).progress(scope.uploadProgress).success(scope.uploadSuccess);
-		            }
-		        }
-		    };
-			*/
+
 		    scope.uploadProgress = function (evt) {
 		    	var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
 		       	console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
@@ -279,6 +224,15 @@ angular.module('mean.datalist').directive('datalistfield', [
 					'name="{{::field.id}}" ' +
 					'onchange="angular.element(this).scope().imageUpdate()" ' +
 					'accept="image/*" />' +
+
+					// Image Upload type="pdf"
+					'<input ' +
+					'type="file" ' +
+					'data-ng-model="item[field.id]" ' +
+					'ng-if="field.type == \'pdf\'" ' + 
+					'name="{{::field.id}}" ' +
+					'onchange="angular.element(this).scope().imageUpdate()" ' +
+					'accept="application/pdf" />' +
 
 
 					// Javascript type="javascript"

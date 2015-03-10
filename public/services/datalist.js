@@ -71,6 +71,12 @@ angular.module('mean.datalist').factory('DataListModel', function() {
         showinlist : false
       },
       {
+        id : 'pdf',
+        label : 'PDF File',
+        type : 'pdf',
+        showinlist : false
+      },
+      {
         id : 'json',
         label : 'JSON',
         type : 'json',
