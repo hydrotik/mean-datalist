@@ -83,6 +83,28 @@ angular.module('mean.datalist').factory('DataListModel', function() {
         id : 'html',
         label : 'HTML',
         type : 'html'
+      },
+      {
+        id : 'nested',
+        label : 'Address',
+        type : 'childlist',
+        children : [
+          {
+            label : 'Address 1'
+          },
+          {
+            label : 'Address 2'
+          }
+        ]
+      },
+
+      // http://mrngoitall.net/blog/2013/10/02/adding-form-fields-dynamically-in-angularjs/
+      {
+        id : 'links',
+        label : 'Links',
+        type : 'textlist',
+        children : [
+        ]
       }
     ];
 

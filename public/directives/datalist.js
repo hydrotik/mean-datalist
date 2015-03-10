@@ -214,6 +214,19 @@ angular.module('mean.datalist').directive('datalistfield', [
 			    };
 			}
 	        
+
+			if (scope.field.type === 'textlist'){
+				scope.choices = [{id: 'choice1'}, {id: 'choice2'}, {id: 'choice3'}];
+
+				scope.showAddChoice = function(choice) {
+				  	return choice.id === scope.choices[scope.choices.length-1].id;
+				};
+
+	        	scope.addNewChoice = function() {
+				  	var newItemNo = scope.choices.length+1;
+				  	scope.choices.push({'id':'choice'+newItemNo});
+				};
+			}
         },
 		
         template: '<div class="form-group">' +
@@ -221,7 +234,7 @@ angular.module('mean.datalist').directive('datalistfield', [
 				'<div class="col-md-9">' +
 
 					// Standard Input field - type="text"
-					'<input ng-if="field.type == \'text\'" data-ng-model="item[field.id]" name="{{::field.id}}" type="text" class="form-control" id={{::field.id}}" placeholder="{{::field.label}}" required>' +
+					'<input ng-if="field.type == \'text\'" data-ng-model="item[field.id]" name="{{::field.id}}" type="text" class="form-control" id="{{::field.id}}" placeholder="{{::field.label}}" required>' +
 					// TextArea Input field - type="textarea"
 					'<textarea ng-if="field.type == \'textarea\'" data-ng-model="item[field.id]" name="{{::field.id}}" id="{{::field.id}}" cols="30" rows="10" placeholder="{{::field.label}}" class="form-control" required></textarea>' +
 
@@ -296,6 +309,27 @@ angular.module('mean.datalist').directive('datalistfield', [
 					'style="width: 100%;" ' + 
 					'id="editor-html"></div>' +
 
+					// Child Input list - type="childlist"
+					'<div' + 
+					'ng-if="field.type == \'childlist\'">' +
+					'<input ng-if="field.type == \'childlist\'" ng-repeat="listitem in field.children track by $index" data-ng-model="item[field.id][$index]" name="{{::field.id}}-{{$index}}" type="text" class="form-control" id="{{::field.id}}-{{$index}}" placeholder="{{::listitem.label}}" required>' +
+					'<div>' + 
+
+
+					// Dynamic Input field list - type="textlist"
+					/*
+					'<div' + 
+					'ng-if="field.type == \'textlist\'">' +
+					'<input ng-repeat="listitem in field.children track by $index" data-ng-model="item[field.id][$index]" name="{{::field.id}}-{{$index}}" type="text" class="form-control" id="{{::field.id}}-{{$index}}" placeholder="{{::listitem.label}}" required>' +
+					'<div>' + 
+					*/
+					'<div ng-if="field.type == \'textlist\'">' +
+						'<div ng-repeat="choice in choices">' + 
+						  '<label for="choice" ng-show="$first">Choices</label>' + 
+						  '<button ng-show="$last" ng-click="addNewChoice()">Add another choice</button>' + 
+						  '<input type="text" ng-model="choice.name" name="" placeholder="Enter a restaurant name">' + 
+						'</div>' + 
+					'</div>' + 
 				'</div>' +
 			'</div>' +
         '</div>'
