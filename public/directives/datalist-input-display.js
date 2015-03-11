@@ -167,7 +167,7 @@ angular.module('mean.datalist').directive('datalistfield', [
 						// TextArea Input field - type="textarea"
 						'<textarea ng-if="field.type == \'textarea\'" data-ng-model="item[field.id]" name="{{::field.id}}" id="{{::field.id}}" cols="30" rows="10" placeholder="{{::field.label}}" class="form-control" required></textarea>' +
 
-						// TextArea Input field - type="textarea"
+						// Datepicker Input field - type="date"
 			            '<input type="text" ' +
 			            'ng-if="field.type == \'date\'" ' +
 			            'ng-change="change()"' + 

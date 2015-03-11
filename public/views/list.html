@@ -38,7 +38,7 @@
           <td ng-repeat="field in $parent.schema track by $index" ng-if="field.showinlist">
             <!--<a ng-if="isDate(item[field.id])" href="/#!/datalist/{{item._id}}">{{item[field.id] | date:'dd-MMMM-yyyy'}}</a>
             <a ng-if="!isDate(item[field.id])" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>-->
-            <datalistdisplay index="{{$index}}" viewtype="listview" item="{{item}}" field="{{field}}"></datalistdisplay> 
+            <datalistdisplay ng-model="field" dl-model="item"></datalistdisplay>
           </td>
 
           <td data-ng-if="hasAuthorization(item)">
