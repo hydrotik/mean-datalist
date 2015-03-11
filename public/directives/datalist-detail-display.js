@@ -34,7 +34,7 @@ angular.module('mean.datalist').directive('datalistdetail', [
             template: '<div>' +
 
                         // Standard Input field - type="text"
-                        '<a ng-if="field.type == \'text\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
+                        '<h2 ng-if="field.id == \'title\'">{{item.title}}</h2>' + 
                         
                         // TextArea Input field - type="textarea"
                         '<a ng-if="field.type == \'textarea\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
