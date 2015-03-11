@@ -97,7 +97,13 @@ angular.module('mean.datalist').directive('datalistfield', [
 		            scope.opened = false;  
 		        }
 
-
+		        if (scope.field.type === 'radio' && scope.operation === 'create'){
+		        	var value = '';
+		        	for(var i = 0; i < scope.field.children.length; i+=1){
+		        		if(scope.field.children[i].hasOwnProperty('selected') && scope.field.children[i].selected) value = scope.field.children[i].value;
+		        	}
+		        	scope.item[scope.field.id] = value;
+		        }
 
 
 		        if (scope.field.type === 'javascript'){

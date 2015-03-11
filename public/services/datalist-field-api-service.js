@@ -38,7 +38,8 @@ angular.module('mean.datalist').factory('DataListModel', function() {
           },
           {
             label : 'Female',
-            value : 'female'
+            value : 'female',
+            selected : true
           }
         ],
         showinlist : true,

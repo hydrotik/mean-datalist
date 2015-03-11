@@ -1,28 +1,4 @@
 <section data-ng-controller="DataListController" data-ng-init="find()">
-  <!--
-  <ul class="datalist unstyled">
-    <li data-ng-repeat="item in datalist">
-      <span>{{item.created | date:'medium'}}</span> /
-      <span>{{item.user.name}}</span>
-      <h2>
-        <a data-ng-href="#!/datalist/{{item._id}}">{{item.title}}</a>
-        <span data-ng-if="hasAuthorization(item)">
-          <a class="btn" href="/#!/datalist/{{item._id}}/edit">
-            <i class="glyphicon glyphicon-edit"></i>
-          </a>
-          <a class="btn" data-ng-click="remove(item);">
-            <i class="glyphicon glyphicon-trash"></i>
-          </a>
-        </span>
-      </h2>
-      <div>{{item.content}}</div>
-    </li>
-  </ul>
--->
-
-
-
-
   <table ng-table class="table" data-ng-hide="!items || items.length === 0">
     <thead>
       <tr>
@@ -36,8 +12,6 @@
       <tr ng-repeat="item in items">
 
           <td ng-repeat="field in $parent.schema track by $index" ng-if="field.showinlist">
-            <!--<a ng-if="isDate(item[field.id])" href="/#!/datalist/{{item._id}}">{{item[field.id] | date:'dd-MMMM-yyyy'}}</a>
-            <a ng-if="!isDate(item[field.id])" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>-->
             <datalistdisplay ng-model="field" dl-model="item"></datalistdisplay>
           </td>
 
