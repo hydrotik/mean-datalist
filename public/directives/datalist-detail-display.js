@@ -48,31 +48,31 @@ angular.module('mean.datalist').directive('datalistdetail', [
                         // Checkbox type="checkbox"
                         '<p ng-if="field.id == \'subscribe\'">{{item[field.id]}}</p>' +
 
-                        // Image Upload type="image"
-                        '<img ng-if="field.id == \'picture\'" ng-src="./packages/custom/datalist/public/upload/{{item[field.id]}}" />' +
+                        // Image Upload type="image" FIXME
+                        //'<img ng-if="field.id == \'picture\'" ng-src="./packages/custom/datalist/public/upload/{{item[field.id]}}" />' +
 
                         // Image Upload type="pdf"
-                        '<a ng-if="field.type == \'pdf\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
+                        '<a ng-if="field.id == \'pdf\'" href="/#!/datalist/{{item._id}}" target="_blank">{{item[field.id]}}</a>' +
 
-                        // Javascript type="javascript"
-                        '<a ng-if="field.type == \'javascript\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
+                        // Javascript type="javascript" FIXME
+                        //'<script type="text/javascript" ng-if="field.id == \'js\'">{{item[field.id]}}</script>' +
 
-                        // JSON type="json"
-                        '<a ng-if="field.type == \'json\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
+                        // JSON type="json" FIXME
+                        //'<script type="text/javascript" ng-if="field.id == \'json\'">{{item[field.id]}}</script>' +
 
                         // JSON type="css"
-                        '<a ng-if="field.type == \'css\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
+                        '<style ng-if="field.id == \'css\'">{{item[field.id]}}</style>' +
 
-                        // JSON type="json"
-                        '<a ng-if="field.type == \'json\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
+                        // HTML type="html"
+                        '<div ng-if="field.id == \'html\'">{{item[field.id]}}</div>' +
 
                         // Child Input list - type="childlist"
-                        '<div ng-if="field.type == \'childlist\' && field.showinlist">' +
+                        '<div ng-if="field.id == \'nested\'">' +
                             '<div ng-repeat="listitem in field.children track by $index" href="/#!/datalist/{{item._id}}">{{item[field.id][$index]}}</div>' +
                         '<div>' +
 
                         // Dynamic Input field list - type="textlist"
-                        '<a ng-if="field.type == \'textlist\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
+                        '<a ng-if="field.type == \'links\'" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
             '</div>'
         };
     }

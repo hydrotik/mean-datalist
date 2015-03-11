@@ -246,7 +246,7 @@ angular.module('mean.datalist').directive('datalistfield', [
 						'style="width: 100%;" ' + 
 						'id="editor-css"></div>' +
 
-						// JSON type="json"
+						// HTML type="html"
 						'<div ui-ace="{onLoad: aceHTMLLoaded}" ' +
 						'data-ng-model="item[field.id]" ' +
 						'ng-if="field.type == \'html\'">' +

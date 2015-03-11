@@ -1,17 +1,8 @@
 <section data-ng-controller="DataListController" data-ng-init="findOne()">
 
+<div data-ng-if="hasAuthorization(item)">
 <span>{{item.created | date:'medium'}}</span> /
   <span>{{item.user.name}}</span>
-<div ng-repeat="field in schema track by $index">
-  <datalistdetail ng-model="field" dl-model="item"></datalistdetail>
-</div>
-
-  <hr />
-
-
-  
- 
-  <div data-ng-if="hasAuthorization(item)">
     <a class="btn" href="/#!/datalist/{{item._id}}/edit">
       <i class="glyphicon glyphicon-edit"></i>
     </a>
@@ -19,5 +10,8 @@
       <i class="glyphicon glyphicon-trash"></i>
     </a>
   </div>
-  <div>{{item.content}}</div>
+<div ng-repeat="field in schema track by $index">
+  <datalistdetail ng-model="field" dl-model="item"></datalistdetail>
+</div>
+  
 </section>
