@@ -114,7 +114,8 @@ This example demonstrates the ability to dynamically create form fields and push
   // options for Radio Group:
   children: [{
     label: 'Male',
-    value: 'male'
+    value: 'male',
+    selected : true
   }, {
     label: 'Female',
     value: 'female'
