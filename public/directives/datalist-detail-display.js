@@ -37,19 +37,19 @@ angular.module('mean.datalist').directive('datalistdetail', [
                         '<h2 ng-if="field.id == \'title\'">{{item.title}}</h2>' + 
                         
                         // TextArea Input field - type="textarea"
-                        '<a ng-if="field.type == \'textarea\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
+                        '<p ng-if="field.id == \'content\'">{{item[field.id]}}</p>' +
 
                         // Datepicker Input field - type="date"
-                        '<a ng-if="field.type == \'date\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id] | date:\"dd-MMMM-yyyy\"}}</a>' +
+                        '<p ng-if="field.id == \'launchdate\'">{{item[field.id] | date:\"dd-MMMM-yyyy\"}}</p>' +
 
                         // Radio Button Group type="radio"
-                        '<a ng-if="field.type == \'radio\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
+                        '<p ng-if="field.id == \'gender\'">{{item[field.id]}}</p>' +
 
                         // Checkbox type="checkbox"
-                        '<a ng-if="field.type == \'checkbox\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
+                        '<p ng-if="field.id == \'subscribe\'">{{item[field.id]}}</p>' +
 
                         // Image Upload type="image"
-                        '<a ng-if="field.type == \'image\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
+                        '<img ng-if="field.id == \'picture\'" ng-src="./packages/custom/datalist/public/upload/{{item[field.id]}}" />' +
 
                         // Image Upload type="pdf"
                         '<a ng-if="field.type == \'pdf\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +

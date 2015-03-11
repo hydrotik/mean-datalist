@@ -4,12 +4,11 @@
  * Defining the Package
  */
 var Module = require('meanio').Module;
-
 var Datalist = new Module('datalist');
-
 var libconfig = require('./libs.config');
-
 var multipart = require('connect-multiparty');
+var config = require('meanio').loadConfig();
+var express = require('express');
 
 
 
@@ -70,27 +69,9 @@ Datalist.register(function(app, auth, database) {
 
     Datalist.angularDependencies(libng);
 
-  /**
-    //Uncomment to use. Requires meanio@0.3.7 or above
-    // Save settings with callback
-    // Use this for saving data from administration pages
-    Datalist.settings({
-        'someSetting': 'some value'
-    }, function(err, settings) {
-        //you now have the settings object
-    });
 
-    // Another save settings example this time with no callback
-    // This writes over the last settings.
-    Datalist.settings({
-        'anotherSettings': 'some value'
-    });
+    app.use('/public/upload', express.static(config.root + './packages/custom/datalist/public/upload'));
 
-    // Get settings. Retrieves latest saved settigns
-    Datalist.settings(function(err, settings) {
-        //you now have the settings object
-    });
-    */
 
   return Datalist;
 });
