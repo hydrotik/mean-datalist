@@ -1,4 +1,13 @@
 <section data-ng-controller="DataListController" data-ng-init="findOne()">
+
+
+<div ng-repeat="field in schema track by $index">
+  <datalistdetail ng-model="field" dl-model="item"></datalistdetail>
+</div>
+
+  <hr />
+
+
   <span>{{item.created | date:'medium'}}</span> /
   <span>{{item.user.name}}</span>
   <h2>{{item.title}}</h2>
