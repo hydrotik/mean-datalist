@@ -33,15 +33,14 @@ angular.module('mean.datalist').directive('datalistdetail', [
                 if(scope.field.type === 'html' || scope.field.type === 'htmleditor'){
                     $timeout(function() {
                         scope.safeHTML = $sce.trustAsHtml(scope.item[scope.field.id]);
-                    }, 0);
+                    }, 10);
+
                 }
 
                 if(scope.field.type === 'javascript'){
                     $timeout(function() {
-                        console.log(scope.item[scope.field.id]);
                         scope.safeJS = $sce.trustAsJs(scope.item[scope.field.id]);
-                        console.log(scope.safeJS);
-                    }, 0);
+                    }, 10);
                 }
 
             },
