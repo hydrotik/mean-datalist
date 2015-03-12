@@ -31,17 +31,17 @@ angular.module('mean.datalist').directive('datalistdetail', [
             link: function(scope, element, attrs, $parse) {
 
                 if(scope.field.type === 'html'){
-                    console.log(scope.field.id);
-                    console.log(scope.item[scope.field.id]);
-                    scope.safeHTML = $sce.trustAsHtml(scope.item[scope.field.id]);
-                    console.log(scope.safeHTML);
+                    $timeout(function() {
+                        scope.safeHTML = $sce.trustAsHtml(scope.item[scope.field.id]);
+                    }, 0);
                 }
 
-                if(scope.field.type === 'javascript' || scope.field.type === 'json'){
-                    console.log(scope.field.id);
-                    console.log(scope.item[scope.field.id]);
-                    scope.safeJS = $sce.trustAsJs(scope.item[scope.field.id]);
-                    console.log(scope.safeJS);
+                if(scope.field.type === 'javascript'){
+                    $timeout(function() {
+                        console.log(scope.item[scope.field.id]);
+                        scope.safeJS = $sce.trustAsJs(scope.item[scope.field.id]);
+                        console.log(scope.safeJS);
+                    }, 0);
                 }
 
             },
@@ -69,7 +69,7 @@ angular.module('mean.datalist').directive('datalistdetail', [
                         '<a ng-if="field.id == \'pdf\'" href="/#!/datalist/{{item._id}}" target="_blank">{{item[field.id]}}</a>' +
 
                         // Javascript type="javascript" FIXME
-                        //'<script type="text/javascript" ng-if="field.id == \'js\'" ng-bind-js="safeJS"></script>' +
+                        '<script type="text/javascript" ng-if="field.id == \'js\'" ng-bind-js="safeJS"></script>' +
 
                         // JSON type="json" FIXME
                         //'<script type="text/javascript" ng-if="field.id == \'json\'" ng-bind-js="\'var foo = \' + safeJS + \';\'"></script>' +
