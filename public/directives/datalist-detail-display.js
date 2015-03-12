@@ -30,7 +30,7 @@ angular.module('mean.datalist').directive('datalistdetail', [
 
             link: function(scope, element, attrs, $parse) {
 
-                if(scope.field.type === 'html'){
+                if(scope.field.type === 'html' || scope.field.type === 'htmleditor'){
                     $timeout(function() {
                         scope.safeHTML = $sce.trustAsHtml(scope.item[scope.field.id]);
                     }, 0);
@@ -78,7 +78,7 @@ angular.module('mean.datalist').directive('datalistdetail', [
                         '<style ng-if="field.id == \'css\'">{{item[field.id]}}</style>' +
 
                         // HTML type="html"
-                        '<div ng-if="field.id == \'html\'" ng-bind-html="safeHTML"></div>' +
+                        '<div ng-if="field.id == \'html\' || field.id ==\'htmleditor\'" ng-bind-html="safeHTML"></div>' +
 
                         // Child Input list - type="childlist"
                         '<div ng-if="field.id == \'nested\'">' +

@@ -92,6 +92,11 @@ This example demonstrates the ability to dynamically create form fields and push
 // HTML Code Editor Input Field
 {
   type: 'html'
+},
+
+// HTML WYSIWYG Editor Input Field
+{
+  type: 'htmleditor'
 }
 ```
 

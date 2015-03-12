@@ -4,7 +4,8 @@
     	"../lib/ng-table/dist/ng-table.css",
     	"../lib/bootstrap/dist/css/bootstrap.css",
         "../lib/highlightjs/styles/dark.css",
-    	"../lib/bootstrap/dist/css/bootstrap-theme.css"
+    	"../lib/bootstrap/dist/css/bootstrap-theme.css",
+        "../lib/textAngular/src/textAngular.css"
     ],
     "js": [
         "../lib/ace-builds/src-min-noconflict/ace.js",
@@ -20,13 +21,19 @@
         "../lib/ace-builds/src-min-noconflict/ext-language_tools.js",
         "../lib/ace-builds/src-min-noconflict/ext-beautify.js",
         "../lib/ace-builds/src-min-noconflict/theme-twilight.js",
-        "../lib/angular-ui-ace/ui-ace.js"
+        "../lib/angular-ui-ace/ui-ace.js",
+
+        
+        "../lib/textAngular/dist/textAngular-rangy.min.js",
+        "../lib/textAngular/dist/textAngular-sanitize.min.js",
+        "../lib/textAngular/dist/textAngular.min.js"
     ],
     "ng": [
         "ngTable",
         "ui.bootstrap",
         "angularFileUpload",
-        "ui.ace"
+        "ui.ace",
+        "textAngular"
     ]
   }
 }

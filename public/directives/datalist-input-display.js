@@ -253,6 +253,12 @@ angular.module('mean.datalist').directive('datalistfield', [
 						'style="width: 100%;" ' + 
 						'id="editor-html"></div>' +
 
+						// HTML type="htmleditor"
+						'<text-angular ' +
+						'data-ng-model="item[field.id]" ' +
+						'ng-if="field.type == \'htmleditor\'">' +
+						'></text-angular>' + 
+
 						// Child Input list - type="childlist"
 						'<div' + 
 						'ng-if="field.type == \'childlist\'">' +

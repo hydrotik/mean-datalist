@@ -86,6 +86,12 @@ angular.module('mean.datalist').factory('DataListModel', function() {
         showinlist : false
       },
       {
+        id : 'htmleditor',
+        label : 'HTML',
+        type : 'htmleditor',
+        showinlist : false
+      },
+      {
         id : 'nested',
         label : 'Address',
         type : 'childlist',
