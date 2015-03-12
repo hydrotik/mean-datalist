@@ -5,7 +5,8 @@ angular.module('mean.datalist').directive('datalistdetail', [
     '$compile',
     '$filter',
     '$timeout',
-    function($compile, $filter, $timeout) {
+    '$sce',
+    function($compile, $filter, $timeout, $sce) {
         return {
             restrict: 'AE',
 
@@ -29,10 +30,23 @@ angular.module('mean.datalist').directive('datalistdetail', [
 
             link: function(scope, element, attrs, $parse) {
 
+                if(scope.field.type === 'html'){
+                    console.log(scope.field.id);
+                    console.log(scope.item[scope.field.id]);
+                    scope.safeHTML = $sce.trustAsHtml(scope.item[scope.field.id]);
+                    console.log(scope.safeHTML);
+                }
+
+                if(scope.field.type === 'javascript' || scope.field.type === 'json'){
+                    console.log(scope.field.id);
+                    console.log(scope.item[scope.field.id]);
+                    scope.safeJS = $sce.trustAsJs(scope.item[scope.field.id]);
+                    console.log(scope.safeJS);
+                }
+
             },
             
-            template: '<div>' +
-
+            template: 
                         // Standard Input field - type="text"
                         '<h2 ng-if="field.id == \'title\'">{{item.title}}</h2>' + 
                         
@@ -55,16 +69,16 @@ angular.module('mean.datalist').directive('datalistdetail', [
                         '<a ng-if="field.id == \'pdf\'" href="/#!/datalist/{{item._id}}" target="_blank">{{item[field.id]}}</a>' +
 
                         // Javascript type="javascript" FIXME
-                        //'<script type="text/javascript" ng-if="field.id == \'js\'">{{item[field.id]}}</script>' +
+                        //'<script type="text/javascript" ng-if="field.id == \'js\'" ng-bind-js="safeJS"></script>' +
 
                         // JSON type="json" FIXME
-                        //'<script type="text/javascript" ng-if="field.id == \'json\'">{{item[field.id]}}</script>' +
+                        //'<script type="text/javascript" ng-if="field.id == \'json\'" ng-bind-js="\'var foo = \' + safeJS + \';\'"></script>' +
 
-                        // JSON type="css"
+                        // CSS type="css"
                         '<style ng-if="field.id == \'css\'">{{item[field.id]}}</style>' +
 
                         // HTML type="html"
-                        '<div ng-if="field.id == \'html\'">{{item[field.id]}}</div>' +
+                        '<div ng-if="field.id == \'html\'" ng-bind-html="safeHTML"></div>' +
 
                         // Child Input list - type="childlist"
                         '<div ng-if="field.id == \'nested\'">' +
@@ -72,8 +86,7 @@ angular.module('mean.datalist').directive('datalistdetail', [
                         '<div>' +
 
                         // Dynamic Input field list - type="textlist"
-                        '<a ng-if="field.type == \'links\'" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
-            '</div>'
+                        '<a ng-if="field.type == \'links\'" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>'
         };
     }
 ]);
