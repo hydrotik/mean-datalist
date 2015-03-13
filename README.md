@@ -97,6 +97,16 @@ This example demonstrates the ability to dynamically create form fields and push
 // HTML WYSIWYG Editor Input Field
 {
   type: 'htmleditor'
+},
+
+// Text List - Nested array of basic text fields
+{
+  type: 'textlist'
+},
+
+// Dynamic Text Lists - User added text fields to array of fields
+{
+  type: 'dynamictextlist'
 }
 ```
 

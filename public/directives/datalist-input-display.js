@@ -66,36 +66,7 @@ angular.module('mean.datalist').directive('datalistfield', [
 				
 	            
 
-	            if (scope.field.type === 'date'){
-
-	            	scope.dateFormat = 'dd-MMMM-yyyy';
-	            	
-
-	            	scope.today = function() {
-		                scope.item[scope.field.id] = $filter('date')(new Date(), scope.dateFormat);
-		                //scope.item[scope.field.id] = new Date();
-		            };
-
-		            scope.open = function($event) {
-		                $event.preventDefault();
-		                $event.stopPropagation();
-
-		                $timeout( function(){
-					     scope.opened = true;  
-					  	}, 50);
-		            };
-
-		            scope.disabled = function(date, mode) {
-					    return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-					};
-
-		            scope.dateOptions = {
-		                formatYear: 'yy',
-		                startingDay: 1
-		            };
-		            scope.today();
-		            scope.opened = false;  
-		        }
+	            
 
 		        if (scope.field.type === 'radio' && scope.operation === 'create'){
 		        	var value = '';
@@ -147,7 +118,7 @@ angular.module('mean.datalist').directive('datalistfield', [
 				}
 		        
 
-				if (scope.field.type === 'textlist'){
+				if (scope.field.type === 'dynamictextlist'){
 					scope.choices = [{id: 'choice1'}, {id: 'choice2'}, {id: 'choice3'}];
 
 					scope.showAddChoice = function(choice) {
@@ -169,11 +140,15 @@ angular.module('mean.datalist').directive('datalistfield', [
 					'<div class="col-md-9">' +
 
 						// Standard Input field - type="text"
-						'<input ng-if="field.type == \'text\'" data-ng-model="item[field.id]" name="{{::field.id}}" type="text" class="form-control" id="{{::field.id}}" placeholder="{{::field.label}}" required>' +
+						//'<input ng-if="field.type == \'text\'" data-ng-model="item[field.id]" name="{{::field.id}}" type="text" class="form-control" id="{{::field.id}}" placeholder="{{::field.label}}" required>' +
+						'<datalist-input-text ng-if="field.type == \'text\'"></datalist-input-text>' + 
+
 						// TextArea Input field - type="textarea"
-						'<textarea ng-if="field.type == \'textarea\'" data-ng-model="item[field.id]" name="{{::field.id}}" id="{{::field.id}}" cols="30" rows="10" placeholder="{{::field.label}}" class="form-control" required></textarea>' +
+						//'<textarea ng-if="field.type == \'textarea\'" data-ng-model="item[field.id]" name="{{::field.id}}" id="{{::field.id}}" cols="30" rows="10" placeholder="{{::field.label}}" class="form-control" required></textarea>' +
+						'<datalist-input-textarea ng-if="field.type == \'textarea\'"></datalist-input-textarea>' + 
 
 						// Datepicker Input field - type="date"
+						/*
 			            '<input type="text" ' +
 			            'ng-if="field.type == \'date\'" ' +
 			            'ng-change="change()"' + 
@@ -186,9 +161,11 @@ angular.module('mean.datalist').directive('datalistfield', [
 					    'date-disabled="disabled(date, mode)" ' +
 					    'ng-required="true" ' +
 					    'close-text="Close" ' +
-					    'class="form-control" />' +
+					    'class="form-control" />' +*/
+					    '<datalist-input-date ng-if="field.type == \'date\'"></datalist-input-date>' + 
 
 					    // Radio Button Group type="radio"
+					    /*
 					    '<span ng-if="field.type == \'radio\'" ng-repeat="radio in field.children"> ' + 
 						    '<input type="radio" ' +
 						    'name="{{::field.id}}" ' +
@@ -196,8 +173,11 @@ angular.module('mean.datalist').directive('datalistfield', [
 						    'data-ng-model="item[field.id]" '+
 						    'value="{{radio.value}}" /> {{radio.label}}&nbsp;&nbsp;&nbsp;' +
 					    '</span> ' + 
+						*/
+						'<datalist-input-radio ng-if="field.type == \'radio\'"></datalist-input-radio>' + 
 
 					    // Checkbox type="checkbox"
+					    /*
 					    '<span ng-if="field.type == \'checkbox\'">' + 
 					    '<input type="checkbox" ' + 
 				       	'data-ng-model="item[field.id]" ' +
@@ -205,8 +185,11 @@ angular.module('mean.datalist').directive('datalistfield', [
 				       	'ng-checked="field.selected" ' +
 				       	'name="{{::field.id}}" ' +
 						'id="{{::field.id}}" /> {{field.options[item[field.id]]}}</span>' + 
+						*/
+						'<datalist-input-checkbox ng-if="field.type == \'checkbox\'"></datalist-input-checkbox>' +
 
 						// Image Upload type="image"
+						/*
 						'<input ' +
 						'type="file" ' +
 						'data-ng-model="item[field.id]" ' +
@@ -214,8 +197,11 @@ angular.module('mean.datalist').directive('datalistfield', [
 						'name="{{::field.id}}" ' +
 						'onchange="angular.element(this).scope().imageUpdate()" ' +
 						'accept="image/*" />' +
+						*/
+						'<datalist-input-image ng-if="field.type == \'image\'" ></datalist-input-image>' + 
 
 						// Image Upload type="pdf"
+						/*
 						'<input ' +
 						'type="file" ' +
 						'data-ng-model="item[field.id]" ' +
@@ -223,47 +209,66 @@ angular.module('mean.datalist').directive('datalistfield', [
 						'name="{{::field.id}}" ' +
 						'onchange="angular.element(this).scope().imageUpdate()" ' +
 						'accept="application/pdf" />' +
-
+						*/
+						'<datalist-input-pdf ng-if="field.type == \'pdf\'" ></datalist-input-pdf>' + 
 
 						// Javascript type="javascript"
+						/*
 						'<div ui-ace="{onLoad: aceJSLoaded}" ' +
 						'data-ng-model="item[field.id]" ' +
 						'ng-if="field.type == \'javascript\'">' +
 						'style="width: 100%;" ' + 
 						'id="editor-javascript"></div>' +
+						*/
+						'<datalist-input-javascript ng-if="field.type == \'javascript\'" ></datalist-input-javascript>' + 
 
 						// JSON type="json"
+						/*
 						'<div ui-ace="{onLoad: aceJSONLoaded}" ' +
 						'data-ng-model="item[field.id]" ' +
 						'ng-if="field.type == \'json\'">' +
 						'style="width: 100%;" ' + 
 						'id="editor-json"></div>' +
+						*/
+						'<datalist-input-json ng-if="field.type == \'json\'" ></datalist-input-json>' + 
 
 						// JSON type="css"
+						/*
 						'<div ui-ace="{onLoad: aceCSSLoaded}" ' +
 						'data-ng-model="item[field.id]" ' +
 						'ng-if="field.type == \'css\'">' +
 						'style="width: 100%;" ' + 
 						'id="editor-css"></div>' +
+						*/
+						'<datalist-input-css ng-if="field.type == \'css\'" ></datalist-input-css>' + 
 
 						// HTML type="html"
+						/*
 						'<div ui-ace="{onLoad: aceHTMLLoaded}" ' +
 						'data-ng-model="item[field.id]" ' +
 						'ng-if="field.type == \'html\'">' +
 						'style="width: 100%;" ' + 
 						'id="editor-html"></div>' +
+						*/
+						'<datalist-input-html ng-if="field.type == \'html\'" ></datalist-input-html>' + 
 
 						// HTML type="htmleditor"
+						/*
 						'<text-angular ' +
 						'data-ng-model="item[field.id]" ' +
 						'ng-if="field.type == \'htmleditor\'">' +
 						'></text-angular>' + 
+						*/
+						'<datalist-input-htmleditor ng-if="field.type == \'htmleditor\'" ></datalist-input-htmleditor>' + 
 
-						// Child Input list - type="childlist"
+						// Child Input list - type="textlist"
+						/*
 						'<div' + 
-						'ng-if="field.type == \'childlist\'">' +
-						'<input ng-if="field.type == \'childlist\'" ng-repeat="listitem in field.children track by $index" data-ng-model="item[field.id][$index]" name="{{::field.id}}-{{$index}}" type="text" class="form-control" id="{{::field.id}}-{{$index}}" placeholder="{{::listitem.label}}" required>' +
+						'ng-if="field.type == \'textlist\'">' +
+						'<input ng-if="field.type == \'textlist\'" ng-repeat="listitem in field.children track by $index" data-ng-model="item[field.id][$index]" name="{{::field.id}}-{{$index}}" type="text" class="form-control" id="{{::field.id}}-{{$index}}" placeholder="{{::listitem.label}}" required>' +
 						'<div>' + 
+						*/
+						'<datalist-input-textlist ng-if="field.type == \'textlist\'" ></datalist-input-textlist>' + 
 
 
 						// Dynamic Input field list - type="textlist"
@@ -273,13 +278,16 @@ angular.module('mean.datalist').directive('datalistfield', [
 						'<input ng-repeat="listitem in field.children track by $index" data-ng-model="item[field.id][$index]" name="{{::field.id}}-{{$index}}" type="text" class="form-control" id="{{::field.id}}-{{$index}}" placeholder="{{::listitem.label}}" required>' +
 						'<div>' + 
 						*/
-						'<div ng-if="field.type == \'textlist\'">' +
+						/*
+						'<div ng-if="field.type == \'dynamictextlist\'">' +
 							'<div ng-repeat="choice in choices">' + 
 							  '<label for="choice" ng-show="$first">Choices</label>' + 
 							  '<button ng-show="$last" ng-click="addNewChoice()">Add another choice</button>' + 
 							  '<input type="text" ng-model="choice.name" name="" placeholder="Enter a restaurant name">' + 
 							'</div>' + 
 						'</div>' + 
+						*/
+						'<datalist-input-dynamictextlist ng-if="field.type == \'dynamictextlist\'" ></datalist-input-dynamictextlist>' + 
 					'</div>' +
 				'</div>' +
 	        '</div>'

@@ -10,16 +10,16 @@ angular.module('mean.datalist').factory('DataListModel', function() {
         showinlist : true
       },
       {
-        id : 'launchdate',
-        label : 'Launch Date',
-        type : 'date',
-        showinlist : true
-      },
-      {
         id : 'content',
         label : 'Content',
         type : 'textarea',
         showinlist : false
+      },
+      {
+        id : 'launchdate',
+        label : 'Launch Date',
+        type : 'date',
+        showinlist : true
       },
       {
         id : 'gender',
@@ -94,7 +94,7 @@ angular.module('mean.datalist').factory('DataListModel', function() {
       {
         id : 'nested',
         label : 'Address',
-        type : 'childlist',
+        type : 'textlist',
         children : [
           {
             label : 'Address 1'
@@ -110,7 +110,7 @@ angular.module('mean.datalist').factory('DataListModel', function() {
       {
         id : 'links',
         label : 'Links',
-        type : 'textlist',
+        type : 'dynamictextlist',
         children : [
         ],
         showinlist : true
