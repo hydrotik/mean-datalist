@@ -11,17 +11,17 @@
     <tbody>
       <tr ng-repeat="item in items">
 
-          <td ng-repeat="field in $parent.schema track by $index" ng-if="field.showinlist">
+          <td ng-repeat="field in $parent.schema" ng-if="field.showinlist">
             <datalistdisplay ng-model="field" dl-model="item"></datalistdisplay>
           </td>
 
-          <td data-ng-if="hasAuthorization(item)">
-            <a class="btn" href="/#!/datalist/{{item._id}}/edit">
+          <td>
+            <a class="btn" href="/#!/datalist/{{item._id}}/edit" data-ng-if="hasAuthorization(item)">
               <i class="glyphicon glyphicon-edit"></i>
             </a>
           </td>
-          <td data-ng-if="hasAuthorization(item)">
-            <a class="btn" data-ng-click="remove(item);">
+          <td>
+            <a class="btn" data-ng-click="remove(item);" data-ng-if="hasAuthorization(item)">
               <i class="glyphicon glyphicon-trash"></i>
             </a>
           </td>

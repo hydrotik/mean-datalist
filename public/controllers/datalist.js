@@ -10,10 +10,14 @@ angular.module('mean.datalist').controller('DataListController', [
     'DataListModel',
   function($scope, $stateParams, $location, $timeout, Global, DataList, DataListModel) {
       $scope.global = Global;
-      $scope.hasAuthorization = function(item) {
+
+      $timeout(function() {
+        $scope.hasAuthorization = function(item) {
           if (!item || !item.user) return false;
           return $scope.global.isAdmin || item.user._id === $scope.global.user._id;
       };
+      }, 0);
+      
 
       $scope.schema = DataListModel.getFields();
 
