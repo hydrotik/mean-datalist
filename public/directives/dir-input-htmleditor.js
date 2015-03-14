@@ -18,6 +18,7 @@ angular.module('mean.datalist').directive('datalistInputHtmleditor', [
 	        link: function(scope, element, attrs, $parse) {
 	        	console.warn(scope.field.id);
 
+	        	
 	        },
 
 	        template: '<text-angular ' +

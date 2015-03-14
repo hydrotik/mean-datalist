@@ -18,7 +18,7 @@ angular.module('mean.datalist').directive('datalistInputJson', [
 	        link: function(scope, element, attrs, $parse) {
 	        	console.warn(scope.field.id);
 
-
+	        	// Scope controlled by datalist-input-display.js
 	        },
 
 	        template: '<div ui-ace="{onLoad: aceJSONLoaded}" ' +
