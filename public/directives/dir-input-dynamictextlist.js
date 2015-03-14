@@ -22,9 +22,8 @@ angular.module('mean.datalist').directive('datalistInputDynamictextlist', [
 
 	        template: '<div>' +
 							'<div ng-repeat="choice in choices">' + 
-							  '<label for="choice" ng-show="$first">Choices</label>' + 
-							  '<button ng-show="$last" ng-click="addNewChoice()">Add another choice</button>' + 
-							  '<input type="text" ng-model="choice.name" name="" placeholder="Enter a restaurant name">' + 
+								'<input type="text" class="form-control" ng-model="choice.name" name="" placeholder="Enter">' + 
+							  	'<button ng-show="$last" ng-click="addNewChoice()">Add another choice</button>' + 
 							'</div>' + 
 						'</div>'
 	    };
