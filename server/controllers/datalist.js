@@ -127,7 +127,7 @@ exports.upload = function(req, res) {
   //console.log(file);
   // https://www.npmjs.com/package/fs-extra
 
-  fse.copy('./' + file.path, './packages/custom/datalist/public/upload/' + objid + file.extension, function(err) {
+  fse.copy('./' + file.path, './packages/custom/datalist/public/assets/uploads/' + objid + file.extension, function(err) {
     if (err) return console.error(err);
     fse.remove('./' + file.path, function(err) {
       if (err) return console.error(err);
