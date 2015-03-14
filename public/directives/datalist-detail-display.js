@@ -34,7 +34,6 @@ angular.module('mean.datalist').directive('datalistdetail', [
                     $timeout(function() {
                         scope.safeHTML = $sce.trustAsHtml(scope.item[scope.field.id]);
                     }, 10);
-
                 }
 
                 if(scope.field.type === 'javascript'){

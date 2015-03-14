@@ -76,7 +76,7 @@ angular.module('mean.datalist').controller('DataListController', [
               if (!item.updated) {
                   item.updated = [];
               }
-              item.updated.push(new Date().getTime());
+              item.updated.push({date : new Date().getTime(), user : $scope.global.user});
 
               item.$update(function() {
                   $location.path('datalist/' + item._id);

@@ -28,13 +28,14 @@ angular.module('mean.datalist').directive('datalistdisplay', [
             },
 
             link: function(scope, element, attrs, $parse) {
-
+                if(scope.field.type === 'text') console.log(scope.item);
             },
             
             template: '<div>' +
 
                         // Standard Input field - type="text"
-                        '<a ng-if="field.type == \'text\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
+                        '<a ng-if="field.type == \'text\' && field.showinlist" ' + 
+                        'popover="{{item.updated.length > 0 ? (\'Last updated: \' + (item.updated[item.updated.length - 1].date | date:\'dd-MMMM-yyyy\') + \' by \' + item.updated[item.updated.length - 1].user.name) : \'\'}}" popover-placement="right" popover-trigger="mouseenter" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
                         
                         // TextArea Input field - type="textarea"
                         '<a ng-if="field.type == \'textarea\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
