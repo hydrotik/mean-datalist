@@ -11,7 +11,6 @@ var config = require('meanio').loadConfig();
 var express = require('express');
 
 
-
 /*
  * All MEAN packages require registration
  * Dependency injection is used to define required modules
@@ -69,9 +68,8 @@ Datalist.register(function(app, auth, database) {
 
     Datalist.angularDependencies(libng);
 
-
-    app.use('/public/upload', express.static(config.root + './packages/custom/datalist/public/upload'));
-
+    //app.use('datalist/public/assets/uploads', express.static(config.root + '/datalist/public/assets/uploads'));
+    app.use('/packages/custom/datalist/public/assets/uploads', express.static(config.root + '/packages/custom/datalist/public/assets/uploads'));
 
   return Datalist;
 });
