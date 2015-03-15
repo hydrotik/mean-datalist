@@ -117,25 +117,28 @@ exports.all = function(req, res) {
 };
 
 
-
 exports.upload = function(req, res) {
+  console.log('server upload()');
   var file = req.files.file;
   var objid = mongoose.Types.ObjectId();
   file.objid = objid;
   file.extension = path.extname(file.name);
+  
+  var tmpfile = './' + file.path;
+  var destdir = './packages/custom/datalist/public/assets/uploads/';
+  var destfile = objid + file.extension;
 
-  //console.log(file);
   // https://www.npmjs.com/package/fs-extra
-
-  fse.copy('./' + file.path, './packages/custom/datalist/public/assets/uploads/' + objid + file.extension, function(err) {
-    if (err) return console.error(err);
-    fse.remove('./' + file.path, function(err) {
+  fse.ensureDir(destdir, function(err) {
+    if(err) return console.log(err); // => null 
+    fse.copy(tmpfile, destdir + destfile, function(err) {
       if (err) return console.error(err);
-      res.json(file);
-      console.log('success!');
+      fse.remove('./' + file.path, function(err) {
+        if (err) return console.error(err);
+        res.json(file);
+        console.log('file upload success!');
+      });
     });
   });
-
-  
 };
 
