@@ -19,6 +19,7 @@ Follow instructions and choose gulp
 ```bash
 $ cd datalistmean
 $ npm install && bower install
+$ mkdir tmp
 ```
 
 **Start mongoDB In another process:**
