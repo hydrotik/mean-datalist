@@ -5,7 +5,8 @@
     	"../lib/bootstrap/dist/css/bootstrap.css",
         "../lib/highlightjs/styles/dark.css",
     	"../lib/bootstrap/dist/css/bootstrap-theme.css",
-        "../lib/textAngular/src/textAngular.css"
+        "../lib/textAngular/src/textAngular.css",
+        "http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
     ],
     "js": [
         "../lib/ace-builds/src-min-noconflict/ace.js",
