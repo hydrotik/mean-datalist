@@ -47,8 +47,12 @@ Datalist.register(function(app, auth, database) {
       libjs = libconfig.core.js,
       libng = libconfig.core.ng,
       i, isAbs, regexp,
-      notAbs = {
+      falseAbs = {
         absolute: false,
+        global: true
+      },
+      trueAbs = {
+        absolute: true,
         global: true
       };
 
@@ -56,20 +60,21 @@ Datalist.register(function(app, auth, database) {
       regexp = /\.\.\/lib/gi;
       isAbs = !libcss[i].match(regexp);
       console.log('css: ' + libcss[i] + ' - ' + isAbs);
-      Datalist.aggregateAsset('css', libcss[i], !isAbs ? notAbs : {});
+      Datalist.aggregateAsset('css', libcss[i], !isAbs ? falseAbs : trueAbs);
     }
 
     for(i = 0; i<libjs.length;i += 1){
       regexp = /\.\.\/lib/gi;
       isAbs = !libjs[i].match(regexp);
       console.log('js: ' + libjs[i] + ' - ' + isAbs);
-      Datalist.aggregateAsset('js', libjs[i], !isAbs ? notAbs : {});
+      Datalist.aggregateAsset('js', libjs[i], !isAbs ? falseAbs : trueAbs);
     }
 
     Datalist.angularDependencies(libng);
 
     //app.use('datalist/public/assets/uploads', express.static(config.root + '/datalist/public/assets/uploads'));
     app.use('/packages/custom/datalist/public/assets/uploads', express.static(config.root + '/packages/custom/datalist/public/assets/uploads'));
+    app.use('/packages/custom/datalist/public/assets/fonts', express.static(config.root + '/packages/custom/datalist/public/assets/fonts'));
 
   return Datalist;
 });
