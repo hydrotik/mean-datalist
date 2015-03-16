@@ -73,7 +73,7 @@ angular.module('mean.datalist').directive('datalistdisplay', [
                         '<a ng-if="field.type == \'json\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
 
                         // Child Input list - type="textlist"
-                        '<div ng-if="field.type == \'textlist\' && field.showinlist">Items:' +
+                        '<div ng-if="field.type == \'textlist\' && field.showinlist">' +
                             '<div ng-repeat="listitem in field.children track by $index">{{item[field.id][$index]}}</div>' +
                         '</div>' +
 
