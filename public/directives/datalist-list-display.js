@@ -68,12 +68,12 @@ angular.module('mean.datalist').directive('datalistdisplay', [
                         '<a ng-if="field.type == \'json\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
 
                         // Child Input list - type="childlist"
-                        '<div ng-if="field.type == \'childlist\' && field.showinlist">' +
+                        '<div ng-if="field.type == \'textlist\' && field.showinlist">' +
                             '<div ng-repeat="listitem in field.children track by $index" href="/#!/datalist/{{item._id}}">{{item[field.id][$index]}}</div>' +
                         '<div>' +
 
                         // Dynamic Input field list - type="textlist"
-                        '<a ng-if="field.type == \'textlist\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
+                        '<a ng-if="field.type == \'dynamictextlist\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
             '</div>'
         };
     }

@@ -1,5 +1,5 @@
 <section data-ng-controller="DataListController" data-ng-init="findOne()">
-  <form name="datalistForm" class="form-horizontal col-md-6" role="form" data-ng-submit="update(datalistForm.$valid)" novalidate>
+  <form name="datalistForm" class="form-horizontal col-md-9" role="form" data-ng-submit="update(datalistForm.$valid)" novalidate>
   
 
     <datalistfield ng-repeat="field in schema" ng-model="field" dl-model="item" field-op="edit"></datalistfield>
