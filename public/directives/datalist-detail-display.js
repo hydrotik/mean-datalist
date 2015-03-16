@@ -33,15 +33,32 @@ angular.module('mean.datalist').directive('datalistdetail', [
                 if(scope.field.type === 'html' || scope.field.type === 'htmleditor'){
                     $timeout(function() {
                         scope.safeHTML = $sce.trustAsHtml(scope.item[scope.field.id]);
-                    }, 10);
+                    }, 0);
                 }
 
                 if(scope.field.type === 'javascript'){
                     $timeout(function() {
                         scope.safeJS = $sce.trustAsJs(scope.item[scope.field.id]);
-                    }, 10);
+                    }, 0);
                 }
 
+                if(scope.field.type === 'image'){
+                    $timeout(function() {
+                        scope.picture = '/packages/custom/datalist/public/assets/uploads/' + scope.item[scope.field.id];
+                    }, 0);
+                }
+
+                scope.$watch(function() {
+                    return attrs.ngSrc;
+                }, function(value) {
+                    if (!value) {
+                        element.attr('src', attrs.errSrc);
+                    }
+                });
+
+                element.bind('error', function() {
+                    element.attr('src', '/packages/custom/datalist/public/assets/uploads/' + scope.item[scope.field.id]);
+                });
             },
             
             template: 
@@ -61,7 +78,7 @@ angular.module('mean.datalist').directive('datalistdetail', [
                         '<p ng-if="field.id == \'subscribe\'">{{item[field.id]}}</p>' +
 
                         // Image Upload type="image" FIXME
-                        '<img ng-if="field.id == \'picture\'" ng-src="/packages/custom/datalist/public/assets/uploads/{{item[field.id]}}" />' +
+                        '<img ng-if="field.id == \'picture\'" err-src src="http://google.com/favicon.ico" ng-src="{{picture}}" />' +
 
                         // Image Upload type="pdf"
                         '<a ng-if="field.id == \'pdf\'" href="/#!/datalist/{{item._id}}" target="_blank">{{item[field.id]}}</a>' +
