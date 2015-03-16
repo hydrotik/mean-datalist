@@ -100,15 +100,15 @@ angular.module('mean.datalist').directive('datalistfield', [
 				}
 
 				if (scope.field.type === 'dynamictextlist'){
-					scope.choices = [{id: 'choice1'}];
+					scope.choices = [{id: 'option1'}];
 
-					scope.showAddChoice = function(choice) {
-					  	return choice.id === scope.choices[scope.choices.length-1].id;
+					scope.showAddChoice = function(option) {
+					  	return option.id === scope.choices[scope.choices.length-1].id;
 					};
 
 		        	scope.addNewChoice = function(e) {
 					  	var newItemNo = scope.choices.length+1;
-					  	scope.choices.push({'id':'choice'+newItemNo});
+					  	scope.choices.push({'id':'option'+newItemNo});
 					  	e.stopPropagation();
 					};
 				}
