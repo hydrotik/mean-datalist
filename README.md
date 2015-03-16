@@ -22,6 +22,15 @@ $ npm install && bower install
 $ mkdir tmp
 ```
 
+Install mean-admin Package in root of your mean app:
+```bash
+$ mean install mean-admin
+```
+Add the admin role to your user:
+```bash
+$ mean user <email> -a admin
+```
+
 **Start mongoDB In another process:**
 ```bash
 $ mongod --dbpath /path/to/workspace/datalistmean/data/db 
