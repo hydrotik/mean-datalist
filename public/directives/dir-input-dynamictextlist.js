@@ -24,7 +24,7 @@ angular.module('mean.datalist').directive('datalistInputDynamictextlist', [
 	        template: '<div>' +
 							'<div ng-repeat="choice in field.children track by $index">' + 
 								'<input type="text" class="form-control" data-ng-model="item[field.id][$index]" name="{{::field.id}}-{{$index}}" placeholder="Enter">' + 
-							  	'<button ng-show="$last" ng-click="addNewChoice()">Add another choice</button>' + 
+							  	'<div class="btn btn-default" ng-show="$last" ng-click="addNewChoice()">Add another choice</div>' + 
 							'</div>' + 
 						'</div>'
 

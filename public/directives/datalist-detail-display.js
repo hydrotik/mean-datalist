@@ -78,7 +78,7 @@ angular.module('mean.datalist').directive('datalistdetail', [
                         '<p ng-if="field.id == \'subscribe\'">{{item[field.id]}}</p>' +
 
                         // Image Upload type="image" FIXME
-                        '<img ng-if="field.id == \'picture\' && scope.item[scope.field.id] == \'\'" err-src src="http://google.com/favicon.ico" ng-src="{{picture}}" />' +
+                        '<img ng-if="field.id == \'picture\'" err-src src="http://google.com/favicon.ico" ng-src="{{picture}}" />' +
 
                         // Image Upload type="pdf"
                         '<a ng-if="field.id == \'pdf\'" href="/#!/datalist/{{item._id}}" target="_blank">{{item[field.id]}}</a>' +

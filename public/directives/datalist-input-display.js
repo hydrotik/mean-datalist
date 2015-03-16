@@ -107,10 +107,9 @@ angular.module('mean.datalist').directive('datalistfield', [
 						  	return option.id === scope.field.children[scope.field.children.length-1].id;
 						};
 
-			        	scope.addNewChoice = function(e) {
+			        	scope.addNewChoice = function() {
 						  	var newItemNo = scope.field.children.length+1;
 						  	scope.field.children.push({'id':'option'+newItemNo});
-						  	e.stopPropagation();
 						};
                     }, 0);
 					
