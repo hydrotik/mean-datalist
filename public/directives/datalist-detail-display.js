@@ -97,11 +97,14 @@ angular.module('mean.datalist').directive('datalistdetail', [
 
                         // Child Input list - type="childlist"
                         '<div ng-if="field.id == \'nested\'">' +
-                            '<div ng-repeat="listitem in field.children track by $index" href="/#!/datalist/{{item._id}}">{{item[field.id][$index]}}</div>' +
-                        '<div>' +
+                            '<div ng-repeat="listitem in field.children track by $index">{{item[field.id][$index]}}</div>' +
+                        '</div>' +
 
                         // Dynamic Input field list - type="textlist"
-                        '<a ng-if="field.type == \'links\'" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>'
+                        //'<a ng-if="field.type == \'links\'" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' + 
+                        '<div ng-if="field.id == \'links\'">' +
+                            '<div ng-repeat="listitem in item[field.id]">{{listitem}}</div>' +
+                        '</div>'
         };
     }
 ]);

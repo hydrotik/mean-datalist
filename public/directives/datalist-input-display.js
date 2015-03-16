@@ -100,17 +100,20 @@ angular.module('mean.datalist').directive('datalistfield', [
 				}
 
 				if (scope.field.type === 'dynamictextlist'){
-					scope.choices = [{id: 'option1'}];
+					$timeout(function() {
+						scope.field.children.push({id: 'option1'});
 
-					scope.showAddChoice = function(option) {
-					  	return option.id === scope.choices[scope.choices.length-1].id;
-					};
+						scope.showAddChoice = function(option) {
+						  	return option.id === scope.field.children[scope.field.children.length-1].id;
+						};
 
-		        	scope.addNewChoice = function(e) {
-					  	var newItemNo = scope.choices.length+1;
-					  	scope.choices.push({'id':'option'+newItemNo});
-					  	e.stopPropagation();
-					};
+			        	scope.addNewChoice = function(e) {
+						  	var newItemNo = scope.field.children.length+1;
+						  	scope.field.children.push({'id':'option'+newItemNo});
+						  	e.stopPropagation();
+						};
+                    }, 0);
+					
 				}
 		        
 	        },

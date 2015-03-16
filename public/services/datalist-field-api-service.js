@@ -105,8 +105,6 @@ angular.module('mean.datalist').factory('DataListModel', function() {
         ],
         showinlist : true
       },
-
-      // http://mrngoitall.net/blog/2013/10/02/adding-form-fields-dynamically-in-angularjs/
       {
         id : 'links',
         label : 'Links',

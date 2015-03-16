@@ -23,6 +23,7 @@
         "../lib/ace-builds/src-min-noconflict/ext-beautify.js",
         "../lib/ace-builds/src-min-noconflict/theme-twilight.js",
         "../lib/angular-ui-ace/ui-ace.js",
+        "../lib/angular-toArrayFilter/toArrayFilter.js",
 
         
         "../lib/textAngular/dist/textAngular-rangy.min.js",
@@ -34,7 +35,8 @@
         "ui.bootstrap",
         "angularFileUpload",
         "ui.ace",
-        "textAngular"
+        "textAngular",
+        "angular-toArrayFilter"
     ]
   }
 }

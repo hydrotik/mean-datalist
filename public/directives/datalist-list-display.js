@@ -29,6 +29,11 @@ angular.module('mean.datalist').directive('datalistdisplay', [
 
             link: function(scope, element, attrs, $parse) {
                 if(scope.field.type === 'text') console.log(scope.item);
+                if(scope.field.type === 'dynamictextlist'){
+                    console.log(scope.field.children);
+                    console.log(scope.item[scope.field.id]);
+                
+                }
             },
             
             template: '<div>' +
@@ -67,13 +72,16 @@ angular.module('mean.datalist').directive('datalistdisplay', [
                         // JSON type="json"
                         '<a ng-if="field.type == \'json\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
 
-                        // Child Input list - type="childlist"
-                        '<div ng-if="field.type == \'textlist\' && field.showinlist">' +
-                            '<div ng-repeat="listitem in field.children track by $index" href="/#!/datalist/{{item._id}}">{{item[field.id][$index]}}</div>' +
-                        '<div>' +
+                        // Child Input list - type="textlist"
+                        '<div ng-if="field.type == \'textlist\' && field.showinlist">Items:' +
+                            '<div ng-repeat="listitem in field.children track by $index">{{item[field.id][$index]}}</div>' +
+                        '</div>' +
 
-                        // Dynamic Input field list - type="textlist"
-                        '<a ng-if="field.type == \'dynamictextlist\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
+                        // Dynamic Input field list - type="dynamictextlist"
+                        //'<a ng-if="field.type == \'dynamictextlist\' && field.showinlist" href="/#!/datalist/{{item._id}}">{{item[field.id]}}</a>' +
+                        '<div ng-if="field.type == \'dynamictextlist\'">' +
+                            '<div ng-repeat="listitem in item[field.id]">{{listitem}}</div>' +
+                        '</div>' +
             '</div>'
         };
     }

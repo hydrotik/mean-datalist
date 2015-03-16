@@ -16,17 +16,18 @@ angular.module('mean.datalist').directive('datalistInputDynamictextlist', [
 	        scope: false,
 
 	        link: function(scope, element, attrs, $parse) {
-	        	console.warn(scope.field.id);
+	        	//console.warn(scope.field.id);
 
 	        	// Scope controlled by datalist-input-display.js
 	        },
 
 	        template: '<div>' +
-							'<div ng-repeat="choice in choices">' + 
-								'<input type="text" class="form-control" ng-model="choice.name" name="" placeholder="Enter">' + 
+							'<div ng-repeat="choice in field.children track by $index">' + 
+								'<input type="text" class="form-control" data-ng-model="item[field.id][$index]" name="{{::field.id}}-{{$index}}" placeholder="Enter">' + 
 							  	'<button ng-show="$last" ng-click="addNewChoice()">Add another choice</button>' + 
 							'</div>' + 
 						'</div>'
-	    };
+
+		};
 	}
 ]);

@@ -16,7 +16,7 @@ angular.module('mean.datalist').directive('datalistInputText', [
 	        scope: false,
 
 	        link: function(scope, element, attrs, $parse) {
-	        	console.warn(scope.field.id);
+	        	//console.warn(scope.field.id);
 
 	        },
 
