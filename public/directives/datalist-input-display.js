@@ -101,8 +101,6 @@ angular.module('mean.datalist').directive('datalistfield', [
 
 				if (scope.field.type === 'dynamictextlist'){
 					$timeout(function() {
-						scope.field.children.push({id: 'option1'});
-
 						scope.showAddChoice = function(option) {
 						  	return option.id === scope.field.children[scope.field.children.length-1].id;
 						};
@@ -111,6 +109,18 @@ angular.module('mean.datalist').directive('datalistfield', [
 						  	var newItemNo = scope.field.children.length+1;
 						  	scope.field.children.push({'id':'option'+newItemNo});
 						};
+
+						scope.field.children = [];
+
+						if(scope.operation === 'create'){
+							scope.field.children.push({id: 'option1'});
+						}else{
+							console.log(scope.item[scope.field.id]);
+							var k;
+							for(k in scope.item[scope.field.id]){
+								scope.addNewChoice();
+							}
+						}
                     }, 0);
 					
 				}
