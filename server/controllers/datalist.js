@@ -7,7 +7,8 @@ var mongoose = require('mongoose'),
   DataItem = mongoose.model('DataItem'),
   _ = require('lodash'),
   fse = require('fs-extra'),
-  path = require('path');
+  path = require('path'),
+  pdftohtml = require('pdftohtmljs');
 
 /**
  * Find item by id
@@ -231,5 +232,26 @@ exports.tree = function(req, res) {
 };
 
 exports.resource = function(req, res) {
-  res.send(fse.readFileSync(req.query.resource, 'UTF-8'));
+  console.log(req.query);
+  if(req.query.resource.match('.pdf')){
+    var converter = new pdftohtml(req.query.resource, path.resolve(__dirname, '../..', 'public/assets/uploads/pdf.html'));
+    converter.preset('default');
+
+    converter.success(function() {
+      console.log('convertion done');
+    });
+
+    converter.error(function(error) {
+      console.log('conversion error: ' + error);
+    });
+
+    converter.progress(function(ret) {
+      console.log ((ret.current*100.0)/ret.total + ' %');
+    });
+    converter.convert();
+    res.send(fse.readFileSync(req.query.resource, 'UTF-8'));
+  }else{
+    res.send(fse.readFileSync(req.query.resource, 'UTF-8'));
+  }
+  
 };
