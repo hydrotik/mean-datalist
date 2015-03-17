@@ -142,3 +142,94 @@ exports.upload = function(req, res) {
   });
 };
 
+
+
+
+
+
+
+
+
+
+
+
+function processNode(_p, f) {
+    var s = fse.statSync(path.join(_p, f));
+    return {
+        'id': path.join(_p, f),
+        'text': f,
+        'icon': s.isDirectory() ? 'jstree-custom-folder' : 'jstree-custom-file',
+        'state': {
+            'opened': false,
+            'disabled': false,
+            'selected': false
+        },
+        'li_attr': {
+            'base': path.join(_p, f),
+            'isLeaf': !s.isDirectory()
+        },
+        'children': s.isDirectory(),
+        'contextmenu' : {
+          items : { // Could be a function that should return an object like this one
+              'create' : {
+                  'separator_before'  : false,
+                  'separator_after'   : true,
+                  'label'             : 'Create',
+                  'action'            : false,
+                  'submenu' :{
+                      'create_file' : {
+                          'seperator_before' : false,
+                          'seperator_after' : false,
+                          'label' : 'File',
+                          action : function (obj) {
+                              this.create(obj, 'last', {'attr' : {'rel' : 'default'}});
+                          }
+                      },
+                      'create_folder' : {
+                          'seperator_before' : false,
+                          'seperator_after' : false,
+                          'label' : 'Folder',
+                          action : function (obj) {                               
+                              this.create(obj, 'last', {'attr' : { 'rel' : 'folder'}});
+                          }
+                      }
+                  }
+              }
+          }
+      }
+    };
+}
+
+function processReq(_p, res) {
+    var resp = [];
+    fse.readdir(_p, function(err, list) {
+        for (var i = list.length - 1; i >= 0; i = i - 1) {
+            resp.push(processNode(_p, list[i]));
+        }
+        res.json(resp);
+    });
+}
+
+exports.tree = function(req, res) {
+  var _p;
+  console.log(req.query.id);
+    if (parseInt(req.query.id) === 1) {
+      _p = path.resolve(__dirname, '../..', 'public/assets');
+      //_p = './packages/custom/datalist/public/assets';
+      console.log('has id: ' + _p);
+      processReq(_p, res);
+
+    } else {
+      if (req.query.id) {
+        _p = req.query.id;
+        console.log('id not 1: ' + _p);
+        processReq(_p, res);
+      } else {
+        res.json(['No valid data found']);
+      }
+    }
+};
+
+exports.resource = function(req, res) {
+  res.send(fse.readFileSync(req.query.resource, 'UTF-8'));
+};

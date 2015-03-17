@@ -20,6 +20,7 @@
     "forerunnerdb": "^1.3.4",
     "fs-extra": "^0.16.5",
     "highland": "^2.4.0",
-    "multer": "^0.1.8"
+    "multer": "^0.1.8",
+    "pdftohtmljs": "^0.3.5"
   }
 }

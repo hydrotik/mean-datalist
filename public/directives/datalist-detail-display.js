@@ -45,8 +45,12 @@ angular.module('mean.datalist').directive('datalistdetail', [
                 if(scope.field.type === 'image'){
                     scope.showPicture = false;
                     $timeout(function() {
-                        scope.picture = '/packages/custom/datalist/public/assets/uploads/' + scope.item[scope.field.id];
-                        if(scope.item[scope.field.id] !== '') scope.showPicture = true;
+                        if(scope.item[scope.field.id] !== ''){
+                            scope.picture = '/packages/custom/datalist/public/assets/uploads/' + scope.item[scope.field.id];
+                            scope.showPicture = true;
+                        }else{
+                            scope.picture = '';
+                        }
                     }, 0);
                 }
 

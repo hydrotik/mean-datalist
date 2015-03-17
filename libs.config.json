@@ -1,6 +1,7 @@
 {
   "core": {
     "css": [
+        "../lib/jstree/dist/themes/default/style.css",
     	"../lib/ng-table/dist/ng-table.css",
     	"../lib/bootstrap/dist/css/bootstrap.css",
         "../lib/highlightjs/styles/dark.css",
@@ -10,6 +11,7 @@
     ],
     "js": [
         "../lib/ace-builds/src-min-noconflict/ace.js",
+        "../lib/jstree/dist/jstree.js",
     	"../lib/highland/dist/highland.js",
         "../lib/highlightjs/highlight.pack.js",
         "../lib/angular-highlightjs/angular-highlightjs.js",

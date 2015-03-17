@@ -36,6 +36,9 @@ module.exports = function(Articles, app, auth) {
 
   app.post('/api/upload', auth.requiresLogin, multipartyMiddleware, datalist.upload);
 
+  app.route('/api/tree').get(datalist.tree);
+
+  app.route('/api/resource').get(datalist.resource);
 
 
   // https://github.com/mick26/ng_Node-AdvancedFileUpload

@@ -1,30 +1,40 @@
 'use strict';
 
 angular.module('mean.datalist').controller('DataListController', [
-    '$scope',
-    '$stateParams',
-    '$location',
-    '$timeout',
-    'Global',
-    'DataList',
-    'DataListModel',
-  function($scope, $stateParams, $location, $timeout, Global, DataList, DataListModel) {
+    '$scope',         // Angular $scope object
+    '$stateParams',   // UI-Router $stateParams object
+    '$location',      // Angular $location object
+    '$timeout',       // Angular $timeout object
+    'Global',         // Meain.io Global object
+    'DataList',       // DataList rest endpoint service
+    'DataListModel',  // DataList model/local schema service
+    'DataListTree',   // Datalist Tree rest endpoint service
+  function($scope, $stateParams, $location, $timeout, Global, DataList, DataListModel, DataListTree) {
+      /*
+          Start Global/Initialization Functions
+      */
+
+      // Main Global
       $scope.global = Global;
       
+      // Global Authorization check
       $scope.hasAuthorization = function(item) {
           if (!item || !item.user) return false;
           return $scope.global.isAdmin || item.user._id === $scope.global.user._id;
       };
 
+      // Return the Client Side Schema from the service
       $scope.schema = DataListModel.getFields();
 
-
+      // Initialize a parent item object. TODO remove _key prop if not being used.
       $scope.item = {
           _key: 'empty'
       };
 
+      // Helper function in the servic for clearing the field model data
       DataListModel.clearFieldModels($scope.item);
 
+      // Helper function for checking data TODO move to global helper/util service
       $scope.isDate = function(date){
         //TODO Clean this up!
         if(!isNaN(parseFloat(date)) && isFinite(date)) return false;
@@ -32,6 +42,13 @@ angular.module('mean.datalist').controller('DataListController', [
         return Object.prototype.toString.call(d) === '[object Date]' ? true : angular.isDate(d);
       };
 
+
+
+      /*
+          Start CRUD Functions
+      */
+
+      // Main Create function for conenction to endpoint
       $scope.create = function(isValid) {
           var data = DataListModel.getData($scope.item);
 
@@ -52,7 +69,7 @@ angular.module('mean.datalist').controller('DataListController', [
           }
       };
 
-
+      // Main Remove function for conenction to endpoint
       $scope.remove = function(item) {
           if (item) {
               item.$remove(function(response) {
@@ -70,6 +87,7 @@ angular.module('mean.datalist').controller('DataListController', [
           }
       };
 
+      // Main Update function for conenction to endpoint
       $scope.update = function(isValid) {
           if (isValid) {
               var item = $scope.item;
@@ -86,18 +104,81 @@ angular.module('mean.datalist').controller('DataListController', [
           }
       };
 
+      // Main Find All function for conenction to endpoint
       $scope.find = function() {
           DataList.query(function(items) {
               $scope.items = items;
           });
       };
 
+      // Main Find One by ID function for conenction to endpoint
       $scope.findOne = function() {
           DataList.get({
               itemid: $stateParams.itemid
           }, function(item) {
               $scope.item = item;
           });
+      };
+
+
+
+      /*
+          Start Tree Functions
+      */
+
+      $scope.fileViewer = 'Please select a file to view its contents';
+
+      $scope.contextMenu = {
+          'Menu 1': {
+              'label': 'Menu 1',
+              'action': function(obj) {
+                  console.log(obj);
+                  alert('You clicked ' + obj.item.label);
+              }
+          },
+          'Menu 2': {
+              'label': 'Menu 2',
+              'action': function(obj) {
+                  console.log(obj);
+                  alert('You clicked ' + obj.item.label);
+              }
+          }
+      };
+
+      $scope.tree_core = {
+        
+        multiple: false,  // disable multiple node selection
+
+        check_callback: function (operation, node, node_parent, node_position, more) {
+            // operation can be 'create_node', 'rename_node', 'delete_node', 'move_node' or 'copy_node'
+            // in case of 'rename_node' node_position is filled with the new node name
+
+            if (operation === 'move_node') {
+                return false;   // disallow all dnd operations
+            }
+            return true;  // allow all other operations
+        }
+      };
+
+      $scope.nodeSelected = function(e, data) {
+        var _l = data.node.li_attr;
+        if (_l.isLeaf) {
+          DataListTree.fetchFile(_l.base).then(function(data) {
+            var _d = data.data;
+            if (typeof _d === 'object') {
+
+              //http://stackoverflow.com/a/7220510/1015046//
+              _d = JSON.stringify(_d, undefined, 2);
+            }
+            $scope.fileViewer = _d;
+          });
+        } else {
+
+          //http://jimhoskins.com/2012/12/17/angularjs-and-apply.html//
+          $scope.$apply(function() {
+            $scope.fileViewer = 'Please select a file to view its contents';
+          });
+        }
       };
   }
 ]);

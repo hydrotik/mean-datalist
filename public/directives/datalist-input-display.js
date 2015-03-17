@@ -115,7 +115,6 @@ angular.module('mean.datalist').directive('datalistfield', [
 						if(scope.operation === 'create'){
 							scope.field.children.push({id: 'option1'});
 						}else{
-							console.log(scope.item[scope.field.id]);
 							var k;
 							for(k in scope.item[scope.field.id]){
 								scope.addNewChoice();

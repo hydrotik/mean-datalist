@@ -28,12 +28,7 @@ angular.module('mean.datalist').directive('datalistdisplay', [
             },
 
             link: function(scope, element, attrs, $parse) {
-                if(scope.field.type === 'text') console.log(scope.item);
-                if(scope.field.type === 'dynamictextlist'){
-                    console.log(scope.field.children);
-                    console.log(scope.item[scope.field.id]);
                 
-                }
             },
             
             template: '<div>' +
