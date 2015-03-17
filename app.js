@@ -75,6 +75,7 @@ Datalist.register(function(app, auth, database) {
     //app.use('datalist/public/assets/uploads', express.static(config.root + '/datalist/public/assets/uploads'));
     app.use('/packages/custom/datalist/public/assets/uploads', express.static(config.root + '/packages/custom/datalist/public/assets/uploads'));
     app.use('/packages/custom/datalist/public/assets/fonts', express.static(config.root + '/packages/custom/datalist/public/assets/fonts'));
+    app.use('/packages/custom/datalist/public/assets/img', express.static(config.root + '/packages/custom/datalist/public/assets/img'));
 
   return Datalist;
 });
