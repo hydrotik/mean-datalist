@@ -9,6 +9,7 @@
 * highlandjs
 * d3 and/or Google Visualization - Coming Soon
 * ACE Editor
+* jsTree
 
 **In a terminal process:**
 ```bash
