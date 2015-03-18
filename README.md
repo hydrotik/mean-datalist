@@ -9,10 +9,10 @@
 **Tools Used**
 * jquery
 * highlandjs
-* d3 and/or Google Visualization - Coming Soon
 * ACE Editor
 * jsTree
-* pdftohtmljs
+* pdftohtmljs and pdf2htmlEX
+* Cheerio
 
 **In a terminal process:**
 ```bash
