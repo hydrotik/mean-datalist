@@ -5,11 +5,12 @@ angular.module('mean.datalist').controller('DataListController', [
     '$stateParams',   // UI-Router $stateParams object
     '$location',      // Angular $location object
     '$timeout',       // Angular $timeout object
+    '$sce',           // Angular $sce safe content object
     'Global',         // Meain.io Global object
     'DataList',       // DataList rest endpoint service
     'DataListModel',  // DataList model/local schema service
     'DataListTree',   // Datalist Tree rest endpoint service
-  function($scope, $stateParams, $location, $timeout, Global, DataList, DataListModel, DataListTree) {
+  function($scope, $stateParams, $location, $timeout, $sce, Global, DataList, DataListModel, DataListTree) {
       /*
           Start Global/Initialization Functions
       */
@@ -163,14 +164,21 @@ angular.module('mean.datalist').controller('DataListController', [
       $scope.nodeSelected = function(e, data) {
         var _l = data.node.li_attr;
         if (_l.isLeaf) {
+          console.log(_l);
           DataListTree.fetchFile(_l.base).then(function(data) {
+            // $sce.trustAsHtml(scope.item[scope.field.id]);
+
+            if(_l.base.toLowerCase().split('.').pop() === 'pdf'){
+              console.log('Loading HTML File!');
+            }
+
             var _d = data.data;
             if (typeof _d === 'object') {
-
               //http://stackoverflow.com/a/7220510/1015046//
               _d = JSON.stringify(_d, undefined, 2);
             }
-            $scope.fileViewer = _d;
+            $scope.fileViewer = $sce.trustAsHtml(_d);
+
           });
         } else {
 
