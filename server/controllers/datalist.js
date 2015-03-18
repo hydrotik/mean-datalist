@@ -255,6 +255,8 @@ function processReq(_p, res) {
     var resp = [];
     fse.readdir(_p, function(err, list) {
         for (var i = list.length - 1; i >= 0; i = i - 1) {
+            // TODO Check for existance of pdf and html with same file name and exclude html from tree
+            // https://github.com/hydrotik/mean-datalist/issues/52
             resp.push(processNode(_p, list[i]));
         }
         res.json(resp);
