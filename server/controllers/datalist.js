@@ -233,12 +233,21 @@ exports.tree = function(req, res) {
 
 exports.resource = function(req, res) {
   console.log(req.query);
-  if(req.query.resource.match('.pdf')){
-    var converter = new pdftohtml(req.query.resource, path.resolve(__dirname, '../..', 'public/assets/uploads/pdf.html'));
+
+  var extension = path.extname(req.query.resource);
+  var filename = path.basename(req.query.resource, '.pdf');
+  var dir = path.dirname(req.query.resource);
+
+  if(extension === '.pdf'){
+
+    
+
+    var converter = new pdftohtml(dir, filename + extension, filename + '.html');
     converter.preset('default');
 
     converter.success(function() {
       console.log('convertion done');
+      res.send(fse.readFileSync(dir + '/' + filename + '.html', 'UTF-8'));
     });
 
     converter.error(function(error) {
@@ -249,7 +258,7 @@ exports.resource = function(req, res) {
       console.log ((ret.current*100.0)/ret.total + ' %');
     });
     converter.convert();
-    res.send(fse.readFileSync(req.query.resource, 'UTF-8'));
+    
   }else{
     res.send(fse.readFileSync(req.query.resource, 'UTF-8'));
   }
