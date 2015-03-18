@@ -8,7 +8,9 @@ var mongoose = require('mongoose'),
   _ = require('lodash'),
   fse = require('fs-extra'),
   path = require('path'),
-  pdftohtml = require('pdftohtmljs');
+  pdftohtml = require('pdftohtmljs'),
+  cheerio = require('cheerio'),
+  config = require('meanio').loadConfig();
 
 /**
  * Find item by id
@@ -126,31 +128,79 @@ exports.upload = function(req, res) {
   file.extension = path.extname(file.name);
   
   var tmpfile = './' + file.path;
-  var destdir = './packages/custom/datalist/public/assets/uploads/';
+  var destdir = config.root + '/packages/custom/datalist/public/assets/uploads';
   var destfile = objid + file.extension;
+
 
   // https://www.npmjs.com/package/fs-extra
   fse.ensureDir(destdir, function(err) {
     if(err) return console.log(err); // => null 
-    fse.copy(tmpfile, destdir + destfile, function(err) {
+
+    //Make sure the directory exists
+    fse.copy(tmpfile, destdir + '/' + destfile, function(err) {
       if (err) return console.error(err);
+
+      // Remove tmp file
       fse.remove('./' + file.path, function(err) {
         if (err) return console.error(err);
-        res.json(file);
-        console.log('file upload success!');
+
+        // If file is PDF then let's create an HTML preview
+        if(file.extension === '.pdf'){
+
+          var p = 0;
+
+          // Poll for exisiting file
+          var fileInterval = setInterval(function(){
+
+            console.log('checking for pdf...');
+
+            //Check existance of PDF in destination directory
+            fse.exists(destdir + '/' + destfile, function(exists) {
+              console.log(exists);
+              if(exists){
+                // Clear Polling Interval
+                clearInterval(fileInterval);
+
+                console.log('PDF is located at: ' + destdir + '/' + destfile); // => null
+
+                // Start PDF Conversion process
+                var converter = new pdftohtml(destdir, destfile, objid + '.html', {});
+                converter.preset('sanitized_styling');
+
+                converter.success(function() {
+                  res.json(file);
+                  console.log('pdf file upload success!');
+                });
+
+                converter.error(function(error) {
+                  console.log('conversion error: ' + error);
+                });
+
+                converter.progress(function(ret) {
+                  console.log ((ret.current*100.0)/ret.total + ' %');
+                });
+                converter.convert();
+              }else{
+                console.log('PDF not copied yet: ' + err); // => null
+                p = p + 1;
+
+                if(p === 15){
+                  clearInterval(fileInterval);
+                  console.log('upload success but PDF can not be found. Cancelling HTML preview creation.'); // => null
+                  res.json(file);
+                }
+              }
+            });
+          }, 100);
+        }else{
+          res.json(file);
+          console.log('file upload success!');
+        }
+        
       });
     });
   });
 };
-
-
-
-
-
-
-
-
-
 
 
 
@@ -232,35 +282,21 @@ exports.tree = function(req, res) {
 };
 
 exports.resource = function(req, res) {
-  console.log(req.query);
+  //console.log(req.query);
 
   var extension = path.extname(req.query.resource);
-  var filename = path.basename(req.query.resource, '.pdf');
+  var filename = path.basename(req.query.resource, extension);
   var dir = path.dirname(req.query.resource);
 
+  var output = '';
+
   if(extension === '.pdf'){
-
-    
-
-    var converter = new pdftohtml(dir, filename + extension, filename + '.html');
-    converter.preset('default');
-
-    converter.success(function() {
-      console.log('convertion done');
-      res.send(fse.readFileSync(dir + '/' + filename + '.html', 'UTF-8'));
-    });
-
-    converter.error(function(error) {
-      console.log('conversion error: ' + error);
-    });
-
-    converter.progress(function(ret) {
-      console.log ((ret.current*100.0)/ret.total + ' %');
-    });
-    converter.convert();
-    
+    var $ = cheerio.load(fse.readFileSync(dir + '/' + filename + '.html', 'UTF-8'));
+    output = $('body').html();
   }else{
-    res.send(fse.readFileSync(req.query.resource, 'UTF-8'));
+    output = fse.readFileSync(req.query.resource, 'UTF-8');
   }
+
+  res.send(output);
   
 };

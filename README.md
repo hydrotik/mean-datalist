@@ -3,6 +3,8 @@
 **Prereqs**
 * Make sure mean-cli is installed
 * Make sure MongoDB is installed
+* Make sure Brew is installed
+* Make sure pdf2htmlEX is installed
 
 **Tools Used**
 * jquery
@@ -10,6 +12,7 @@
 * d3 and/or Google Visualization - Coming Soon
 * ACE Editor
 * jsTree
+* pdftohtmljs
 
 **In a terminal process:**
 ```bash
@@ -46,6 +49,13 @@ $ cd datalist
 $ npm install && bower install
 $ gulp
 ```
+
+Add
+```
+packages/custom/datalist/public/assets/lib/**
+packages/custom/datalist/public/assets/uploads/**
+```
+to .jshintignore
 
 **Dynamic Input Field API Information**
 This example demonstrates the ability to dynamically create form fields and push them into MongDB. See additional parameters below.
