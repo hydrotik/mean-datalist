@@ -10,7 +10,10 @@ var mongoose = require('mongoose'),
   path = require('path'),
   pdftohtml = require('pdftohtmljs'),
   cheerio = require('cheerio'),
-  config = require('meanio').loadConfig();
+  config = require('meanio').loadConfig(),
+  junk = require('junk'),
+  _ = require('highland'),
+  Datalist = require('../lib/datalist-node.js');
 
 /**
  * Find item by id
@@ -254,10 +257,9 @@ function processNode(_p, f) {
 function processReq(_p, res) {
     var resp = [];
     fse.readdir(_p, function(err, list) {
-        for (var i = list.length - 1; i >= 0; i = i - 1) {
-            // TODO Check for existance of pdf and html with same file name and exclude html from tree
-            // https://github.com/hydrotik/mean-datalist/issues/52
-            resp.push(processNode(_p, list[i]));
+      var l = Datalist.removeDuplicateFile(list.filter(junk.not), '.html');
+        for (var i = l.length - 1; i >= 0; i = i - 1) {
+            resp.push(processNode(_p, l[i]));
         }
         res.json(resp);
     });
@@ -268,8 +270,6 @@ exports.tree = function(req, res) {
   console.log(req.query.id);
     if (parseInt(req.query.id) === 1) {
       _p = path.resolve(__dirname, '../..', 'public/assets');
-      //_p = './packages/custom/datalist/public/assets';
-      console.log('has id: ' + _p);
       processReq(_p, res);
 
     } else {
