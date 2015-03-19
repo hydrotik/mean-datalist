@@ -294,7 +294,10 @@ exports.resource = function(req, res) {
 
   if(extension === '.pdf'){
     var $ = cheerio.load(fse.readFileSync(dir + '/' + filename + '.html', 'UTF-8'));
-    output = $('body').html();
+    //var $css = $('style');
+    var $dom = $('body');
+    $dom.find('img').remove();
+    output = $dom.html();
   }else{
     output = fse.readFileSync(req.query.resource, 'UTF-8');
   }
