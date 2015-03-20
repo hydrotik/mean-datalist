@@ -15,6 +15,8 @@ angular.module('mean.datalist').directive('pdfDirectDownload', [
 
             template : '<a href="" class="btn btn-primary" ng-click="downloadPdf()">Download</a>',
 
+            // http://stackoverflow.com/questions/364946/how-to-make-pdf-file-downloadable-in-html-link
+
             link: function(scope, element, attr) {
 
                 var $ = window.$;
