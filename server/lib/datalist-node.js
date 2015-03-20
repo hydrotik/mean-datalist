@@ -2,6 +2,18 @@
 'use strict';
 
 
+var fse = require('fs-extra'),
+    path = require('path'),
+    junk = require('junk'),
+    globalconfig = require('meanio').loadConfig(),
+    localconfig = require('../config/all.js'),
+    pdftohtml = require('pdftohtmljs'),
+    fse = require('fs-extra'),
+    mongoose = require('mongoose');
+
+
+
+
 function removeDuplicateFile(arr, target) {
     var array = [];
     var array2 = [];
@@ -80,7 +92,153 @@ function removeDuplicateFile(arr, target) {
 } //
 
 
+
+
+function uploadFile(req, cb) {
+    var file = req.files.file;
+    var objid = mongoose.Types.ObjectId();
+    file.objid = objid;
+    file.extension = path.extname(file.name);
+
+    var tmpfile = './' + file.path;
+    var destdir = globalconfig.root + localconfig.uploads;
+    var destfile = objid + file.extension;
+
+
+
+
+    // https://www.npmjs.com/package/fs-extra
+    fse.ensureDir(destdir, function(err) {
+        if (err) return console.log(err); // => null 
+
+        //Make sure the directory exists
+        fse.copy(tmpfile, destdir + '/' + destfile, function(err) {
+            if (err) return console.error(err);
+
+            // Remove tmp file
+            fse.remove('./' + file.path, function(err) {
+                if (err) return console.error(err);
+
+                // If file is PDF then let's create an HTML preview
+                if (file.extension === '.pdf') {
+
+                    var p = 0;
+
+                    // Poll for exisiting file
+                    var fileInterval = setInterval(function() {
+
+                        console.log('checking for pdf...');
+
+                        //Check existance of PDF in destination directory
+                        fse.exists(destdir + '/' + destfile, function(exists) {
+                            console.log(exists);
+                            if (exists) {
+                                // Clear Polling Interval
+                                clearInterval(fileInterval);
+
+                                console.log('PDF is located at: ' + destdir + '/' + destfile); // => null
+
+                                // Start PDF Conversion process
+                                var converter = new pdftohtml(destdir, destfile, objid + '.html', {});
+                                converter.preset('sanitized_styling');
+
+                                converter.success(function() {
+                                    cb(file);
+                                    console.log('pdf file upload success!');
+                                });
+
+                                converter.error(function(error) {
+                                    console.log('conversion error: ' + error);
+                                });
+
+                                converter.progress(function(ret) {
+                                    console.log((ret.current * 100.0) / ret.total + ' %');
+                                });
+                                converter.convert();
+                            } else {
+                                console.log('PDF not copied yet: ' + err); // => null
+                                p = p + 1;
+
+                                if (p === 15) {
+                                    clearInterval(fileInterval);
+                                    console.log('upload success but PDF can not be found. Cancelling HTML preview creation.'); // => null
+                                    cb(file);
+                                }
+                            }
+                        });
+                    }, 100);
+                } else {
+                    cb(file);
+                    console.log('file upload success!');
+                }
+
+            });
+        });
+    });
+}
+
+
+function processNode(_p, f) {
+    var s = fse.statSync(path.join(_p, f));
+    return {
+        'id': path.join(_p, f),
+        'text': f,
+        'icon': s.isDirectory() ? 'jstree-custom-folder' : 'jstree-custom-file',
+        'state': {
+            'opened': false,
+            'disabled': false,
+            'selected': false
+        },
+        'li_attr': {
+            'base': path.join(_p, f),
+            'isLeaf': !s.isDirectory()
+        },
+        'children': s.isDirectory(),
+        'contextmenu' : {
+          items : { // Could be a function that should return an object like this one
+              'create' : {
+                  'separator_before'  : false,
+                  'separator_after'   : true,
+                  'label'             : 'Create',
+                  'action'            : false,
+                  'submenu' :{
+                      'create_file' : {
+                          'seperator_before' : false,
+                          'seperator_after' : false,
+                          'label' : 'File',
+                          action : function (obj) {
+                              this.create(obj, 'last', {'attr' : {'rel' : 'default'}});
+                          }
+                      },
+                      'create_folder' : {
+                          'seperator_before' : false,
+                          'seperator_after' : false,
+                          'label' : 'Folder',
+                          action : function (obj) {                               
+                              this.create(obj, 'last', {'attr' : { 'rel' : 'folder'}});
+                          }
+                      }
+                  }
+              }
+          }
+      }
+    };
+}
+
+function processReq(_p, res) {
+    var resp = [];
+    fse.readdir(_p, function(err, list) {
+      var l = removeDuplicateFile(list.filter(junk.not), '.html');
+        for (var i = l.length - 1; i >= 0; i = i - 1) {
+            resp.push(processNode(_p, l[i]));
+        }
+        res.json(resp);
+    });
+}
+
+
 module.exports = {
-    removeDuplicateFile: removeDuplicateFile
+    processReq : processReq,
+    uploadFile : uploadFile
 
 };
