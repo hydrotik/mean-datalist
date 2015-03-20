@@ -54,6 +54,19 @@ angular.module('mean.datalist').directive('datalistdetail', [
                     }, 0);
                 }
 
+                if(scope.field.type === 'pdf'){
+                    scope.showPDF = false;
+                    $timeout(function() {
+                        if(scope.item[scope.field.id] !== ''){
+                            scope.pdffile = '/packages/custom/datalist/public/assets/uploads/' + scope.item[scope.field.id];
+                            console.log(scope.pdffile);
+                            scope.showPDF = true;
+                        }else{
+                            scope.pdffile = '';
+                        }
+                    }, 0);
+                }
+
                 scope.$watch(function() {
                     return attrs.ngSrc;
                 }, function(value) {
@@ -87,7 +100,13 @@ angular.module('mean.datalist').directive('datalistdetail', [
                         '<img ng-if="field.id == \'picture\'" ng-show="showPicture" class="ng-hide" err-src src="/packages/custom/datalist/public/assets/img/giphy.gif" ng-src="{{picture}}" />' +
 
                         // Image Upload type="pdf"
-                        '<a ng-if="field.id == \'pdf\'" href="/#!/datalist/{{item._id}}" target="_blank">{{item[field.id]}}</a>' +
+                        //'<a ng-if="field.id == \'pdf\'" href="/#!/datalist/{{item._id}}" target="_blank">{{item[field.id]}}</a>' +
+                        /*'<div ng-if="field.id == \'pdf\'">' +
+                        '<object data="/packages/custom/datalist/public/assets/uploads/{{item[field.id]}}" type="application/pdf" width="300" height="200">' +
+                        'alt : <a ng-href="/packages/custom/datalist/public/assets/uploads/{{item[field.id]}}">{{item[field.id]}}</a>' +
+                        '</object>' +
+                        '</div>' +*/
+                        '<pdf ng-if="field.id == \'pdf\'" ng-show="showPDF" data="{{pdffile}}"></pdf>' + 
 
                         // Javascript type="javascript" FIXME
                         '<script type="text/javascript" ng-if="field.id == \'js\'" ng-bind-js="safeJS"></script>' +
