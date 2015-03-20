@@ -106,7 +106,10 @@ angular.module('mean.datalist').directive('datalistdetail', [
                         'alt : <a ng-href="/packages/custom/datalist/public/assets/uploads/{{item[field.id]}}">{{item[field.id]}}</a>' +
                         '</object>' +
                         '</div>' +*/
-                        '<pdf ng-if="field.id == \'pdf\'" ng-show="showPDF" data="{{pdffile}}"></pdf>' + 
+                        '<div ng-if="field.id == \'pdf\'">' + 
+                        '<pdf ng-show="showPDF" data="{{pdffile}}"></pdf>' + 
+                        '<br>Download Link: <pdf-direct-download data="{{pdffile}}" filename="downloaded-pdf"></pdf-direct-download>' + 
+                        '</div>' + 
 
                         // Javascript type="javascript" FIXME
                         '<script type="text/javascript" ng-if="field.id == \'js\'" ng-bind-js="safeJS"></script>' +

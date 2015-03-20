@@ -149,7 +149,7 @@ exports.resource = function(req, res) {
 
   var output = '';
 
-  if(extension === '.pdf'){
+  if(extension === '.pdf' && req.query.download){
     var $ = cheerio.load(fse.readFileSync(dir + '/' + filename + '.html', 'UTF-8'));
     //var $css = $('style');
     var $dom = $('body');
