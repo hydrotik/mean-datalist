@@ -101,7 +101,7 @@ function uploadFile(req, cb) {
     file.extension = path.extname(file.name);
 
     var tmpfile = './' + file.path;
-    var destdir = globalconfig.root + localconfig.uploads;
+    var destdir = globalconfig.root + localconfig.uploaddir;
     var destfile = objid + file.extension;
 
 
@@ -146,6 +146,27 @@ function uploadFile(req, cb) {
                                 converter.preset('sanitized_styling');
 
                                 converter.success(function() {
+
+                                    var files = localconfig.pdftohtmlfiles;
+                                    var doRemove = function(file){
+                                        fse.exists(destdir + '/' + file, function(exists) {
+                                            if (exists) {
+                                                fse.remove(destdir + '/' + file, function(err) {
+                                                  if(err) console.error(err);
+
+                                                  console.log('removed ' + file + '!');
+                                                });
+                                            }
+                                        });
+                                    };
+
+                                    for(var i = 0; i < files.length; i+=1){
+                                        doRemove(files[i]);
+                                    }
+                                    
+
+
+
                                     cb(file);
                                     console.log('pdf file upload success!');
                                 });

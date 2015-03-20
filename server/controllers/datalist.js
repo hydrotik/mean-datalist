@@ -9,6 +9,7 @@ var mongoose = require('mongoose'),
   fse = require('fs-extra'),
   path = require('path'),
   localconfig = require('../config/all.js'),
+  globalconfig = require('meanio').loadConfig(),
   cheerio = require('cheerio'),
   _ = require('highland'),
   Datalist = require('../lib/datalist-node.js');
@@ -122,7 +123,7 @@ exports.tree = function(req, res) {
   var _p;
   console.log(req.query.id);
     if (parseInt(req.query.id) === 1) {
-      _p = localconfig.assetsdir; 
+      _p = globalconfig.root + localconfig.assetsdir; 
       Datalist.processReq(_p, res);
 
     } else {
