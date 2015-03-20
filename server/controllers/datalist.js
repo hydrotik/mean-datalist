@@ -43,9 +43,6 @@ exports.create = function(req, res) {
   });
 };
 
-
-
-
 /**
  * Update an item
  */
@@ -90,12 +87,6 @@ exports.destroy = function(req, res) {
  * Show an item
  */
 exports.show = function(req, res) {
-  /*
-  var obj = {
-    item : req.item,
-    tree : DataItemSchemaTree
-  };
-  */
   res.json(req.item);
 };
 
@@ -109,18 +100,13 @@ exports.all = function(req, res) {
         error: 'Cannot list the items'
       });
     }
-    /*
-    var obj = {
-      items : items,
-      tree : DataItemSchemaTree
-    };
-    */
     res.json(items);
-
   });
 };
 
-
+/**
+ * Upload Files
+ */
 exports.upload = function(req, res) {
   console.log('server upload()');
 
@@ -129,10 +115,9 @@ exports.upload = function(req, res) {
   });
 };
 
-
-
-
-
+/**
+ * jsTree Data
+ */
 exports.tree = function(req, res) {
   var _p;
   console.log(req.query.id);
@@ -151,6 +136,9 @@ exports.tree = function(req, res) {
     }
 };
 
+/**
+ * Load Resource
+ */
 exports.resource = function(req, res) {
   //console.log(req.query);
 
