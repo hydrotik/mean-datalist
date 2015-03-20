@@ -108,6 +108,9 @@ function uploadFile(req, cb) {
 
 
     // https://www.npmjs.com/package/fs-extra
+
+    // https://www.npmjs.com/package/spindrift
+    
     fse.ensureDir(destdir, function(err) {
         if (err) return console.log(err); // => null 
 
