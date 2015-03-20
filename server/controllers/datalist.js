@@ -149,12 +149,14 @@ exports.resource = function(req, res) {
 
   var output = '';
 
-  if(extension === '.pdf' && req.query.download){
+  if(extension === '.pdf' && req.query.download === 'false'){
     var $ = cheerio.load(fse.readFileSync(dir + '/' + filename + '.html', 'UTF-8'));
     //var $css = $('style');
     var $dom = $('body');
     $dom.find('img').remove();
     output = $dom.html();
+  }else if(req.query.download === 'true'){
+    output = fse.readFileSync(req.query.resource);
   }else{
     output = fse.readFileSync(req.query.resource, 'UTF-8');
   }

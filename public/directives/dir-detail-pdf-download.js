@@ -3,63 +3,77 @@
 
 angular.module('mean.datalist').directive('pdfDirectDownload', [
     'DataListTree',
-    function(DataListTree) {
+    '$timeout',
+    '$http',
+    function(DataListTree, $timeout, $http) {
         return {
-            restrict: 'E',
+            restrict: 'AE',
+
             scope: {
                 src : '@data'
             },
-            link: function(scope, element, attr) {
-                element.replaceWith('<a href="" class="btn btn-primary" ng-click="downloadPdf()">Download</a>');
 
-                var anchor = element.children()[0];
+            template : '<a href="" class="btn btn-primary" ng-click="downloadPdf()">Download</a>',
+
+            link: function(scope, element, attr) {
 
                 var $ = window.$;
 
-                
+                $timeout(function() {
+                    var anchor = element.children()[0];
 
-                // When the download starts, disable the link
-                scope.$on('download-start', function() {
-                    $(anchor).attr('disabled', 'disabled');
-                });
+                    console.log(anchor);
+                    console.log(element);
+                    console.log(element.children());
 
-                // When the download finishes, attach the data to the link. Enable the link and change its appearance.
-                scope.$on('downloaded', function(event, data) {
-                    $(anchor).attr({
-                        href: 'data:application/pdf;base64,' + data,
-                        download: attr.filename
-                    })
-                        .removeAttr('disabled')
-                        .text('Save')
-                        .removeClass('btn-primary')
-                        .addClass('btn-success');
 
-                    // Also overwrite the download pdf function to do nothing.
-                    scope.downloadPdf = function() {};
-                });
-            },
-            controller: ['$scope', '$attrs', '$http',
-                function($scope, $attrs, $http) {
-                    $scope.downloadPdf = function() {
-                        $scope.$emit('download-start');
-                        /*
-                        $http.get($scope.src).then(function(response) {
-                            //$scope.$emit('downloaded', response.data);
+                    
 
-                        });
-                        */
+                    // When the download starts, disable the link
+                    scope.$on('download-start', function() {
+                        $(anchor).attr('disabled', 'disabled');
+                    });
 
-                        var file = $scope.src.toLowerCase().split('/').pop();
-                        console.log(file);
-                        /*
-                        DataListTree.fetchFile(file, true).then(function(data) {
-                            $scope.$emit('downloaded', data);
-                        });
-                        */
-                        $scope.$emit('downloaded', {});
+                    // When the download finishes, attach the data to the link. Enable the link and change its appearance.
+                    scope.$on('downloaded', function(event, data) {
+                        $(anchor).attr({
+                            href: 'data:application/pdf;base64,' + data,
+                            download: attr.filename
+                        })
+                            .removeAttr('disabled')
+                            .text('Save')
+                            .removeClass('btn-primary')
+                            .addClass('btn-success');
+
+                        // Also overwrite the download pdf function to do nothing.
+                        scope.downloadPdf = function() {};
+                    });
+
+                    scope.downloadPdf = function() {
+                            console.log('DOWNLOAD');
+                            scope.$emit('download-start');
+
+                            var file = scope.src.toLowerCase().split('/').pop();
+
+                            console.log(file);
+                            
+                            $http.get(scope.src).then(function(response) {
+                                scope.$emit('downloaded', response.data);
+
+                            });
+                            
+
+                            
+                            
+                            /*
+                            DataListTree.fetchFile(file, true).then(function(data) {
+                                $scope.$emit('downloaded', data);
+                            });
+                            */
+                            //scope.$emit('downloaded', {});
                     };
-                }
-            ]
+                }, 0);
+            }
         };
     }]
 );

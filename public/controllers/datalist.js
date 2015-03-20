@@ -165,7 +165,7 @@ angular.module('mean.datalist').controller('DataListController', [
         var _l = data.node.li_attr;
         if (_l.isLeaf) {
           console.log(_l);
-          DataListTree.fetchFile(_l.base).then(function(data) {
+          DataListTree.fetchFile(_l.base, false).then(function(data) {
             // $sce.trustAsHtml(scope.item[scope.field.id]);
 
             if(_l.base.toLowerCase().split('.').pop() === 'pdf'){
