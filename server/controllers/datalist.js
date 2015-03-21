@@ -149,14 +149,24 @@ exports.resource = function(req, res) {
 
   var output = '';
 
+  
+
   if(extension === '.pdf' && req.query.download === 'false'){
     var $ = cheerio.load(fse.readFileSync(dir + '/' + filename + '.html', 'UTF-8'));
     //var $css = $('style');
     var $dom = $('body');
     $dom.find('img').remove();
     output = $dom.html();
-  }else if(req.query.download === 'true'){
-    output = fse.readFileSync(req.query.resource);
+  }else if(extension === '.pdf' && req.query.download === 'true'){
+    var pdfData = fse.readFileSync(req.query.resource, 'UTF-8');//After you get imageData 
+    output = pdfData.toString('base64');
+  }else if(extension === '.jpeg' || extension === '.jpg'){
+    // Image
+    // http://stackoverflow.com/questions/14911746/how-to-post-base64-encoded-in-memory-image-as-file-parameter
+    var imageData = fse.readFileSync(req.query.resource, 'UTF-8');//After you get imageData 
+    var base64Image = imageData.toString('base64');    //base64 encoded string
+    var decodedImage = new Buffer(base64Image, 'base64');  //base64 encoded buffer
+    output = base64Image;
   }else{
     output = fse.readFileSync(req.query.resource, 'UTF-8');
   }
