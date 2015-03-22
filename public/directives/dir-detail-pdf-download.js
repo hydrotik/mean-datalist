@@ -13,6 +13,7 @@ angular.module('mean.datalist').directive('pdfDirectDownload', [
                 src : '@data'
             },
 
+
             //template : '<a href="" class="btn btn-primary" ng-click="downloadPdf()">Download</a>',
             template : '<a ng-href="{{src}}" target="_blank" class="btn btn-primary" download="download.pdf">Download</a>',
 
@@ -73,7 +74,6 @@ angular.module('mean.datalist').directive('pdfDirectDownload', [
                                 $scope.$emit('downloaded', data);
                             });
                             */
-                            //scope.$emit('downloaded', {});
                     };
                 }, 0);
             }
