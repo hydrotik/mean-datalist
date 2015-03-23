@@ -159,7 +159,7 @@ exports.resource = function(req, res) {
     output = $dom.html();
   }else if(extension === '.pdf' && req.query.download === 'true'){
     var pdfData = fse.readFileSync(req.query.resource, 'UTF-8');//After you get imageData 
-    output = pdfData.toString('base64');
+    output = pdfData;
   }else if(extension === '.jpeg' || extension === '.jpg'){
     // Image
     // http://stackoverflow.com/questions/14911746/how-to-post-base64-encoded-in-memory-image-as-file-parameter

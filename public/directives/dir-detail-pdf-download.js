@@ -15,7 +15,7 @@ angular.module('mean.datalist').directive('pdfDirectDownload', [
 
 
             //template : '<a href="" class="btn btn-primary" ng-click="downloadPdf()">Download</a>',
-            template : '<a ng-href="{{src}}" target="_blank" class="btn btn-primary" download="download.pdf">Download</a>',
+            template : '<a ng-href="{{src}}" class="btn btn-primary" download="download.pdf">Download</a>',
 
             // http://stackoverflow.com/questions/364946/how-to-make-pdf-file-downloadable-in-html-link
 
@@ -41,7 +41,7 @@ angular.module('mean.datalist').directive('pdfDirectDownload', [
                     // When the download finishes, attach the data to the link. Enable the link and change its appearance.
                     scope.$on('downloaded', function(event, data) {
                         $(anchor).attr({
-                            href: 'data:application/pdf;base64,' + encodeURIComponent(data),
+                            href: 'data:application/pdf;base64,' + data,
                             download: 'download.pdf'
                         })
                             .removeAttr('disabled')
